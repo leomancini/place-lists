@@ -1,0 +1,251 @@
+body {
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
+}
+
+#master {
+	overflow: hidden;
+}
+
+#container {
+	width: 750px;
+	position: relative;
+	left: 50%;
+}
+
+#header-image {
+	position: relative;
+	height: 400px;
+	background-color: #F2F2F2;
+	position: relative;
+	overflow: hidden;
+}
+
+#header-image #map {
+	height: 100%;
+}
+
+#header-image img.photo {
+	width: 100%;
+	min-width: 700px;
+    margin-top: -50%;
+    position: absolute;
+    top: 50%;
+}
+
+#list {
+	position: relative;
+	left: -50%;
+	padding-bottom: 150px;
+	margin-top: 60px;
+	margin-left: 375px;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover, a.hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#list-header {
+	padding-bottom: 10px;
+}
+
+#navigation {
+	position: relative;
+	margin-left: -750px;
+	margin-top: -20px;
+	margin-bottom: 150px;
+	width: 300px;
+	float: left;
+}
+
+#navigation.sticky {
+	position: fixed;
+	margin-left: -375px;
+	top: 60px;
+}
+
+#navigation.sticky-top {
+	top: 60px;
+}
+
+#navigation.sticky-bottom {
+	bottom: 60px;
+}
+
+h1 {
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-weight: 700;
+	font-size: 45px;
+	color: black;
+	margin: 20px 0 10px 0;
+}
+
+h1 a {
+	color: black;
+}
+
+#category-breadcrumbs {
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-weight: 700;
+	font-size: 24px;
+	color: #1D2129;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#category-breadcrumbs a {
+	color: #1D2129;
+}
+
+.index-header {
+	margin-top: 30px;
+}
+
+.index {
+	margin-top: 10px;
+	overflow: hidden;
+}
+
+.index .item {
+	display: block;
+	margin-top: 2px;
+	height: 22px;
+}
+
+.index .item a {
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-weight: 400;
+	letter-spacing: -0.25px;
+	font-size: 18px;
+	color: #90949C;
+}
+
+.index .item a:hover {
+	text-decoration: none;
+}
+
+.index .item a:hover .label {
+	text-decoration: underline;
+}
+
+.index .item a .count {
+	color: #BEC2C9;
+}
+
+.index.collapsed {
+	height: 245px;
+}
+
+input#search.places-search {
+	font-weight: 700;
+	display: inline-block;
+	width: 100px;
+}
+
+.search-separator {
+	display: inline-block;
+	color: #BEC2C9;
+	font-weight: 400;
+	width: 18px;
+	text-align: center;
+}
+
+.search-separator.has-search-query {
+	color: #000;
+	font-weight: 700;
+}
+
+#search-suggestions {
+	width: 90%;
+}
+
+#places {
+	opacity: 0;
+	margin-bottom: 150px;
+	float: left;
+	width: 375px;
+}
+
+.subcategory-places {
+	margin-top: 50px;
+}
+
+.subcategory-places:first-of-type {
+	margin-top: 0;
+}
+
+.subcategory-header {
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+.subcategory-header a {
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-size: 13px;
+	font-weight: 400;
+	color: #BEC2C9;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+
+.place {
+	display: inline-block;
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+.place .place-image-wrapper {
+    float: left;
+    width: 70px;
+	height: 70px;
+    margin-right: 15px;
+    border-radius: 4px;
+	background-color: #F2F2F2;
+	padding: 0;
+	overflow: hidden;
+}
+
+.place .place-image-wrapper .place-image {
+    width: 70px;
+}
+
+.place .place-info {
+	height: 70px;
+	display: table-cell;
+    vertical-align: middle;
+}
+
+.place .place-info .title a {
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-weight: 400;
+	font-size: 22px;
+	color: #000000;
+}
+
+.place .place-info .description {
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-weight: 400;
+	display: block;
+	margin-top: 5px;
+	color: #90949C;
+	line-height: 20px;
+}
+
+.place .place-info .description .rating-circle {
+	width: 6px;
+	height: 6px;
+	border-radius: 6px;
+	display: inline-block;
+	margin-right: 5px;
+	vertical-align: 2px;
+}
+
+.place .place-info .description a {
+	color: #90949C;
+}

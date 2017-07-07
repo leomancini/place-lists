@@ -1,0 +1,80 @@
+#master {	
+	opacity: 0;
+}
+
+input#search {
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-size: 22px;
+	color: #000;
+	border: 0;
+    outline: none;
+	font-weight: 500;
+}
+
+input#search::-webkit-input-placeholder {
+	color: #BEC2C9;
+	font-weight: 400;
+}
+
+#search-suggestions .suggestion {
+	display: inline-block;
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-weight: 400;
+	letter-spacing: -0.25px;
+	color: #BEC2C9;
+	font-size: 16px;
+	margin-right: 15px;
+}
+
+#search-suggestions .suggestion:hover {
+	color: #90949C;
+}
+
+#index-show-more {
+	display: none;
+}
+
+.index-header {
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-size: 13px;
+	font-weight: 400;
+	color: #BEC2C9;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+a.index-show-more {
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-weight: 400;
+	letter-spacing: -0.25px;
+	font-size: 18px;
+	color: #BEC2C9;
+	cursor: pointer;
+}
+
+.subcategory-header-replacement {
+	height: 20px;
+	display: block;
+}
+
+.subcategory-places:first-of-type .subcategory-header-replacement {
+	height: 0;
+}
+
+#empty-search-results {
+	display: none;
+	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+	font-weight: 400;
+	letter-spacing: -0.25px;
+	font-size: 18px;
+	color: #90949C;
+	margin-top: 50px;
+}
+
+#empty-search-results a {
+	color: #BEC2C9;
+	font-size: 16px;
+	margin-top: 10px;
+	display: inline-block;
+	cursor: pointer;
+}
