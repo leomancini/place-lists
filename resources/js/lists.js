@@ -69,7 +69,6 @@ function run_search(search_query, keyboard) {
 }
 
 $(document).ready(function() { 
-
 	if($("input#search").val() != "") {
 		run_search($("input#search").val(), "onload");
 	}

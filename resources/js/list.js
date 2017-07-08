@@ -25,6 +25,7 @@ function run_search(input_from_textfield) {
 			});	
 			
 		} else {
+			console.log("asd");
 			search_query = "";
 			$(".search-separator").removeClass("has-search-query");
 			
@@ -33,6 +34,13 @@ function run_search(input_from_textfield) {
 			} else {
 			    location.hash = '#';
 			}
+			
+			$(".index a, .subcategory-header a").each(function() {
+				if($(this).attr("href")) {
+					this_href = $(this).attr("href").split("#")[0];
+					$(this).attr("href", this_href);
+				}
+			});	
 		}
 		
 		search_query = search_query.toUpperCase();
