@@ -47,6 +47,7 @@ function run_search(input_from_textfield) {
 		neighborhoods = new Array();
 		places = $("#places .place");
 		subcategories = $("#places .subcategory-places");
+		indexes = $(".index-wrapper");
 
 		$.each(places, function(key, place) {
 			if(search_query.indexOf(">") > -1) {
@@ -105,15 +106,21 @@ function run_search(input_from_textfield) {
 
 			// update index to reflect current search results
 			$(".index").parent().parent().hide();
-			
 		} else {
 			$("#empty-search-results").hide();
 			
 			// update index to reflect current search results
 			$(".index").parent().parent().show();
 		}
-
+		
+		
+		$.each(indexes, function() {
+		
+			console.log($(this).children(".index").children(".item").html());
+		});
+		
 		$.each(subcategories, function(key, subcategory) {
+						
 			if($(subcategory).children(".place").hasClass("positive-search-result") == false) {
 				$(subcategory).hide().removeClass("positive-search-result").addClass("negative-search-result");
 
@@ -122,6 +129,7 @@ function run_search(input_from_textfield) {
 					negative_subcategory_index_id = $(subcategory).attr("id").replace("subcategory-", "");
 					$(".index .item#"+negative_subcategory_index_id).hide();
 				}
+				
 			} else {
 				$(subcategory).show().removeClass("negative-search-result").addClass("positive-search-result");
 				
@@ -165,6 +173,7 @@ function set_subcategory_index_state() {
 	subcategory_index_max = 10;
 	
 	if(window.mobile) {
+		console.log("mobile");
 		$("a.index-show-more").hide();
 
 		$(".index").each(function() {
@@ -180,21 +189,26 @@ function set_subcategory_index_state() {
 			search_width = parseInt(search_width) + (parseInt($(this).outerWidth()) + parseInt($(this).css("margin-right").replace("px", "")));
 		});
 		$("#search-suggestions").width(search_width + 10);
-	} else {
-		$(".index").each(function() {
-			if($(this).children(":visible").length > subcategory_index_max) {
-				$("a.index-show-more#"+$(this).attr("id")).show();
-				$(this).addClass("collapsed");
-			} else {
-				$("a.index-show-more#"+$(this).attr("id")).hide();
-				$(this).removeClass("collapsed");
-
-				if($(this).children(":visible").length == 0) {
-					$(this).parent().parent().hide();
-				}
-			}
-		});
 	}
+	
+	$(".index").each(function() {
+		if($(this).children(":visible").length > subcategory_index_max) {
+			$("a.index-show-more#"+$(this).attr("id")).show();
+			$(this).addClass("collapsed");
+		} else {
+			$("a.index-show-more#"+$(this).attr("id")).hide();
+			$(this).removeClass("collapsed");
+
+			if($(this).children(":visible").length == 0) {
+				$(this).parent().parent().hide();
+			}
+		}
+	});
+	
+	if($(".subcategory-places:visible").length == 1) {
+		$(".subcategory-header-replacement").parent(".subcategory-places.positive-search-result").children(".place:first").css("margin-top", 0);
+	}
+
 }
 
 $(document).ready(function() { 

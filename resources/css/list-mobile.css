@@ -216,6 +216,10 @@ input#search.places-search {
 	width: 100%;
 }
 
+.subcategory-places#none .place:first-of-type {
+	margin-top: 0;
+}
+
 .place .place-image-wrapper {
     float: left;
     width: 70px;

@@ -61,6 +61,10 @@ a.index-show-more {
 	height: 0;
 }
 
+.subcategory-places.positive-search-result .subcategory-header-replacement {
+	height: 0;
+}
+
 #empty-search-results {
 	display: none;
 	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
