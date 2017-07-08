@@ -25,7 +25,6 @@ function run_search(input_from_textfield) {
 			});	
 			
 		} else {
-			console.log("asd");
 			search_query = "";
 			$(".search-separator").removeClass("has-search-query");
 			
