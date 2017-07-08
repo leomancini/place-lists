@@ -118,16 +118,20 @@ function run_search(input_from_textfield) {
 				$(subcategory).hide().removeClass("positive-search-result").addClass("negative-search-result");
 
 				// update index to reflect current search results
-				negative_subcategory_index_id = $(subcategory).attr("id").replace("subcategory-", "");
-				$(".index .item#"+negative_subcategory_index_id).hide();
+				if($(subcategory).attr("id")) {
+					negative_subcategory_index_id = $(subcategory).attr("id").replace("subcategory-", "");
+					$(".index .item#"+negative_subcategory_index_id).hide();
+				}
 			} else {
 				$(subcategory).show().removeClass("negative-search-result").addClass("positive-search-result");
-
-				// update index to reflect current search results
-				positive_subcategory_index_id = $(subcategory).attr("id").replace("subcategory-", "");
-				positive_subcategory_index_count = $(subcategory).children(".positive-search-result").length;
-				$(".index .item#"+positive_subcategory_index_id).show();
-				$(".index .item#"+positive_subcategory_index_id).children("a").children(".count").html("&nbsp;&nbsp;"+positive_subcategory_index_count);
+				
+				if($(subcategory).attr("id")) {
+					// update index to reflect current search results
+					positive_subcategory_index_id = $(subcategory).attr("id").replace("subcategory-", "");
+					positive_subcategory_index_count = $(subcategory).children(".positive-search-result").length;
+					$(".index .item#"+positive_subcategory_index_id).show();
+					$(".index .item#"+positive_subcategory_index_id).children("a").children(".count").html("&nbsp;&nbsp;"+positive_subcategory_index_count);
+				}
 			}
 			$(".subcategory-places").not(":first").css("margin-top", "50px");
 			$(".subcategory-places:visible:first").css("margin-top", 0);
