@@ -5,7 +5,7 @@
 	if($_SERVER['SERVER_NAME'] == "localhost" || $_SERVER['SERVER_NAME'] == $server["local"]["name"]) {	
 		mysql_connect($database["local"]["server"], $database["local"]["username"], $database["local"]["password"]) or die(mysql_error());
 		mysql_select_db($database["local"]["database-name"]) or die(mysql_error());
-		$root = "http://".$_SERVER["HTTP_HOST"]."/foursquare-places/html/";
+		$root = "http://".$_SERVER["HTTP_HOST"]."/foursquare-places-dev/foursquare-places/";
 	} else {
 		mysql_connect($database["gridserver"]["server"], $database["gridserver"]["username"], $database["gridserver"]["password"]) or die(mysql_error());
 	    mysql_select_db($database["gridserver"]["database-name"]) or die(mysql_error());

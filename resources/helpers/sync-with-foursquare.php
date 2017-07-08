@@ -354,6 +354,6 @@
 	foreach($foursquare_lists as $list_id => $list_name) {
 		get_places($list_id);
 	}
-	
+
 ?>
 </pre>
