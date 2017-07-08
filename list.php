@@ -80,6 +80,7 @@
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/list-<?php echo (is_mobile() ? "mobile" : "desktop"); ?>.css">
 			<meta name="viewport" content="width = device-width, initial-scale = 1, user-scalable = no" />
 			<script src="<?php echo $root; ?>resources/js/jquery.js"></script>
+			<script src="<?php echo $root; ?>resources/js/stretchy.js"></script>
 			<?php if(is_mobile()) { ?><script>$(document).ready(function() { is_mobile(); });</script><?php } ?>
 			<script src="<?php echo $root; ?>resources/js/list.js"></script>
 		</head>
