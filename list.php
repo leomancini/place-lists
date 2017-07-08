@@ -1,4 +1,4 @@
-both<?php
+<?php
 	require("base.php");
 	require("render-list.php");
 	header('Content-Type: text/html; charset=utf-8');
