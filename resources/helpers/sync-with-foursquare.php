@@ -7,12 +7,12 @@
 		global $foursquare_auth_token;	
 		
 		$url = "https://api.foursquare.com/v2/users/self/lists?oauth_token=".$foursquare_auth_token."&v=20170427&group=created&limit=".$limit."&offset=".$offset;
-	    $ch = curl_init(); 
-	    curl_setopt($ch, CURLOPT_URL, $url); 
-	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+		$ch = curl_init(); 
+		curl_setopt($ch, CURLOPT_URL, $url); 
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
 
-	    $output = curl_exec($ch); 
-	    curl_close($ch); 
+		$output = curl_exec($ch); 
+		curl_close($ch); 
 		
 		return $output;
 	}
