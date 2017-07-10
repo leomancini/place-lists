@@ -82,7 +82,10 @@
 			if(in_array($database_list_id."/".$database_list_name, $foursquare_list_id_and_name_pair)) {
 				// Database item still exists in Foursquare and is unchanged
 				echo "KEEP: ".$database_list_id." '".$database_list_name."' (still exists on Foursquare)<br>";
-				// DO NOTHING
+
+				// Update count
+				$places_count = $foursquare_lists_places_count[$database_list_id];
+				mysql_query("UPDATE lists SET places_count='".$places_count."' WHERE foursquare_id='".$database_list_id."'");
 			} else {
 				// Database item doesn't exists in Foursquare
 				echo "DELETE: ".$database_list_id." '".$database_list_name."' (missing from Foursquare)<br>";
@@ -105,8 +108,10 @@
 			if(in_array($foursquare_list_id."/".$foursquare_list_name, $database_list_id_and_name_pair)) {
 				// Foursquare item still exists in database and is unchanged
 				echo "KEEP: ".$foursquare_list_id." '".$foursquare_list_name."' (still exists in db)<br>";
-				// DO NOTHING
 
+				// Update count
+				$places_count = $foursquare_lists_places_count[$foursquare_list_id];
+				mysql_query("UPDATE lists SET places_count='".$places_count."' WHERE foursquare_id='".$foursquare_list_id."'");
 			} else {
 				// Foursquare item doesn't exist in database
 				echo "ADD: ".$foursquare_list_id." '".$foursquare_list_name."' (missing from db)<br>";
@@ -354,6 +359,5 @@
 	foreach($foursquare_lists as $list_id => $list_name) {
 		get_places($list_id);
 	}
-
 ?>
 </pre>

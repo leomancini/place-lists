@@ -50,7 +50,7 @@
 										echo "</span>";
 									echo '</a>';
 									echo "<span class='count'>&nbsp;&nbsp;";
-										echo "".$list["places_count"];
+										echo $list["places_count"];
 									echo "</span>";
 								echo '</div>';
 							}
