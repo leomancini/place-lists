@@ -4,8 +4,8 @@
 	header('Content-Type: text/html; charset=utf-8');
 
 	$list = $_GET['list'];
-	$list = explode("id:", $list);
-
+	$list = explode("list-id:", $list);
+	
 	if($list[0] != "") {
 		if(preg_match("/:/", $list[0])) {
 			$list_name_and_neighborhood = explode(":", $list[0]);
@@ -168,6 +168,6 @@
 <?php
 	} else {
 		// List doesn't exist
-		header('Location: ./');
+		// header('Location: ./');
 	}
 ?>
