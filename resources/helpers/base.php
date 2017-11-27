@@ -2,17 +2,33 @@
 	require("../../../config/secrets.php");
 
 	// Connect to database based on server
-	if($_SERVER['SERVER_NAME'] == "localhost" || $_SERVER['SERVER_NAME'] == $server["local"]["name"]) {	
-		mysql_connect($database["local"]["server"], $database["local"]["username"], $database["local"]["password"]) or die(mysql_error());
-		mysql_select_db($database["local"]["database-name"]) or die(mysql_error());
+	if($_SERVER['SERVER_NAME'] == "localhost" || $_SERVER['SERVER_NAME'] == $server["local"]["name"]) {
 		$root = "http://".$_SERVER["HTTP_HOST"]."/foursquare-places-dev/foursquare-places/";
+
+		$link = mysqli_init();
+		mysqli_real_connect(
+		   $link, 
+		   $database["local"]["server"], 
+		   $database["local"]["username"], 
+		   $database["local"]["password"], 
+		   $database["local"]["database-name"],
+		   8889
+		);
 	} else {
-		mysql_connect($database["gridserver"]["server"], $database["gridserver"]["username"], $database["gridserver"]["password"]) or die(mysql_error());
-	    mysql_select_db($database["gridserver"]["database-name"]) or die(mysql_error());
 		$root = "http://".$_SERVER["HTTP_HOST"]."/";
+		
+		$link = mysqli_init();
+		mysqli_real_connect(
+		   $link, 
+		   $database["remote"]["server"], 
+		   $database["remote"]["username"], 
+		   $database["remote"]["password"], 
+		   $database["remote"]["database-name"],
+		   8889
+		);
 	}
 	
-	mysql_set_charset('UTF8');
+	// mysql_set_charset('UTF8');
 
 	function get_all_category_info() {
 		$x_parent_categories_query = mysql_query("SELECT * FROM categories") or die(mysql_error());
