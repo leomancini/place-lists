@@ -397,9 +397,9 @@
 		if(isset($_GET['category5'])) { $url_category_names[4] = urldecode($_GET['category5']); }
 		$url_categories = implode("/", $url_category_names);
 	
-		$places_info_query = mysql_query("SELECT * FROM places ".$query) or die(mysql_error());
+		$places_info_query = mysqli_query($link, "SELECT * FROM places ".$query) or die(mysql_error());
 	
-		while($place = mysql_fetch_array($places_info_query)) {
+		while($place = mysqli_fetch_array($places_info_query)) {
 			$this_categories_names = Array();
 			$this_categories_id = Array();
 		

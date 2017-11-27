@@ -28,19 +28,19 @@
 		);
 	}
 	
-	mysqli_set_charset('UTF8');
+	mysqli_set_charset($link, 'UTF8');
 
 	function get_all_category_info() {
-		$x_parent_categories_query = mysql_query("SELECT * FROM categories") or die(mysql_error());
+		$x_parent_categories_query = mysqli_query($link, "SELECT * FROM categories") or die(mysql_error());
 	
-		while($x_parent_category_info_result = mysql_fetch_array($x_parent_categories_query)) {
+		while($x_parent_category_info_result = mysqli_fetch_array($x_parent_categories_query)) {
 			$x_parent_category_infos[$x_parent_category_info_result["foursquare_id"]] = $x_parent_category_info_result;
 		}
 		
-		$categories_query = mysql_query("SELECT * FROM categories") or die(mysql_error());
+		$categories_query = mysqli_query($link, "SELECT * FROM categories") or die(mysql_error());
 		$x_parent_category_labels = Array("parent", "grandparent", "greatgrandparent", "greatgreatgrandparent");
 			
-		while($category = mysql_fetch_array($categories_query)) {
+		while($category = mysqli_fetch_array($categories_query)) {
 			
 			$category_info[$category["foursquare_id"]] = Array(
 				"id" => $category["id"],

@@ -2,11 +2,11 @@
 	require("base.php");
 
 	if($_GET["data"] == "lists") {
-		$lists_query = mysql_query("SELECT * FROM lists") or die(mysql_error());
+		$lists_query = mysqli_query($link, "SELECT * FROM lists") or die(mysql_error());
 	
 		$lists = Array();
 	
-		while($list = mysql_fetch_array($lists_query)) {
+		while($list = mysqli_fetch_array($lists_query)) {
 			$lists[] = $list["name"];
 		}
 	

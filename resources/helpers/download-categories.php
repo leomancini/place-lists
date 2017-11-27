@@ -16,7 +16,7 @@
 	
 	// print_r($foursquare_categories_from_json);
 	
-	mysql_query("TRUNCATE TABLE categories") or die(mysql_error()); 
+	mysqli_query($link, "TRUNCATE TABLE categories") or die(mysql_error()); 
 	
 	function save_category(
 				$id,
@@ -36,7 +36,7 @@
 		$greatgrandparent_category_foursquare_id = mysql_real_escape_string($greatgrandparent_category_foursquare_id);
 		$greatgreatgrandparent_category_foursquare_id = mysql_real_escape_string($greatgreatgrandparent_category_foursquare_id);
 		
-		mysql_query("INSERT INTO categories (foursquare_id, name, plural_name, short_name, parent_category_foursquare_id, grandparent_category_foursquare_id, greatgrandparent_category_foursquare_id, greatgreatgrandparent_category_foursquare_id) VALUES('".$id."', '".$name."', '".$plural_name."', '".$short_name."', '".$parent_category_foursquare_id."', '".$grandparent_category_foursquare_id."', '".$greatgrandparent_category_foursquare_id."', '".$greatgreatgrandparent_category_foursquare_id."')") or die(mysql_error());
+		mysqli_query($link, "INSERT INTO categories (foursquare_id, name, plural_name, short_name, parent_category_foursquare_id, grandparent_category_foursquare_id, greatgrandparent_category_foursquare_id, greatgreatgrandparent_category_foursquare_id) VALUES('".$id."', '".$name."', '".$plural_name."', '".$short_name."', '".$parent_category_foursquare_id."', '".$grandparent_category_foursquare_id."', '".$greatgrandparent_category_foursquare_id."', '".$greatgreatgrandparent_category_foursquare_id."')") or die(mysql_error());
 	} 
 		
 	foreach($foursquare_categories_from_json as $foursquare_category_from_json => $foursquare_category_data_from_json) {

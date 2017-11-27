@@ -43,9 +43,9 @@
 	<?php
 		require("../resources/helpers/base.php");
 	
-		$places_info_query = mysql_query("SELECT * FROM places") or die(mysql_error());
+		$places_info_query = mysqli_query($link, "SELECT * FROM places") or die(mysql_error());
 	
-		while($place = mysql_fetch_array($places_info_query)) {
+		while($place = mysqli_fetch_array($places_info_query)) {
 		
 			if($place["saved_timestamp"] != "") {
 				if($_GET['scale'] == "year") {

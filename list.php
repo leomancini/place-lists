@@ -31,14 +31,14 @@
 		$list_name_display = convert("list", "display", $list_name_display);
 		$list_name_display = mysql_real_escape_string($list_name_display);
 
-		$lists_query = mysql_query("SELECT * FROM lists WHERE name = '".$list_name_display."'") or die(mysql_error());
+		$lists_query = mysqli_query($link, "SELECT * FROM lists WHERE name = '".$list_name_display."'") or die(mysql_error());
 		$count = mysql_num_rows($lists_query);
 
 		$list_counter = 0;
 
 		if($count > 1) {
 			// Multiple lists match URL request name
-			while($list = mysql_fetch_array($lists_query)) {
+			while($list = mysqli_fetch_array($lists_query)) {
 				$list_counter++;
 				echo "<a href='./id:".$list['foursquare_id']."'>".$list['name']."-".$list_counter."</a>";
 				echo "<br>";
@@ -46,15 +46,15 @@
 			break;
 		} else {
 			// One list matches URL request name
-			$list = mysql_fetch_array($lists_query);
+			$list = mysqli_fetch_array($lists_query);
 		}
 	} else {
 		// URL is a list id
 		$list_id = $list[1];
 		$list_id = mysql_real_escape_string($list_id);
 
-		$list_query = mysql_query("SELECT * FROM lists WHERE foursquare_id = '".$list_id."'") or die(mysql_error());
-		$list = mysql_fetch_array($list_query);
+		$list_query = mysqli_query($link, "SELECT * FROM lists WHERE foursquare_id = '".$list_id."'") or die(mysql_error());
+		$list = mysqli_fetch_array($list_query);
 	}
 	
 	if($list) {
@@ -102,10 +102,10 @@
 					} else {
 						if($url_neighborhood["url"]) {
 							foreach($url_neighborhood_terms as $url_neighborhood_term) {
-								$places_with_this_neighborhood_query = mysql_query("SELECT neighborhood FROM places WHERE neighborhood = '".convert("search-query", "display", $url_neighborhood_term)."' LIMIT 1") or die(mysql_error());
+								$places_with_this_neighborhood_query = mysqli_query($link, "SELECT neighborhood FROM places WHERE neighborhood = '".convert("search-query", "display", $url_neighborhood_term)."' LIMIT 1") or die(mysql_error());
 								$is_real_neighborhood = mysql_num_rows($places_with_this_neighborhood_query);
 								if($is_real_neighborhood == 1) {
-									$place = mysql_fetch_array($places_with_this_neighborhood_query);
+									$place = mysqli_fetch_array($places_with_this_neighborhood_query);
 								}
 								$map_neighborhood = $place["neighborhood"];
 							}
