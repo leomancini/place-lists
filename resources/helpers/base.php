@@ -5,9 +5,9 @@
 	if($_SERVER['SERVER_NAME'] == "localhost" || $_SERVER['SERVER_NAME'] == $server["local"]["name"]) {
 		$root = "http://".$_SERVER["HTTP_HOST"]."/foursquare-places-dev/foursquare-places/";
 		
-		$link = mysqli_init();
+		$db = mysqli_init();
 		mysqli_real_connect(
-		   $link, 
+		   $db, 
 		   $database["local"]["server"], 
 		   $database["local"]["username"], 
 		   $database["local"]["password"], 
@@ -17,9 +17,9 @@
 	} else {
 		$root = "http://".$_SERVER["HTTP_HOST"]."/";
 		
-		$link = mysqli_init();
+		$db = mysqli_init();
 		mysqli_real_connect(
-		   $link, 
+		   $db, 
 		   $database["remote"]["server"], 
 		   $database["remote"]["username"], 
 		   $database["remote"]["password"], 
@@ -28,16 +28,18 @@
 		);
 	}
 	
-	mysqli_set_charset($link, 'UTF8');
+	mysqli_set_charset($db, 'UTF8');
 
 	function get_all_category_info() {
-		$x_parent_categories_query = mysqli_query($link, "SELECT * FROM categories") or die(mysql_error());
+		global $db;
+		
+		$x_parent_categories_query = mysqli_query($db, "SELECT * FROM categories");
 	
 		while($x_parent_category_info_result = mysqli_fetch_array($x_parent_categories_query)) {
 			$x_parent_category_infos[$x_parent_category_info_result["foursquare_id"]] = $x_parent_category_info_result;
 		}
 		
-		$categories_query = mysqli_query($link, "SELECT * FROM categories") or die(mysql_error());
+		$categories_query = mysqli_query($db, "SELECT * FROM categories");
 		$x_parent_category_labels = Array("parent", "grandparent", "greatgrandparent", "greatgreatgrandparent");
 			
 		while($category = mysqli_fetch_array($categories_query)) {

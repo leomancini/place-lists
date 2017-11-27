@@ -59,7 +59,7 @@
 		
 		$database_lists = Array();
 		$database_lists_query = "SELECT * FROM lists"; 
-		$database_lists_results = mysqli_query($link, $database_lists_query) or die(mysql_error());
+		$database_lists_results = mysqli_query($db, $database_lists_query);
 
 		while($database_list_result = mysqli_fetch_array($database_lists_results)){
 			$database_lists[$database_list_result['foursquare_id']] = $database_list_result['name'];
@@ -85,17 +85,17 @@
 
 				// Update count
 				$places_count = $foursquare_lists_places_count[$database_list_id];
-				mysqli_query($link, "UPDATE lists SET places_count='".$places_count."' WHERE foursquare_id='".$database_list_id."'");
+				mysqli_query($db, "UPDATE lists SET places_count='".$places_count."' WHERE foursquare_id='".$database_list_id."'");
 			} else {
 				// Database item doesn't exists in Foursquare
 				echo "DELETE: ".$database_list_id." '".$database_list_name."' (missing from Foursquare)<br>";
 				$database_list_id = mysql_real_escape_string($database_list_id);
 				
 				// DELETE THIS LIST FROM DATABASE
-				mysqli_query($link, "DELETE FROM lists WHERE foursquare_id = '".$database_list_id."'");
+				mysqli_query($db, "DELETE FROM lists WHERE foursquare_id = '".$database_list_id."'");
 				
 				// DELETE ALL PLACES ON THIS LIST FROM DATABASE
-				mysqli_query($link, "DELETE FROM places WHERE foursquare_list_id = '".$database_list_id."'");
+				mysqli_query($db, "DELETE FROM places WHERE foursquare_list_id = '".$database_list_id."'");
 				
 				// DELETE HEADER IMAGE DIRECTORY
 				mkdir("../images/list-headers/".convert("list", "url", $foursquare_list_name)."/");
@@ -111,7 +111,7 @@
 
 				// Update count
 				$places_count = $foursquare_lists_places_count[$foursquare_list_id];
-				mysqli_query($link, "UPDATE lists SET places_count='".$places_count."' WHERE foursquare_id='".$foursquare_list_id."'");
+				mysqli_query($db, "UPDATE lists SET places_count='".$places_count."' WHERE foursquare_id='".$foursquare_list_id."'");
 			} else {
 				// Foursquare item doesn't exist in database
 				echo "ADD: ".$foursquare_list_id." '".$foursquare_list_name."' (missing from db)<br>";
@@ -128,7 +128,7 @@
 				$foursquare_list_id = mysql_real_escape_string($foursquare_list_id);
 				
 				// ADD THIS TO DATABASE
-				mysqli_query($link, "INSERT INTO lists (
+				mysqli_query($db, "INSERT INTO lists (
 						name,
 						foursquare_id,
 						country_code,
@@ -146,7 +146,7 @@
 						'".$state_info["long_name"]."',
 						'".$country_continent_mapping[$country_info["short_name"]]."',
 						'".$places_count."'
-					)") or die(mysql_error());
+					)");
 
 				$foursquare_lists[$foursquare_list_id] = $foursquare_list_name;
 			}
@@ -235,7 +235,7 @@
 		
 		$database_places = Array();
 		$database_places_query = "SELECT * FROM places WHERE foursquare_list_id = '".$list_id."'"; 
-		$database_places_results = mysqli_query($link, $database_places_query) or die(mysql_error());
+		$database_places_results = mysqli_query($db, $database_places_query);
 
 		while($database_place_result = mysqli_fetch_array($database_places_results)){
 			$database_places[$database_place_result['id']] = Array(
@@ -273,7 +273,7 @@
 				$database_place["foursquare_id"] = mysql_real_escape_string($database_place["foursquare_id"]);
 				
 				// DELETE THIS FROM DATABASE
-				mysqli_query($link, "DELETE FROM places WHERE foursquare_list_id = '".$database_place["foursquare_list_id"]."' AND foursquare_id = '".$database_place["foursquare_id"]."'");
+				mysqli_query($db, "DELETE FROM places WHERE foursquare_list_id = '".$database_place["foursquare_list_id"]."' AND foursquare_id = '".$database_place["foursquare_id"]."'");
 				
 			}
 		}
@@ -295,7 +295,7 @@
 
 				$neighborhood = google_location_metadata("latlng", urlencode($data["venue"]["location"]["lat"]).",".urlencode($data["venue"]["location"]["lng"]), "neighborhood");
 				
-				mysqli_query($link, "INSERT INTO places (
+				mysqli_query($db, "INSERT INTO places (
 					foursquare_id,
 					foursquare_list_id,
 					name,
@@ -343,7 +343,7 @@
 					'".$new_place["rating_color"]."',
 					'".$new_place["rating_signal"]."',
 					'".$new_place["saved_timestamp"]."'
-				)") or die(mysql_error());  
+				)");  
 
 			}
 		}

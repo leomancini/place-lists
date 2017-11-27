@@ -1,5 +1,7 @@
 <?php
 	function generate_category_urls($this_categories_names) {
+		global $db;
+		
 		$this_categories_urls = Array();
 			
 		if($this_categories_names[0]) { $this_categories_urls[0] = $this_categories_names[0]; }
@@ -310,7 +312,7 @@
 		
 		// mysql clean search terms
 		foreach($search_terms as $key => $search_term) {
-			$search_terms[$key] = mysql_real_escape_string($search_term);
+			$search_terms[$key] = mysqli_real_escape_string($search_term);
 		}
 		
 		// combine search terms into string
@@ -387,6 +389,7 @@
 		global $list_name_url_without_neighborhood;
 		global $url_neighborhood;
 		global $url_neighborhood_terms;
+		global $db;
 	
 		$category_info = get_all_category_info();
 		$url_category_names = Array();
@@ -397,7 +400,7 @@
 		if(isset($_GET['category5'])) { $url_category_names[4] = urldecode($_GET['category5']); }
 		$url_categories = implode("/", $url_category_names);
 	
-		$places_info_query = mysqli_query($link, "SELECT * FROM places ".$query) or die(mysql_error());
+		$places_info_query = mysqli_query($db, "SELECT * FROM places ".$query);
 	
 		while($place = mysqli_fetch_array($places_info_query)) {
 			$this_categories_names = Array();

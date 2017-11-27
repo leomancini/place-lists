@@ -2,7 +2,7 @@
 	require("base.php");
 
 	if($_GET["data"] == "lists") {
-		$lists_query = mysqli_query($link, "SELECT * FROM lists") or die(mysql_error());
+		$lists_query = mysqli_query($db, "SELECT * FROM lists");
 	
 		$lists = Array();
 	

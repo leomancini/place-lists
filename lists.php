@@ -23,7 +23,7 @@
 				<div id="lists">
 
 					<?php
-						$lists_query = mysqli_query($link, "SELECT * FROM lists") or die(mysql_error());
+						$lists_query = mysqli_query($db, "SELECT * FROM lists");
 						while($list = mysqli_fetch_array($lists_query)) {
 							$lists_by_section[$list["continent"]][str_pad($list["places_count"], 20, "0", STR_PAD_LEFT)."-----".$list["name"]] = $list;
 						}
