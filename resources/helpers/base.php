@@ -4,7 +4,7 @@
 	// Connect to database based on server
 	if($_SERVER['SERVER_NAME'] == "localhost" || $_SERVER['SERVER_NAME'] == $server["local"]["name"]) {
 		$root = "http://".$_SERVER["HTTP_HOST"]."/foursquare-places-dev/foursquare-places/";
-
+		
 		$link = mysqli_init();
 		mysqli_real_connect(
 		   $link, 
@@ -28,7 +28,7 @@
 		);
 	}
 	
-	// mysql_set_charset('UTF8');
+	mysqli_set_charset('UTF8');
 
 	function get_all_category_info() {
 		$x_parent_categories_query = mysql_query("SELECT * FROM categories") or die(mysql_error());
