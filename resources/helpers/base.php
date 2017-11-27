@@ -24,7 +24,7 @@
 		   $database["remote"]["username"], 
 		   $database["remote"]["password"], 
 		   $database["remote"]["database-name"],
-		   8889
+		   3306
 		);
 	}
 	
