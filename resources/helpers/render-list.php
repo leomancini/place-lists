@@ -300,6 +300,8 @@
 	}
 	
 	function generate_search_terms($this_category_key, $next_sub_category, $place_info) {
+		global $db;
+		
 		// define eligible search terms
 		$search_terms = Array(
 			$next_sub_category,
@@ -312,7 +314,7 @@
 		
 		// mysql clean search terms
 		foreach($search_terms as $key => $search_term) {
-			$search_terms[$key] = mysqli_real_escape_string($search_term);
+			$search_terms[$key] = mysqli_real_escape_string($db, $search_term);
 		}
 		
 		// combine search terms into string
