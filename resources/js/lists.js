@@ -12,7 +12,7 @@ function run_search(search_query, keyboard) {
 		}
 	});
 	
-	if($('.positive-search-result').length > 1) {
+	if($('.positive-search-result').length >= 1) {
 		$("#empty-search-results").hide();
 		is_keyboard_navigation_enabled = 1;
 	} else {

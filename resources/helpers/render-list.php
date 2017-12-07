@@ -403,7 +403,7 @@
 		$url_categories = implode("/", $url_category_names);
 	
 		$places_info_query = mysqli_query($db, "SELECT * FROM places ".$query);
-	
+
 		while($place = mysqli_fetch_array($places_info_query)) {
 			$this_categories_names = Array();
 			$this_categories_id = Array();
