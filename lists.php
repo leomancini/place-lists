@@ -23,9 +23,20 @@
 				<div id="lists">
 
 					<?php
+						$hidden_lists = Array();
+						foreach($split_list_combos as $split_list_combo) {
+							foreach($split_list_combo as $split_list_key => $split_list_id) {
+								if($split_list_key != 0) {
+									array_push($hidden_lists, $split_list_id); 
+								}
+							}
+						}
+						
 						$lists_query = mysqli_query($db, "SELECT * FROM lists");
 						while($list = mysqli_fetch_array($lists_query)) {
-							$lists_by_section[$list["continent"]][str_pad($list["places_count"], 20, "0", STR_PAD_LEFT)."-----".$list["name"]] = $list;
+							if(!in_array($list["foursquare_id"], $hidden_lists)) {
+								$lists_by_section[$list["continent"]][str_pad($list["places_count"], 20, "0", STR_PAD_LEFT)."-----".$list["name"]] = $list;
+							}
 						}
 						
 						krsort($lists_by_section);
@@ -38,8 +49,8 @@
 							}
 						
 							krsort($lists_of_section);
-						
-							foreach($lists_of_section as $list_id_and_name => $list) {
+							
+							foreach($lists_of_section as $list_id_and_name => $list) {	
 								echo '<div class="list" ';
 								echo 'data-search-terms="'.$list['continent']." ".$list['country']." ".$list['state']." ".$list['name'].'"';
 								echo 'data-section="'.convert("section-header", "url", $section_label).'"';
@@ -50,7 +61,7 @@
 										echo "</span>";
 									echo '</a>';
 									echo "<span class='count'>&nbsp;&nbsp;";
-										echo $list["places_count"];
+										echo places_count($list);
 									echo "</span>";
 								echo '</div>';
 							}
@@ -58,7 +69,7 @@
 					?>
 					
 					<div id='empty-search-results'>Nothing found...<br><a id='clear-search'>clear search</a></div>
-	
+
 				</div>
 			</div>
 		</div>

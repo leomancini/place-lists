@@ -161,11 +161,6 @@
 						<?php
 							$list_query = "WHERE foursquare_list_id = '".$list['foursquare_id']."'";
 							
-							// these are lists that span across multiple lists – this combines them so that accessing either list shows places of all lists
-							$split_list_combos = Array(
-								Array("567d7b1d38fa9c91825e5c7a", "59e5a3ba8a6f1741c057072f")
-							);
-		
 							foreach($split_list_combos as $split_list_combo) {
 								if(in_array($list['foursquare_id'], $split_list_combo)) {
 									foreach($split_list_combo as $split_list_id) {
