@@ -53,6 +53,7 @@
 	}
 	
 	function sync_lists() {
+		global $db;
 	    global $foursquare_lists;
 		global $foursquare_lists_places_count;
 		global $country_continent_mapping;
@@ -196,6 +197,7 @@
 	}
 	
 	function get_places($list_id) {
+		global $db;
 
 		// FOURSQUARE QUERY
 		
