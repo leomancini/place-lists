@@ -90,7 +90,7 @@
 			} else {
 				// Database item doesn't exists in Foursquare
 				echo "DELETE: ".$database_list_id." '".$database_list_name."' (missing from Foursquare)<br>";
-				$database_list_id = mysql_real_escape_string($database_list_id);
+				$database_list_id = mysqli_real_escape_string($db, $database_list_id);
 				
 				// DELETE THIS LIST FROM DATABASE
 				mysqli_query($db, "DELETE FROM lists WHERE foursquare_id = '".$database_list_id."'");
@@ -125,8 +125,8 @@
 				
 				$places_count = $foursquare_lists_places_count[$foursquare_list_id];
 				
-				$foursquare_list_name = mysql_real_escape_string($foursquare_list_name);
-				$foursquare_list_id = mysql_real_escape_string($foursquare_list_id);
+				$foursquare_list_name = mysqli_real_escape_string($db, $foursquare_list_name);
+				$foursquare_list_id = mysqli_real_escape_string($db, $foursquare_list_id);
 				
 				// ADD THIS TO DATABASE
 				mysqli_query($db, "INSERT INTO lists (
@@ -271,8 +271,8 @@
 			} else {
 				// Database item doesn't exists in Foursquare
 				echo "DELETE: ".$database_place['foursquare_list_id']."/".$database_place["foursquare_id"]." '".$database_place["name"]."' (missing from Foursquare)<br>";
-				$database_place["foursquare_list_id"] = mysql_real_escape_string($database_place["foursquare_list_id"]);
-				$database_place["foursquare_id"] = mysql_real_escape_string($database_place["foursquare_id"]);
+				$database_place["foursquare_list_id"] = mysqli_real_escape_string($db, $database_place["foursquare_list_id"]);
+				$database_place["foursquare_id"] = mysqli_real_escape_string($db, $database_place["foursquare_id"]);
 				
 				// DELETE THIS FROM DATABASE
 				mysqli_query($db, "DELETE FROM places WHERE foursquare_list_id = '".$database_place["foursquare_list_id"]."' AND foursquare_id = '".$database_place["foursquare_id"]."'");
@@ -292,7 +292,7 @@
 				// ADD THIS TO DATABASE
 													
 				foreach($foursquare_places_data[$foursquare_place['foursquare_id']] as $key => $value) {
-					$new_place[$key] = mysql_real_escape_string($value);
+					$new_place[$key] = mysqli_real_escape_string($db, $value);
 				}
 
 				$neighborhood = google_location_metadata("latlng", urlencode($data["venue"]["location"]["lat"]).",".urlencode($data["venue"]["location"]["lng"]), "neighborhood");
