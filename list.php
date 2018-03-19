@@ -69,11 +69,21 @@
 				$header_image_path = $header_image_directory_file;
 			}
 		}
+	
+		// Generate title including list name, neighborhood, categories, 
+		$title = $list["name"];
+		if($url_neighborhood["url"]) { $title .= " / ".convert("neighborhood", "display", $url_neighborhood["url"]); }
+		if($_GET["category1"]) { $title .= " / ".convert("category", "display", $_GET["category1"]); }
+		if($_GET["category2"]) { $title .= " / ".convert("category", "display", $_GET["category2"]); }
+		if($_GET["category3"]) { $title .= " / ".convert("category", "display", $_GET["category3"]); }
+		if($_GET["category4"]) { $title .= " / ".convert("category", "display", $_GET["category4"]); }
+		if($_GET["category5"]) { $title .= " / ".convert("category", "display", $_GET["category5"]); }
 ?>
 	<!DOCTYPE HTML>
 	<html>
 		<head>
-			<title><?php if($list) { echo $list["name"]; } else { echo "Untitled"; }?></title>
+			<title><?php echo $title; ?></title>
+			<meta property="og:title" content="<?php echo $title; ?>">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/fonts.css">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/common.css">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/list-<?php echo (is_mobile() ? "mobile" : "desktop"); ?>.css">
@@ -84,7 +94,7 @@
 			<script src="<?php echo $root; ?>resources/js/list.js"></script>
 		</head>
 		<body ontouchstart="">
-
+		
 		<?php
 			if(($_GET['category1'] == "" &&
 				$_GET['category2'] == "" &&
@@ -181,6 +191,6 @@
 <?php
 	} else {
 		// List doesn't exist
-		// header('Location: ./');
+		header('Location: ./');
 	}
 ?>

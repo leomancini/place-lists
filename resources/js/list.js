@@ -23,7 +23,8 @@ function run_search(input_from_textfield) {
 				$(this).attr("href", this_href + "#" + input_from_textfield + "");
 			}
 		});	
-		
+
+		document.title = window.document_title_at_load + " / " + search_query;
 	} else {
 		search_query = "";
 		$(".search-separator").removeClass("has-search-query");
@@ -40,6 +41,8 @@ function run_search(input_from_textfield) {
 				$(this).attr("href", this_href);
 			}
 		});	
+
+		document.title = window.document_title_at_load;
 	}
 	
 	search_query = search_query.toUpperCase();
@@ -217,6 +220,7 @@ function set_subcategory_index_state() {
 
 $(document).ready(function() {
 	window.list_header_sticky = 1;
+	window.document_title_at_load = document.title;
 	
 	if(window.location.hash) {
 		url_search_query = window.location.hash.replace("#", "").replace("%20", " ");
