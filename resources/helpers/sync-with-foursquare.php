@@ -295,7 +295,7 @@
 					$new_place[$key] = mysqli_real_escape_string($db, $value);
 				}
 
-				$neighborhood = google_location_metadata("latlng", urlencode($data["venue"]["location"]["lat"]).",".urlencode($data["venue"]["location"]["lng"]), "neighborhood");
+				$neighborhood = google_location_metadata("latlng", urlencode($new_place["location_lat"]).",".urlencode($new_place["location_long"]), "neighborhood");
 				
 				mysqli_query($db, "INSERT INTO places (
 					foursquare_id,
