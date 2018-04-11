@@ -32,7 +32,7 @@
 							}
 						}
 						
-						$lists_query = mysqli_query($db, "SELECT * FROM lists");
+						$lists_query = mysqli_query($db, "SELECT * FROM lists WHERE private <> 1");
 						while($list = mysqli_fetch_array($lists_query)) {
 							if(!in_array($list["foursquare_id"], $hidden_lists)) {
 								$lists_by_section[$list["continent"]][str_pad($list["places_count"], 20, "0", STR_PAD_LEFT)."-----".$list["name"]] = $list;
