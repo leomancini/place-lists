@@ -352,14 +352,22 @@
 
 	}
 
-	$foursquare_lists = Array();
-	
-	get_all_lists();
-	
-	sync_lists();
-	
-	foreach($foursquare_lists as $list_id => $list_name) {
-		get_places($list_id);
+	if($_GET["refresh_cache"] != 1) {
+		$foursquare_lists = Array();
+		get_all_lists();
+		sync_lists();
+		foreach($foursquare_lists as $list_id => $list_name) {
+			get_places($list_id);
+		}
+	} else {
+		// clear cache by deleting all place data and redownloading from Foursquare
+		// doesn't touch list database
+		mysqli_query($db, "TRUNCATE TABLE `places`");
+		$foursquare_lists = Array();
+		get_all_lists();
+		foreach($foursquare_lists as $list_id => $list_name) {
+			get_places($list_id);
+		}
 	}
 ?>
 </pre>
