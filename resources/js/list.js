@@ -224,7 +224,7 @@ $(document).ready(function() {
 	
 	if(window.location.hash) {
 		url_search_query = window.location.hash.replace("#", "").replace("%20", " ");
-		$("input#search").val(" ").val(url_search_query);
+		$("input#search").val(" ").val(decodeURIComponent(url_search_query));
 	}
 	
 	if($("input#search").val() != "") {
