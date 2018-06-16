@@ -562,7 +562,7 @@
 						$rating = str_pad(0, 20);
 					}
 					
-					$sort = $rating.$places_info[$place["id"]]["name"];
+					$sort = $rating.$places_info[$place["id"]]["name"].microtime().rand(0, 99999999);
 					$places_in_sub_category_sorted[$sort] = $place;
 				}
 				
