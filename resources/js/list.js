@@ -221,6 +221,7 @@ function set_subcategory_index_state() {
 $(document).ready(function() {
 	window.list_header_sticky = 1;
 	window.document_title_at_load = document.title;
+	$("input#search").focus();
 	
 	if(window.location.hash) {
 		url_search_query = window.location.hash.replace("#", "").replace("%20", " ");
