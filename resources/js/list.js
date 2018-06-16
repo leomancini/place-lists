@@ -45,7 +45,7 @@ function run_search(input_from_textfield) {
 		document.title = window.document_title_at_load;
 	}
 	
-	search_query = search_query.toUpperCase();
+	search_query = search_query.toUpperCase().replace(/'/g, "\\\'");
 
 	neighborhoods = new Array();
 	places = $("#places .place");
