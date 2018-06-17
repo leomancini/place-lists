@@ -16,16 +16,7 @@
 		return $output;
 	}
 	
-	function premium_places_data_fields($data) {
-		return Array(
-			"phone_number" => $data["response"]["venue"]["contact"]["phone"],
-			"website_url" => $data["response"]["venue"]["url"],
-			"menu_url" => $data["response"]["venue"]["menu"]["url"],
-			"rating" => $data["response"]["venue"]["rating"],
-			"rating_color" => $data["response"]["venue"]["ratingColor"],
-			"rating_signal" => $data["response"]["venue"]["ratingSignals"],
-		);
-	}
+	// premium_places_data_fields is in base.php
 	
 	// add new places from regular places database to places_premium_data database
 	$places_info_query = mysqli_query($db, "SELECT * FROM places");
@@ -37,7 +28,7 @@
 	}
 	
 	// find the oldest 500 rows (by sorting by last_updated)
-	$limit = 3;
+	$limit = 100;
 	$premium_data_info_query = mysqli_query($db, "SELECT * FROM places_premium_data ORDER BY last_updated ASC LIMIT ".$limit);
 	while($place_premium_data = mysqli_fetch_array($premium_data_info_query)) {
 		

@@ -207,6 +207,28 @@
 		return $count;
 	}
 	
+	function premium_places_data_fields($data) {
+		if($data) {
+			return Array(
+				"phone_number" => $data["response"]["venue"]["contact"]["phone"],
+				"website_url" => $data["response"]["venue"]["url"],
+				"menu_url" => $data["response"]["venue"]["menu"]["url"],
+				"rating" => $data["response"]["venue"]["rating"],
+				"rating_color" => $data["response"]["venue"]["ratingColor"],
+				"rating_signal" => $data["response"]["venue"]["ratingSignals"],
+			);
+		} else {
+			return Array(
+				"phone_number",
+				"website_url",
+				"menu_url",
+				"rating",
+				"rating_color",
+				"rating_signal"
+			);
+		}
+	}
+	
 	// these are lists that span across multiple lists – this combines them so that accessing either list shows places of all lists
 	$split_list_combos = Array(
 		Array("567d7b1d38fa9c91825e5c7a", "59e5a3ba8a6f1741c057072f")

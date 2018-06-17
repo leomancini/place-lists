@@ -402,8 +402,12 @@
 		if(isset($_GET['category5'])) { $url_category_names[4] = urldecode($_GET['category5']); }
 		$url_categories = implode("/", $url_category_names);
 	
-		$places_info_query = mysqli_query($db, "SELECT * FROM places ".$query);
+		$premium_places_info_query = mysqli_query($db, "SELECT * FROM places_premium_data ".$query);
+		while($premium_place_info = mysqli_fetch_array($premium_places_info_query)) {
+			$premium_place_info_set[$premium_place_info["foursquare_id"]] = $premium_place_info;
+		}
 
+		$places_info_query = mysqli_query($db, "SELECT * FROM places ".$query);
 		while($place = mysqli_fetch_array($places_info_query)) {
 			$this_categories_names = Array();
 			$this_categories_id = Array();
@@ -479,9 +483,11 @@
 		
 			if($match) {
 				$places_info[$place["id"]] = $place;
+				foreach(premium_places_data_fields(null) as $premium_data_field) {
+					$places_info[$place["id"]][$premium_data_field] = $premium_place_info_set[$place["foursquare_id"]][$premium_data_field];	
+				}
 			
 				// form category urls
-				
 				$this_categories_urls = generate_category_urls($this_categories_names);
 				
 				// set category variables
