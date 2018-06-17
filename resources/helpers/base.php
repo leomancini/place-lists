@@ -1,5 +1,6 @@
 <?php
 	require("../../../config/secrets.php");
+	date_default_timezone_set('America/Los_Angeles');
 
 	// Connect to database based on server
 	if($_SERVER['SERVER_NAME'] == "localhost" || $_SERVER['SERVER_NAME'] == $server["local"]["name"]) {

@@ -301,7 +301,6 @@
 					foursquare_id,
 					foursquare_list_id,
 					name,
-					phone_number,
 					address,
 					zip,
 					neighborhood,
@@ -313,19 +312,13 @@
 					location_lat,
 					location_long,
 					category_id,
-					website_url,
-					menu_url,
 					photo_url_prefix,
 					photo_url_suffix,
-					rating,
-					rating_color,
-					rating_signal,
 					saved_timestamp
 				) VALUES (
 					'".$new_place["foursquare_id"]."',
 					'".$new_place["foursquare_list_id"]."',
 					'".$new_place["name"]."',
-					'".$new_place["phone_number"]."',
 					'".$new_place["address"]."',
 					'".$new_place["zip"]."',
 					'".$neighborhood["long_name"]."',
@@ -337,13 +330,8 @@
 					'".$new_place["location_lat"]."',
 					'".$new_place["location_long"]."',
 					'".$new_place["category_id"]."',
-					'".$new_place["website_url"]."',
-					'".$new_place["menu_url"]."',
 					'".$new_place["photo_url_prefix"]."',
 					'".$new_place["photo_url_suffix"]."',
-					'".$new_place["rating"]."',
-					'".$new_place["rating_color"]."',
-					'".$new_place["rating_signal"]."',
 					'".$new_place["saved_timestamp"]."'
 				)");  
 
