@@ -55,7 +55,7 @@
 								echo 'data-search-terms="'.$list['continent']." ".$list['country']." ".$list['state']." ".$list['name'].'"';
 								echo 'data-section="'.convert("section-header", "url", $section_label).'"';
 								echo '>';
-									echo '<a href="'.convert("list", "url", $list["name"]).'">';
+									echo '<a target="_blank" href="'.convert("list", "url", $list["name"]).'">';
 										echo "<span class='label'>";
 											echo $list["name"];	
 										echo "</span>";

@@ -28,7 +28,7 @@
 	}
 	
 	// find the oldest 500 rows (by sorting by last_updated)
-	$limit = 400;
+	$limit = 480;
 	$premium_data_info_query = mysqli_query($db, "SELECT * FROM places_premium_data ORDER BY last_updated ASC LIMIT ".$limit);
 	while($place_premium_data = mysqli_fetch_array($premium_data_info_query)) {
 		
