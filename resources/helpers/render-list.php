@@ -308,7 +308,7 @@
 			convert("category", "display", $place_info["categories"][$this_category_key]["name"]),
 			$place_info["name"],
 			$place_info["address"],
-			$place_info["neighborhood"],
+			convert("neighborhood", "url", $place_info["neighborhood"]),
 			number_format($place_info["rating"], 1)
 		);
 		
