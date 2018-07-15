@@ -513,7 +513,7 @@
 					
 					// check if any word in search query matches any word in search terms
 					foreach($url_neighborhood_terms as $url_neighborhood_term) {
-						if(strpos(strtoupper($search_terms_string[$place["id"]]), strtoupper(convert("search-query", "display", $url_neighborhood_term))) > 1) {
+						if(strpos(strtoupper($search_terms_string[$place["id"]]), strtoupper(convert("search-query", "url", $url_neighborhood_term))) > 1) {
 							$search_match[$place["id"]][] = 1;
 						} else {
 							$search_match[$place["id"]][] = 0;
