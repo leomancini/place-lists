@@ -168,7 +168,7 @@
 		<?php } ?>		
 			<div id="master">
 				<div id="container">
-					<div id="list">
+					<div id="list" data-list-url="<?php echo $list_name_url; ?>">
 						<?php
 							$list_query = "WHERE foursquare_list_id = '".$list['foursquare_id']."'";
 							

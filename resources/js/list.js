@@ -233,6 +233,11 @@ $(document).ready(function() {
 	}
 
 	$("#empty-search-results a#clear-search").click(function() {
+		if(window.location.hash == "") {
+			var list_url = $("#list").data("list-url");
+			var root_path = window.location.href.split(list_url);
+			window.location.href = root_path["0"] + list_url;
+		}
 		$("input#search").val("").keyup().focus();
 	});
 	
