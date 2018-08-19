@@ -339,7 +339,7 @@
 				$description_items["rating"] = "
 					<span class='rating-circle' style='background-color: #".$place_info["rating_color"].";'></span>
 					<span class='rating'>
-					<a href='".$root.$list_name_url.":".$rating_display.$url_categories_string."' style='color: #".$place_info["rating_color"].";'>".$rating_display."</a>
+					<a href='".$root.$list_name_url.$url_categories_string."#".$rating_display."' style='color: #".$place_info["rating_color"].";' data-rating=".$rating_display.">".$rating_display."</a>
 					</span>";
 			} else {
 				$description_items["rating"] = "
@@ -402,6 +402,7 @@
 		if(isset($_GET['category5'])) { $url_category_names[4] = urldecode($_GET['category5']); }
 		$url_categories = implode("/", $url_category_names);
 	
+		// get premium data for each place
 		$premium_places_info_query = mysqli_query($db, "SELECT * FROM places_premium_data ".$query);
 		while($premium_place_info = mysqli_fetch_array($premium_places_info_query)) {
 			$premium_place_info_set[$premium_place_info["foursquare_id"]] = $premium_place_info;
@@ -483,6 +484,8 @@
 		
 			if($match) {
 				$places_info[$place["id"]] = $place;
+				
+				// add premium data to regular places_info array
 				foreach(premium_places_data_fields(null) as $premium_data_field) {
 					$places_info[$place["id"]][$premium_data_field] = $premium_place_info_set[$place["foursquare_id"]][$premium_data_field];	
 				}

@@ -236,6 +236,11 @@ $(document).ready(function() {
 		$("input#search").val("").keyup().focus();
 	});
 	
+	$(".rating a").click(function() {
+		window.location.hash = "#"+$(this).data("rating");
+		location.reload();
+	});
+	
 	$("#search-suggestions a.suggestion:first").hide();
 	
 	$("#search-suggestions a.suggestion").click(function() {

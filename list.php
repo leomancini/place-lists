@@ -12,17 +12,16 @@
 			$list_name_display = $list_name_and_neighborhood[0];
 		
 			$url_neighborhood["raw"] = str_replace($list_name_display.":", "", $list[0]);
-			
 			$url_neighborhood["url"] = convert("search-query", "url", $url_neighborhood["raw"]);
 				
 			$url_neighborhood_terms = explode(":", $url_neighborhood["raw"]);
 			$url_neighborhood_term_count = 0;
+			
 			foreach($url_neighborhood_terms as $url_neighborhood_term) {
 				$url_neighborhood_term_count++;
 				if($url_neighborhood_term_count > 1) { $separator = " / "; }
 				$url_neighborhood["display"] .= $separator.convert("search-query", "display", $url_neighborhood_term);
 			}
-		
 		} else {
 			$list_name_display = $list[0];
 		}
