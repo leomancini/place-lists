@@ -16,7 +16,7 @@
 		   8889
 		);
 	} else {
-		$root = "]//".$_SERVER["HTTP_HOST"]."/";
+		$root = "//".$_SERVER["HTTP_HOST"]."/";
 		
 		$db = mysqli_init();
 		mysqli_real_connect(
