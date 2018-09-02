@@ -4,7 +4,7 @@
 
 	// Connect to database based on server
 	if($_SERVER['SERVER_NAME'] == "localhost" || $_SERVER['SERVER_NAME'] == $server["local"]["name"]) {
-		$root = "http://".$_SERVER["HTTP_HOST"]."/foursquare-places-dev/foursquare-places/";
+		$root = "//".$_SERVER["HTTP_HOST"]."/foursquare-places-dev/foursquare-places/";
 		
 		$db = mysqli_init();
 		mysqli_real_connect(
@@ -16,7 +16,7 @@
 		   8889
 		);
 	} else {
-		$root = "http://".$_SERVER["HTTP_HOST"]."/";
+		$root = "]//".$_SERVER["HTTP_HOST"]."/";
 		
 		$db = mysqli_init();
 		mysqli_real_connect(

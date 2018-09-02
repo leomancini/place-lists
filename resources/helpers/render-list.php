@@ -359,7 +359,7 @@
 		// generate html for place address
 		if($place_info["address"] != "") {
 			$google_maps_url =
-				"http://google.com/maps/search/?api=1&query=".
+				"//google.com/maps/search/?api=1&query=".
 					urlencode($place_info["name"]
 					." ".
 					$place_info["address"]
