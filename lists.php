@@ -13,6 +13,15 @@
 	<script src="<?php echo $root; ?>resources/js/jquery.js"></script>
 	<script src="<?php echo $root; ?>resources/js/lists.js"></script>
 	<meta property="og:image" content="<?php echo $root; ?>resources/images/map.png">
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112757234-2"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-112757234-2');
+	</script>
 </head>
 <body ontouchstart="">
 

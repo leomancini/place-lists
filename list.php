@@ -93,6 +93,15 @@
 			<script src="<?php echo $root; ?>resources/js/stretchy.js" data-filter=".stretchy"></script>
 			<?php if(is_mobile()) { ?><script>$(document).ready(function() { is_mobile(); });</script><?php } ?>
 			<script src="<?php echo $root; ?>resources/js/list.js"></script>
+			<!-- Global site tag (gtag.js) - Google Analytics -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112757234-2"></script>
+			<script>
+			  window.dataLayer = window.dataLayer || [];
+			  function gtag(){dataLayer.push(arguments);}
+			  gtag('js', new Date());
+
+			  gtag('config', 'UA-112757234-2');
+			</script>
 		</head>
 		<body ontouchstart="">
 		
