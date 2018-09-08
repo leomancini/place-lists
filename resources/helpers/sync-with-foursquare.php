@@ -366,14 +366,11 @@
 		}
 	} else {
 		$foursquare_lists = Array();
-		get_places("59e5a3ba8a6f1741c057072f");
-		/*
 		get_all_lists();
 		sync_lists();
 		foreach($foursquare_lists as $list_id => $list_name) {
 			get_places($list_id);
 		}
-		*/
 	}
 ?>
 </pre>
