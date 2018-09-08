@@ -239,12 +239,19 @@
 		$database_places_query = "SELECT * FROM places WHERE foursquare_list_id = '".$list_id."'"; 
 		$database_places_results = mysqli_query($db, $database_places_query);
 
-		while($database_place_result = mysqli_fetch_array($database_places_results)){
+		while($database_place_result = mysqli_fetch_array($database_places_results)) {
 			$database_places[$database_place_result['id']] = Array(
 				"foursquare_id" => $database_place_result['foursquare_id'],
 				"foursquare_list_id" => $database_place_result['foursquare_list_id'],
 				"name" => $database_place_result['name'],
 			);
+		}
+		
+		$neighborhood_query = "SELECT * FROM neighborhoods"; 
+		$neighborhood_results = mysqli_query($db, $neighborhood_query);
+
+		while($neighborhood_result = mysqli_fetch_array($neighborhood_results)) {
+			$neighborhood_already_saved[$neighborhood_result['foursquare_id']] = 1;
 		}
 		
 		
@@ -294,16 +301,25 @@
 				foreach($foursquare_places_data[$foursquare_place['foursquare_id']] as $key => $value) {
 					$new_place[$key] = mysqli_real_escape_string($db, $value);
 				}
-
-				$neighborhood = google_location_metadata("latlng", urlencode($new_place["location_lat"]).",".urlencode($new_place["location_long"]), "neighborhood");
 				
+				if($neighborhood_already_saved[$foursquare_place['foursquare_id']] != 1) {
+					$neighborhood = google_location_metadata("latlng", urlencode($new_place["location_lat"]).",".urlencode($new_place["location_long"]), "neighborhood");
+				
+					mysqli_query($db, "INSERT INTO neighborhoods (
+						foursquare_id,
+						neighborhood_long_name
+					) VALUES (
+						'".$new_place["foursquare_id"]."',
+						'".$neighborhood["long_name"]."'
+					)");
+				}
+
 				mysqli_query($db, "INSERT INTO places (
 					foursquare_id,
 					foursquare_list_id,
 					name,
 					address,
 					zip,
-					neighborhood,
 					city,
 					state,
 					country,
@@ -321,7 +337,6 @@
 					'".$new_place["name"]."',
 					'".$new_place["address"]."',
 					'".$new_place["zip"]."',
-					'".$neighborhood["long_name"]."',
 					'".$new_place["city"]."',
 					'".$new_place["state"]."',
 					'".$new_place["country"]."',
@@ -340,14 +355,7 @@
 
 	}
 
-	if($_GET["refresh_cache"] != 1) {
-		$foursquare_lists = Array();
-		get_all_lists();
-		sync_lists();
-		foreach($foursquare_lists as $list_id => $list_name) {
-			get_places($list_id);
-		}
-	} else {
+	if($_GET["refresh_cache"] == 1) {
 		// clear cache by deleting all place data and redownloading from Foursquare
 		// doesn't touch list database
 		mysqli_query($db, "TRUNCATE TABLE `places`");
@@ -356,6 +364,16 @@
 		foreach($foursquare_lists as $list_id => $list_name) {
 			get_places($list_id);
 		}
+	} else {
+		$foursquare_lists = Array();
+		get_places("59e5a3ba8a6f1741c057072f");
+		/*
+		get_all_lists();
+		sync_lists();
+		foreach($foursquare_lists as $list_id => $list_name) {
+			get_places($list_id);
+		}
+		*/
 	}
 ?>
 </pre>
