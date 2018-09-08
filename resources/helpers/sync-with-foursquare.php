@@ -251,7 +251,11 @@
 		$neighborhood_results = mysqli_query($db, $neighborhood_query);
 
 		while($neighborhood_result = mysqli_fetch_array($neighborhood_results)) {
-			$neighborhood_already_saved[$neighborhood_result['foursquare_id']] = 1;
+			if($neighborhood_result["neighborhood_long_name"] != "") {
+				$neighborhood_already_saved[$neighborhood_result['foursquare_id']] = 1;
+			} else {
+				$neighborhood_already_saved[$neighborhood_result['foursquare_id']] = 0;
+			}
 		}
 		
 		
@@ -302,16 +306,18 @@
 					$new_place[$key] = mysqli_real_escape_string($db, $value);
 				}
 				
-				if($neighborhood_already_saved[$foursquare_place['foursquare_id']] != 1) {
+				if($neighborhood_already_saved[$foursquare_place['foursquare_id']] == 0) {
 					$neighborhood = google_location_metadata("latlng", urlencode($new_place["location_lat"]).",".urlencode($new_place["location_long"]), "neighborhood");
 				
-					mysqli_query($db, "INSERT INTO neighborhoods (
-						foursquare_id,
-						neighborhood_long_name
-					) VALUES (
-						'".$new_place["foursquare_id"]."',
-						'".$neighborhood["long_name"]."'
-					)");
+					if($neighborhood["long_name"] != "") {
+						mysqli_query($db, "INSERT INTO neighborhoods (
+							foursquare_id,
+							neighborhood_long_name
+						) VALUES (
+							'".$new_place["foursquare_id"]."',
+							'".$neighborhood["long_name"]."'
+						)");
+					}
 				}
 
 				mysqli_query($db, "INSERT INTO places (
