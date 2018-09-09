@@ -344,7 +344,7 @@
 			}
 			
 			if($neighborhood_already_saved[$foursquare_place['foursquare_id']] == 0) {
-				$neighborhood = google_location_metadata("latlng", urlencode($new_place["location_lat"]).",".urlencode($new_place["location_long"]), "neighborhood");
+				$neighborhood = google_location_metadata("latlng", urlencode($foursquare_place["location_lat"]).",".urlencode($foursquare_place["location_long"]), "neighborhood");
 				
 				if($neighborhood["long_name"] != "") {
 					mysqli_query($db, "INSERT INTO neighborhoods (
@@ -352,8 +352,8 @@
 						foursquare_id,
 						neighborhood_long_name
 					) VALUES (
-						'".$new_place["foursquare_list_id"]."',
-						'".$new_place["foursquare_id"]."',
+						'".$foursquare_place["foursquare_list_id"]."',
+						'".$foursquare_place["foursquare_id"]."',
 						'".$neighborhood["long_name"]."'
 					)");
 				}
