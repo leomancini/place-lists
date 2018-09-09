@@ -311,9 +311,11 @@
 					
 					if($neighborhood["long_name"] != "") {
 						mysqli_query($db, "INSERT INTO neighborhoods (
+							foursquare_list_id,
 							foursquare_id,
 							neighborhood_long_name
 						) VALUES (
+							'".$new_place["foursquare_list_id"]."',
 							'".$new_place["foursquare_id"]."',
 							'".$neighborhood["long_name"]."'
 						)");
