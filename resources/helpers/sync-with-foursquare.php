@@ -151,8 +151,7 @@
 
 				$foursquare_lists[$foursquare_list_id] = $foursquare_list_name;
 			}
-		}
-				
+		}			
 	}
 
 	function get_places_on_list($list_id, $offset, $limit) {
@@ -305,22 +304,6 @@
 				foreach($foursquare_places_data[$foursquare_place['foursquare_id']] as $key => $value) {
 					$new_place[$key] = mysqli_real_escape_string($db, $value);
 				}
-				
-				if($neighborhood_already_saved[$foursquare_place['foursquare_id']] == 0) {
-					$neighborhood = google_location_metadata("latlng", urlencode($new_place["location_lat"]).",".urlencode($new_place["location_long"]), "neighborhood");
-					
-					if($neighborhood["long_name"] != "") {
-						mysqli_query($db, "INSERT INTO neighborhoods (
-							foursquare_list_id,
-							foursquare_id,
-							neighborhood_long_name
-						) VALUES (
-							'".$new_place["foursquare_list_id"]."',
-							'".$new_place["foursquare_id"]."',
-							'".$neighborhood["long_name"]."'
-						)");
-					}
-				}
 
 				mysqli_query($db, "INSERT INTO places (
 					foursquare_id,
@@ -359,26 +342,42 @@
 				)");  
 
 			}
+			
+			if($neighborhood_already_saved[$foursquare_place['foursquare_id']] == 0) {
+				$neighborhood = google_location_metadata("latlng", urlencode($new_place["location_lat"]).",".urlencode($new_place["location_long"]), "neighborhood");
+				
+				if($neighborhood["long_name"] != "") {
+					mysqli_query($db, "INSERT INTO neighborhoods (
+						foursquare_list_id,
+						foursquare_id,
+						neighborhood_long_name
+					) VALUES (
+						'".$new_place["foursquare_list_id"]."',
+						'".$new_place["foursquare_id"]."',
+						'".$neighborhood["long_name"]."'
+					)");
+				}
+			}
+			
 		}
 
 	}
 
-	if($_GET["refresh_cache"] == 1) {
+	if($_GET["empty_foursquare_regular_data_cache"] == 1) {
 		// clear cache by deleting all place data and redownloading from Foursquare
-		// doesn't touch list database
 		mysqli_query($db, "TRUNCATE TABLE `places`");
-		$foursquare_lists = Array();
-		get_all_lists();
-		foreach($foursquare_lists as $list_id => $list_name) {
-			get_places($list_id);
-		}
-	} else {
-		$foursquare_lists = Array();
-		get_all_lists();
-		sync_lists();
-		foreach($foursquare_lists as $list_id => $list_name) {
-			get_places($list_id);
-		}
+	}
+	
+	if($_GET["empty_google_neighborhoods_cache"] == 1) {
+		// clear cache by deleting all neighborhood data and redownloading from Google
+		mysqli_query($db, "TRUNCATE TABLE `neighborhoods`");
+	}
+	
+	$foursquare_lists = Array();
+	get_all_lists();
+	sync_lists();
+	foreach($foursquare_lists as $list_id => $list_name) {
+		get_places($list_id);
 	}
 ?>
 </pre>
