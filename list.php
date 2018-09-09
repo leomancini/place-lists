@@ -121,12 +121,12 @@
 					} else {
 						if($url_neighborhood["url"]) {
 							foreach($url_neighborhood_terms as $url_neighborhood_term) {
-								$places_with_this_neighborhood_query = mysqli_query($db, "SELECT neighborhood_long_name FROM neighborhoods WHERE neighborhood_long_name = '".convert("search-query", "display", $url_neighborhood_term)."' LIMIT 1");
-								$is_real_neighborhood = mysqli_num_rows($places_with_this_neighborhood_query);
+								$check_neighborhood_is_real_query = mysqli_query($db, "SELECT neighborhood_long_name FROM neighborhoods WHERE neighborhood_long_name = '".convert("search-query", "display", $url_neighborhood_term)."' LIMIT 1");
+								$is_real_neighborhood = mysqli_num_rows($check_neighborhood_is_real_query);
 								if($is_real_neighborhood == 1) {
-									$place = mysqli_fetch_array($places_with_this_neighborhood_query);
+									$neighborhood = mysqli_fetch_array($check_neighborhood_is_real_query);
 								}
-								$map_neighborhood = $place["neighborhood_long_name"];
+								$map_neighborhood = $neighborhood["neighborhood_long_name"];
 							}
 						}
 						

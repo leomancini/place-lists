@@ -407,7 +407,13 @@
 		while($premium_place_info = mysqli_fetch_array($premium_places_info_query)) {
 			$premium_place_info_set[$premium_place_info["foursquare_id"]] = $premium_place_info;
 		}
-
+		
+		// get neighborhood data for each place
+		$neighborhood_query = mysqli_query($db, "SELECT * FROM neighborhoods ".$query);
+		while($neighborhood_info = mysqli_fetch_array($neighborhood_query)) {
+			$neighborhood_info_set[$neighborhood_info["foursquare_id"]] = $neighborhood_info;
+		}
+		
 		$places_info_query = mysqli_query($db, "SELECT * FROM places ".$query);
 		while($place = mysqli_fetch_array($places_info_query)) {
 			$this_categories_names = Array();
@@ -489,6 +495,9 @@
 				foreach(premium_places_data_fields(null) as $premium_data_field) {
 					$places_info[$place["id"]][$premium_data_field] = $premium_place_info_set[$place["foursquare_id"]][$premium_data_field];	
 				}
+				
+				// add neighborhood data to regular places_info array
+				$places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
 			
 				// form category urls
 				$this_categories_urls = generate_category_urls($this_categories_names);
