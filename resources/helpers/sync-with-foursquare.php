@@ -344,7 +344,7 @@
 			}
 			
 			if($neighborhood_already_saved[$foursquare_place['foursquare_id']] == 0) {
-				$neighborhood = google_location_metadata("latlng", urlencode($foursquare_place["location_lat"]).",".urlencode($foursquare_place["location_long"]), "neighborhood");
+				$neighborhood = google_location_metadata("latlng", urlencode($foursquare_places_data[$foursquare_place['foursquare_id']]["location_lat"]).",".urlencode($foursquare_places_data[$foursquare_place['foursquare_id']]["location_long"]), "neighborhood");
 				
 				if($neighborhood["long_name"] != "") {
 					mysqli_query($db, "INSERT INTO neighborhoods (
@@ -352,8 +352,8 @@
 						foursquare_id,
 						neighborhood_long_name
 					) VALUES (
-						'".$foursquare_place["foursquare_list_id"]."',
-						'".$foursquare_place["foursquare_id"]."',
+						'".$foursquare_places_data[$foursquare_place['foursquare_id']]["foursquare_list_id"]."',
+						'".$foursquare_place['foursquare_id']."',
 						'".$neighborhood["long_name"]."'
 					)");
 				}
@@ -363,12 +363,12 @@
 
 	}
 
-	if($_GET["empty_foursquare_regular_data_cache"] == 1) {
+	if($_GET["refresh_foursquare_regular_data_cache"] == 1) {
 		// clear cache by deleting all place data and redownloading from Foursquare
 		mysqli_query($db, "TRUNCATE TABLE `places`");
 	}
 	
-	if($_GET["empty_google_neighborhoods_cache"] == 1) {
+	if($_GET["refresh_google_neighborhoods_cache"] == 1) {
 		// clear cache by deleting all neighborhood data and redownloading from Google
 		mysqli_query($db, "TRUNCATE TABLE `neighborhoods`");
 	}
