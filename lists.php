@@ -13,6 +13,10 @@
 	<script src="<?php echo $root; ?>resources/js/jquery.js"></script>
 	<script src="<?php echo $root; ?>resources/js/lists.js"></script>
 	<meta property="og:image" content="<?php echo $root; ?>resources/images/map.png">
+	<meta property="og:url" content="https://places.leo.gd">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Places">
+	<meta property="og:og:description" content="Lists of places around the world, curated by Leo Mancini.">
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112757234-2"></script>
 	<script>
