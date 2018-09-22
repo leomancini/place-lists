@@ -12,7 +12,7 @@
 	<meta name="viewport" content = "width = device-width, initial-scale = 1, user-scalable = no" />
 	<script src="<?php echo $root; ?>resources/js/jquery.js"></script>
 	<script src="<?php echo $root; ?>resources/js/lists.js"></script>
-	<meta property="og:image" content="<?php echo $root; ?>resources/images/map.png">
+	<meta property="og:image" content="https://places.leo.gd/resources/images/map.png">
 	<meta property="og:url" content="https://places.leo.gd">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Places">
