@@ -16,7 +16,7 @@
 	<meta property="og:url" content="https://places.leo.gd">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Places">
-	<meta property="og:description" content="Lists of places around the world, curated by Leo Mancini.">
+	<meta property="og:description" content="Lists of places around the world by Leo Mancini">
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112757234-2"></script>
 	<script>
