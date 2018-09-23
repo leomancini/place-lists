@@ -77,6 +77,25 @@
 		if($_GET["category3"]) { $title .= " / ".convert("category", "display", $_GET["category3"]); }
 		if($_GET["category4"]) { $title .= " / ".convert("category", "display", $_GET["category4"]); }
 		if($_GET["category5"]) { $title .= " / ".convert("category", "display", $_GET["category5"]); }
+		
+		if($url_neighborhood["url"]) {
+			foreach($url_neighborhood_terms as $url_neighborhood_term) {
+				$check_neighborhood_is_real_query = mysqli_query($db, "SELECT neighborhood_long_name FROM neighborhoods WHERE neighborhood_long_name = '".convert("search-query", "display", $url_neighborhood_term)."' LIMIT 1");
+				$is_real_neighborhood = mysqli_num_rows($check_neighborhood_is_real_query);
+				if($is_real_neighborhood == 1) {
+					$neighborhood = mysqli_fetch_array($check_neighborhood_is_real_query);
+				}
+				$map_neighborhood = $neighborhood["neighborhood_long_name"];
+			}
+		}
+		
+		if($url_neighborhood["url"] && $map_neighborhood) {
+			$map["center"] = $list["name"]." ".$map_neighborhood;
+			$map["zoom"] = 15;
+		} else {
+			$map["center"] = $list["name"];
+			$map["zoom"] = 11;
+		}
 ?>
 	<!DOCTYPE HTML>
 	<html>
@@ -84,7 +103,7 @@
 			<title><?php echo $title; ?></title>
 			<meta property="og:title" content="<?php echo $title; ?>">
 			<meta property="og:description" content="A list of places by Leo Mancini">
-			<meta property="og:image" content="https://maps.googleapis.com/maps/api/staticmap?key=<?php echo $google_api_key; ?>&center=<?php echo $list_name_url; ?>&zoom=11&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0xebe3cd&style=element:labels.text.fill%7Ccolor:0x523735&style=element:labels.text.stroke%7Ccolor:0xf5f1e6&style=feature:administrative%7Celement:geometry.stroke%7Ccolor:0xc9b2a6&style=feature:administrative.land_parcel%7Celement:geometry.stroke%7Ccolor:0xdcd2be&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0xae9e90&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x93817c&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0xa5b076&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x447530&style=feature:road%7Celement:geometry%7Ccolor:0xf5f1e6&style=feature:road.arterial%7Celement:geometry%7Ccolor:0xfdfcf8&style=feature:road.highway%7Celement:geometry%7Ccolor:0xf8c967&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0xe9bc62&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0xe98d58&style=feature:road.highway.controlled_access%7Celement:geometry.stroke%7Ccolor:0xdb8555&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x806b63&style=feature:transit.line%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:transit.line%7Celement:labels.text.fill%7Ccolor:0x8f7d77&style=feature:transit.line%7Celement:labels.text.stroke%7Ccolor:0xebe3cd&style=feature:transit.station%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:water%7Celement:geometry.fill%7Ccolor:0xb9d3c2&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x92998d&size=600x315">	
+			<meta property="og:image" content="https://maps.googleapis.com/maps/api/staticmap?key=<?php echo $google_api_key; ?>&center=<?php echo $map["center"]; ?>&zoom=<?php echo $map["zoom"]; ?>&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0xebe3cd&style=element:labels.text.fill%7Ccolor:0x523735&style=element:labels.text.stroke%7Ccolor:0xf5f1e6&style=feature:administrative%7Celement:geometry.stroke%7Ccolor:0xc9b2a6&style=feature:administrative.land_parcel%7Celement:geometry.stroke%7Ccolor:0xdcd2be&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0xae9e90&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x93817c&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0xa5b076&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x447530&style=feature:road%7Celement:geometry%7Ccolor:0xf5f1e6&style=feature:road.arterial%7Celement:geometry%7Ccolor:0xfdfcf8&style=feature:road.highway%7Celement:geometry%7Ccolor:0xf8c967&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0xe9bc62&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0xe98d58&style=feature:road.highway.controlled_access%7Celement:geometry.stroke%7Ccolor:0xdb8555&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x806b63&style=feature:transit.line%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:transit.line%7Celement:labels.text.fill%7Ccolor:0x8f7d77&style=feature:transit.line%7Celement:labels.text.stroke%7Ccolor:0xebe3cd&style=feature:transit.station%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:water%7Celement:geometry.fill%7Ccolor:0xb9d3c2&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x92998d&size=600x315">	
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/fonts.css">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/common.css">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/list-<?php echo (is_mobile() ? "mobile" : "desktop"); ?>.css">
@@ -119,24 +138,6 @@
 					<img class="photo" src="<?php echo $root; ?>/resources/images/list-headers/<?php echo $list_name_url_without_neighborhood; ?>/<?php echo $header_image_path; ?>">	
 				<?php
 					} else {
-						if($url_neighborhood["url"]) {
-							foreach($url_neighborhood_terms as $url_neighborhood_term) {
-								$check_neighborhood_is_real_query = mysqli_query($db, "SELECT neighborhood_long_name FROM neighborhoods WHERE neighborhood_long_name = '".convert("search-query", "display", $url_neighborhood_term)."' LIMIT 1");
-								$is_real_neighborhood = mysqli_num_rows($check_neighborhood_is_real_query);
-								if($is_real_neighborhood == 1) {
-									$neighborhood = mysqli_fetch_array($check_neighborhood_is_real_query);
-								}
-								$map_neighborhood = $neighborhood["neighborhood_long_name"];
-							}
-						}
-						
-						if($url_neighborhood["url"] && $map_neighborhood) {
-							$map["center"] = $list["name"]." ".$map_neighborhood;
-							$map["zoom"] = 15;
-						} else {
-							$map["center"] = $list["name"];
-							$map["zoom"] = 11;
-						}
 				?>
 					<div id="map"></div>
 						<script>
