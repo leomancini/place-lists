@@ -6,9 +6,9 @@
 
 <head>
 	<title>Places</title>
-	<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/fonts.css">
-	<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/common.css">
-	<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/lists.css">
+	<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/fonts.css">
+	<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/common.css">
+	<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/lists.css">
 	<meta name="viewport" content = "width = device-width, initial-scale = 1, user-scalable = no" />
 	<script src="<?php echo $root; ?>resources/js/jquery.js"></script>
 	<script src="<?php echo $root; ?>resources/js/lists.js"></script>
