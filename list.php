@@ -106,7 +106,7 @@
 			<meta property="og:type" content="website">
 			<meta property="og:image:width" content="600">
 			<meta property="og:image:height" content="315">
-			<meta property="og:image" content="https://places.leo.gd/resources/helpers/google-static-map.php?center=<?php echo urlencode($map["center"]); ?>&zoom=<?php echo $map["zoom"]; ?>">	
+			<meta property="og:image" content="https://places.leo.gd/resources/helpers/google-static-map.php?center=<?php echo urlencode($map["center"]); ?>&zoom=<?php echo $map["zoom"]; ?>&fake_ext_for_open_graph_validation=.png">	
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/fonts.css">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/common.css">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/css/list-<?php echo (is_mobile() ? "mobile" : "desktop"); ?>.css">
