@@ -1,7 +1,8 @@
 # Place Lists
 ### Explore local spots by neighborhood and category.
 
-Live site: http://places.leo.gd
+Live site: https://places.leo.gd
+
 More info: https://leo.gd/#place-lists
 
 Using Foursquare and Google APIs, this site shows places I've saved around the world. Places are ranked by rating and organized by category. You can filter by a combination of category, neighborhood, and rating — or search by any metadata.
@@ -12,11 +13,11 @@ I love traveling and documenting my experiences. I make lists to remember places
 
 ### Example Pages
 
-City Page: http://places.leo.gd/san-francisco
+City Page: https://places.leo.gd/san-francisco
 
-Category Filter: http://places.leo.gd/san-francisco/food/mexican
+Category Filter: https://places.leo.gd/san-francisco/food/mexican
 
-Neighborhood Filter: http://places.leo.gd/san-francisco:mission-district
+Neighborhood Filter: https://places.leo.gd/san-francisco:mission-district
 
 Rating Filter: https://places.leo.gd/san-francisco#>9.6
 
