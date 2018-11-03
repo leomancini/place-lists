@@ -1,4 +1,4 @@
-# Places
+# Place Lists
 
 Live site: http://places.leo.gd
 
