@@ -289,7 +289,9 @@ $(document).ready(function() {
 	
 	$("input#search").attr("autocomplete", "off").on('input change paste keyup', function(keyboard) {
 		input_from_textfield = $(this).val();
-		run_search(input_from_textfield);
+		setTimeout(function() {
+			run_search(input_from_textfield);
+		}, 500);
 	});
 	
 	$(".place a").click(function() {
