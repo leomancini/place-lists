@@ -112,8 +112,8 @@
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/common.css">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/list-<?php echo (is_mobile() ? "mobile" : "desktop"); ?>.css">
 			<meta name="viewport" content="width = device-width, initial-scale = 1, user-scalable = no" />
-			<script src="<?php echo $root; ?>resources/js/jquery.js"></script>
-			<script src="<?php echo $root; ?>resources/js/stretchy.js" data-filter=".stretchy"></script>
+			<script src="<?php echo $root; ?>resources/js/lib/jquery.js"></script>
+			<script src="<?php echo $root; ?>resources/js/lib/stretchy.js" data-filter=".stretchy"></script>
 			<?php if(is_mobile()) { ?><script>$(document).ready(function() { is_mobile(); });</script><?php } ?>
 			<script src="<?php echo $root; ?>resources/js/list.js"></script>
 			<!-- Global site tag (gtag.js) - Google Analytics -->
