@@ -234,4 +234,8 @@
 	$split_list_combos = Array(
 		Array("567d7b1d38fa9c91825e5c7a", "59e5a3ba8a6f1741c057072f")
 	);
+	
+	function convert_range($input, $input_max, $input_min, $output_max, $output_min) {
+		return (($input - $input_min) / ($input_max - $input_min)) * ($output_max - $output_min) + $output_min;
+	}
 ?>

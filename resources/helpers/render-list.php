@@ -575,16 +575,21 @@
 				// sort places in subcategory by rating
 				foreach($places_in_sub_category as $place) {
 					if($places_info[$place["id"]]["rating"] != "") {
-						$rating = str_pad(number_format($places_info[$place["id"]]["rating"], 1), 20, "0", STR_PAD_LEFT);
+					
+						$rating = str_replace(".", "", number_format($places_info[$place["id"]]["rating"], 1));
+						$rating_sort = convert_range($rating, 100, 0, 0, 100);
+						
+						$rating_sort = str_pad($rating_sort, 20, 0, STR_PAD_LEFT);
 					} else {
-						$rating = str_pad(0, 20);
+						$rating_sort = str_pad(9, 20, 9, STR_PAD_LEFT);
 					}
 					
-					$sort = $rating.$places_info[$place["id"]]["name"].microtime().rand(0, 99999999);
+						
+					$sort = $rating_sort.$places_info[$place["id"]]["name"].microtime().rand(0, 99999999);
 					$places_in_sub_category_sorted[$sort] = $place;
 				}
 				
-				krsort($places_in_sub_category_sorted);
+				ksort($places_in_sub_category_sorted);
 	
 				// for every place in subcategory, render place
 				foreach($places_in_sub_category_sorted as $sort => $place) {
