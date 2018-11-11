@@ -168,7 +168,7 @@
 	function render_search($url_neighborhood, $url_category_names) {
 		if($url_category_names || $url_neighborhood) {
 			// if($url_neighborhood) { $saved_search_class = " has-search-query"; }
-			echo "<span class='search-separator".$saved_search_class."'> / </span>";
+			echo "<span id='search-separator' class='".$saved_search_class."'> / </span>";
 		}
 		echo '<input type="text" id="search" class="places-search" placeholder="Search..." autocapitalize="none" autocorrect="off">';		
 	}
@@ -264,9 +264,10 @@
 		}
 	}
 	
-	function render_place_info($place_info, $search_terms_string, $url_categories) {
+	function render_place_info($place_info, $search_terms_string, $url_categories, $url_neighborhood_terms, $sub_category_label) {
 		echo "<div class='place'";
 		echo 'data-search-terms="'.strtolower(strip_accents($search_terms_string)).'"';
+		echo 'data-subcategory="'.strtolower(strip_accents($sub_category_label)).'"';
 		echo 'data-neighborhood="'.strtolower(strip_accents(convert("neighborhood", "url", $place_info["neighborhood"]))).'"';
 		echo "data-rating='".number_format($place_info["rating"], 1)."'>";
 
@@ -614,9 +615,9 @@
 				
 					// increment number of places with this rating
 					$popular["ratings"][$places_info[$place["id"]]["rating"]]++;
-			
+					
 					// render place info
-					render_place_info($places_info[$place["id"]], $search_terms_string[$place["id"]], $url_categories, $url_neighborhood_terms);
+					render_place_info($places_info[$place["id"]], $search_terms_string[$place["id"]], $url_categories, $url_neighborhood_terms, $sub_category_label);
 				
 					// empty subcategory places so next subcategory is filled with correct places
 					$places_in_sub_category_sorted = Array();

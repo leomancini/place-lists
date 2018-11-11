@@ -148,7 +148,7 @@ input#search.places-search {
     min-width: 100px;
 }
 
-.search-separator {
+#search-separator {
 	display: inline-block;
 	color: #BEC2C9;
 	font-weight: 400;
@@ -156,7 +156,7 @@ input#search.places-search {
 	text-align: center;
 }
 
-.search-separator.has-search-query {
+#search-separator.has-search-query {
 	color: #000;
 	font-weight: 700;
 }
