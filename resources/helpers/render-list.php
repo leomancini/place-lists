@@ -313,6 +313,26 @@
 			number_format($place_info["rating"], 1)
 		);
 		
+		// remove special characters
+		$special_characters_to_remove = Array("-", "%", "&", "'");
+		foreach($special_characters_to_remove as $special_character_to_remove) {
+			if(strpos($place_info["name"], $special_character_to_remove) !== false) {
+				array_push($search_terms, str_replace($special_character_to_remove, "", $place_info["name"]));
+			}
+			if(strpos($place_info["name"], " ".$special_character_to_remove." ") !== false) {
+				array_push($search_terms, str_replace(" ".$special_character_to_remove." ", "", $place_info["name"]));
+			}
+		}
+		
+		// replace special characters
+		$special_characters_to_replace = Array(
+			"&" => "and",
+			"II" => "2"
+		);
+		foreach($special_characters_to_replace as $current => $replacement) {
+			array_push($search_terms, str_replace($current, $replacement, $place_info["name"]));
+		}
+		
 		// mysql clean search terms
 		foreach($search_terms as $key => $search_term) {
 			$search_terms[$key] = mysqli_real_escape_string($db, $search_term);
