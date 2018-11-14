@@ -1,9 +1,7 @@
 # Place Lists
 ### Explore local spots by neighborhood and category.
 
-⚡️ [Live Site](https://places.leo.gd)
-
-🔮 [More Info](https://leo.gd/#place-lists)
+⚡️ [Live Site](https://places.leo.gd) &nbsp;&nbsp;&nbsp; 🔮 [More Info](https://leo.gd/#place-lists)
 
 Using Foursquare and Google APIs, this site shows places I've saved around the world. Places are ranked by rating and organized by category. You can filter by a combination of category, neighborhood, and rating — or search by any metadata.
 
