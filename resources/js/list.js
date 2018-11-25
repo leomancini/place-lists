@@ -132,7 +132,9 @@ function search_filter_list(input_from_textfield) {
 
 				// update index to reflect current search results
 				if(subcategories[i].getAttribute("id")) {
-					document.querySelector(".index .item#"+subcategory_label).style.display = "none";
+					if(document.querySelector(".index .item#"+subcategory_label)) {
+						document.querySelector(".index .item#"+subcategory_label).style.display = "none";
+					}
 				}
 			} else {
 				subcategories[i].style.display = "block";
@@ -141,8 +143,10 @@ function search_filter_list(input_from_textfield) {
 						
 				if(subcategories[i].getAttribute("id")) {
 					// update index to reflect current search results
-					document.querySelector(".index .item#"+subcategory_label).style.display = "block";
-					document.querySelector(".index .item#"+subcategory_label+" a .count").innerHTML = "&nbsp;&nbsp;"+subcategory_count;
+					if(document.querySelector(".index .item#"+subcategory_label)) {
+						document.querySelector(".index .item#"+subcategory_label).style.display = "block";
+						document.querySelector(".index .item#"+subcategory_label+" a .count").innerHTML = "&nbsp;&nbsp;"+subcategory_count;
+					}
 				}
 			}
 		}
