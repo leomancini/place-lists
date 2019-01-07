@@ -90,3 +90,6 @@
 	
 </body>
 </html>
+<?php
+	include("end.php");
+?>

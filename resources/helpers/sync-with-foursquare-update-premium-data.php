@@ -51,4 +51,6 @@
 				rating_signal = '".$premium_place_data[$place_premium_data["foursquare_id"]]["rating_signal"]."'
 			WHERE foursquare_list_and_place_id_combo = '".$place_premium_data["foursquare_list_id"]."-".$place_premium_data["foursquare_id"]."';");
 	}
+	
+	include("end.php");
 ?>

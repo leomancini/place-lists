@@ -72,4 +72,5 @@
 		
 	}
 	
+	include("end.php");	
 ?>

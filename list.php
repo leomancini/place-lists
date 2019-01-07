@@ -205,4 +205,6 @@
 		// List doesn't exist
 		header('Location: ./');
 	}
+
+	include("end.php");
 ?>
