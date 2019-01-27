@@ -108,7 +108,7 @@ function search_filter_list(input_from_textfield) {
 				neighborhood_count = document.querySelectorAll(".place.positive-search-result[data-neighborhood='"+neighborhood_label+"']").length;
 
 				if(neighborhood_label) {
-					if(neighborhood_count > 0) {
+					if(neighborhood_count > 0 && document.querySelector(".index#neighborhoods .item#"+neighborhood_label+" .count")) {
 						document.querySelector(".index#neighborhoods .item#"+neighborhood_label).style.display = "block";
 						document.querySelector(".index#neighborhoods .item#"+neighborhood_label+" .count").innerHTML = "&nbsp;&nbsp;"+neighborhood_count;
 					} else {
@@ -143,7 +143,7 @@ function search_filter_list(input_from_textfield) {
 						
 				if(subcategories[i].getAttribute("id")) {
 					// update index to reflect current search results
-					if(document.querySelector(".index .item#"+subcategory_label)) {
+					if(document.querySelector(".index .item#"+subcategory_label) && document.querySelector(".index .item#"+subcategory_label+" a .count")) {
 						document.querySelector(".index .item#"+subcategory_label).style.display = "block";
 						document.querySelector(".index .item#"+subcategory_label+" a .count").innerHTML = "&nbsp;&nbsp;"+subcategory_count;
 					}
