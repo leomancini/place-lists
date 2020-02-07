@@ -4,7 +4,8 @@
 
 	// Connect to database based on server
 	if($_SERVER['SERVER_NAME'] == "localhost" || $_SERVER['SERVER_NAME'] == $server["local"]["name"]) {
-		$root = "//".$_SERVER["HTTP_HOST"]."/foursquare-places-dev/foursquare-places/";
+		// $root = "//".$_SERVER["HTTP_HOST"]."/foursquare-places-dev/foursquare-places/";
+		$root = "//".$_SERVER["HTTP_HOST"]."/";
 		
 		$db = mysqli_init();
 		mysqli_real_connect(
@@ -183,28 +184,34 @@
 		global $db;
 		global $split_list_combos;
 		
+		$split_lists_parent_ids = Array();
+		
 		foreach($split_list_combos as $split_list_combo) {
-			if(in_array($list["foursquare_id"], $split_list_combo)) {
-				$split_list_query_string = "SELECT * FROM lists WHERE foursquare_id = '".$list["foursquare_id"]."'";
-				
-				foreach($split_list_combo as $split_list_id) {
-					if($split_list_id !== $list['foursquare_id']) {
-						$split_list_query_string .= " OR foursquare_id = '".$split_list_id."'";
-					}
-				}
+			array_push($split_lists_parent_ids, $split_list_combo["parent"]);
+		}
+						
+		if(in_array($list["foursquare_id"], $split_lists_parent_ids)) {
+			foreach($split_list_combos as $split_list_combo) {
+				if($list["foursquare_id"] === $split_list_combo["parent"]) {
+					$split_list_query_string = "SELECT * FROM lists WHERE foursquare_id = '".$list["foursquare_id"]."'";
 
-				$split_list_query = mysqli_query($db, $split_list_query_string);
-				
-				$split_lists_total_count = 0;
-				
-				while($split_list_data = mysqli_fetch_array($split_list_query)) {
-					$split_lists_total_count += $split_list_data["places_count"];
+					foreach($split_list_combo["children"] as $split_list_child_id) {
+						$split_list_query_string .= " OR foursquare_id = '".$split_list_child_id."'";
+					}
+
+					$split_list_query = mysqli_query($db, $split_list_query_string);
+
+					$split_lists_total_count = 0;
+
+					while($split_list_data = mysqli_fetch_array($split_list_query)) {
+						$split_lists_total_count += $split_list_data["places_count"];
+					}
+
+					$count = $split_lists_total_count;
 				}
-				
-				$count = $split_lists_total_count;
-			} else {
-				$count = $list["places_count"];
 			}
+	    } else {
+			$count = $list["places_count"];
 		}
 		
 		return $count;
@@ -234,9 +241,16 @@
 	
 	// these are lists that span across multiple lists – this combines them so that accessing either list shows places of all lists
 	$split_list_combos = Array(
-		Array("567d7b1d38fa9c91825e5c7a", "59e5a3ba8a6f1741c057072f", "5be9fdbb0a08ab002c5ca81a"), // San Francisco, San Francisco 2, and San Francisco 3
-		Array("567e16a238fa9c9182a0b903", "5e0a930d16de620006642ad8"), // New York, New York 2
+		Array(
+			"parent" => "567d7b1d38fa9c91825e5c7a",
+			"children" => Array("59e5a3ba8a6f1741c057072f", "5be9fdbb0a08ab002c5ca81a")
+		), // San Francisco, San Francisco 2, and San Francisco 3
+		Array(
+			"parent" => "567e16a238fa9c9182a0b903",
+			"children" => Array("5e0a930d16de620006642ad8")
+		), // New York, New York 2
 	);
+	
 	
 	function convert_range($input, $input_max, $input_min, $output_max, $output_min) {
 		return (($input - $input_min) / ($input_max - $input_min)) * ($output_max - $output_min) + $output_min;

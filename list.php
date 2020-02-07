@@ -184,11 +184,9 @@
 							$list_query = "WHERE foursquare_list_id = '".$list['foursquare_id']."'";
 							
 							foreach($split_list_combos as $split_list_combo) {
-								if(in_array($list['foursquare_id'], $split_list_combo)) {
-									foreach($split_list_combo as $split_list_id) {
-										if($split_list_id !== $list['foursquare_id']) {
-											$list_query .= " OR foursquare_list_id = '".$split_list_id."'";
-										}
+								if($list['foursquare_id'] === $split_list_combo["parent"]) {
+									foreach($split_list_combo["children"] as $split_list_child_id) {
+										$list_query .= " OR foursquare_list_id = '".$split_list_child_id."'";
 									}
 								}
 							}
