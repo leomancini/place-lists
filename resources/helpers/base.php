@@ -234,8 +234,8 @@
 	
 	// these are lists that span across multiple lists – this combines them so that accessing either list shows places of all lists
 	$split_list_combos = Array(
-		Array("567d7b1d38fa9c91825e5c7a", "59e5a3ba8a6f1741c057072f", "5be9fdbb0a08ab002c5ca81a"),
-		Array("567e16a238fa9c9182a0b903", "5e0a930d16de620006642ad8"),
+		Array("567d7b1d38fa9c91825e5c7a", "59e5a3ba8a6f1741c057072f", "5be9fdbb0a08ab002c5ca81a"), // San Francisco, San Francisco 2, and San Francisco 3
+		Array("567e16a238fa9c9182a0b903", "5e0a930d16de620006642ad8"), // New York, New York 2
 	);
 	
 	function convert_range($input, $input_max, $input_min, $output_max, $output_min) {
