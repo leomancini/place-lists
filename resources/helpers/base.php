@@ -251,7 +251,6 @@
 		), // New York, New York 2
 	);
 	
-	
 	function convert_range($input, $input_max, $input_min, $output_max, $output_min) {
 		return (($input - $input_min) / ($input_max - $input_min)) * ($output_max - $output_min) + $output_min;
 	}
