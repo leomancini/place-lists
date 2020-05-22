@@ -73,7 +73,6 @@ a:hover, a.hover {
 }
 
 h1 {
-	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
 	font-weight: 700;
 	font-size: 45px;
 	color: black;
@@ -85,7 +84,6 @@ h1 a {
 }
 
 #category-breadcrumbs {
-	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
 	font-weight: 700;
 	font-size: 24px;
 	color: #1D2129;
@@ -113,9 +111,7 @@ h1 a {
 }
 
 .index .item a {
-	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
 	font-weight: 400;
-	letter-spacing: -0.25px;
 	font-size: 18px;
 	color: #90949C;
 }
@@ -181,11 +177,9 @@ input#search.places-search {
 }
 
 .subcategory-header a {
-	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
 	font-size: 13px;
 	font-weight: 400;
 	color: #BEC2C9;
-	letter-spacing: 1px;
 	text-transform: uppercase;
 }
 
@@ -218,14 +212,12 @@ input#search.places-search {
 }
 
 .place .place-info .title a {
-	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
 	font-weight: 400;
 	font-size: 22px;
 	color: #000000;
 }
 
 .place .place-info .description {
-	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
 	font-weight: 400;
 	display: block;
 	margin-top: 5px;

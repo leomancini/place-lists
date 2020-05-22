@@ -6,7 +6,6 @@
 
 <head>
 	<title>Places</title>
-	<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/fonts.css">
 	<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/common.css">
 	<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/lists.css">
 	<meta name="viewport" content = "width = device-width, initial-scale = 1, user-scalable = no" />

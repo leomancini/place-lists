@@ -20,7 +20,6 @@ body {
 }
 
 .section-header {
-	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
 	font-size: 13px;
 	font-weight: 400;
 	color: #BEC2C9;
@@ -37,7 +36,6 @@ body {
 
 #lists .list {
 	margin-bottom: 8px;
-	font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
 	font-size: 22px;
 }
 	
@@ -47,7 +45,7 @@ body {
 
 #lists .list .label {
 	color: #000000;
-	font-weight: 500;
+	font-weight: 400;
 }
 
 #lists .list .count {
