@@ -38,10 +38,8 @@
 					<?php
 						$hidden_lists = Array();
 						foreach($split_list_combos as $split_list_combo) {
-							foreach($split_list_combo as $split_list_key => $split_list_id) {
-								if($split_list_key != 0) {
-									array_push($hidden_lists, $split_list_id); 
-								}
+							foreach($split_list_combo["children"] as $split_list_child_key => $split_list_child_value) {
+								array_push($hidden_lists, $split_list_child_value);
 							}
 						}
 						

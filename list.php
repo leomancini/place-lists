@@ -110,7 +110,7 @@
 			<meta property="og:image" content="https://places.leo.gd/google_static_map/<?php echo $list_name_url; ?>/<?php echo $map["zoom"]; ?>">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/fonts.css">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/common.css">
-			<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/list-<?php echo (is_mobile() ? "mobile" : "desktop"); ?>.css">
+			<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/list-<?php echo (is_mobile() ? "mobile" : "desktop"); ?>.css<?php echo "?".rand(0, 9999999); ?>">
 			<meta name="viewport" content="width = device-width, initial-scale = 1, user-scalable = no" />
 			<script src="<?php echo $root; ?>resources/js/lib/jquery.js"></script>
 			<script src="<?php echo $root; ?>resources/js/lib/stretchy.js" data-filter=".stretchy"></script>
@@ -184,11 +184,9 @@
 							$list_query = "WHERE foursquare_list_id = '".$list['foursquare_id']."'";
 							
 							foreach($split_list_combos as $split_list_combo) {
-								if(in_array($list['foursquare_id'], $split_list_combo)) {
-									foreach($split_list_combo as $split_list_id) {
-										if($split_list_id !== $list['foursquare_id']) {
-											$list_query .= " OR foursquare_list_id = '".$split_list_id."'";
-										}
+								if($list['foursquare_id'] === $split_list_combo["parent"]) {
+									foreach($split_list_combo["children"] as $split_list_child_id) {
+										$list_query .= " OR foursquare_list_id = '".$split_list_child_id."'";
 									}
 								}
 							}
