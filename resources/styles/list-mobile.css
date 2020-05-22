@@ -190,6 +190,7 @@ input#search.places-search {
 
 .subcategory-header {
 	min-height: 10px;
+	letter-spacing: 1px;
 }
 
 .subcategory-header a {

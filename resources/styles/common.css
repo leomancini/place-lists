@@ -48,6 +48,7 @@ input#search::-webkit-input-placeholder {
 	font-weight: 400;
 	color: #BEC2C9;
 	text-transform: uppercase;
+	letter-spacing: 1px;
 }
 
 a.index-show-more {
