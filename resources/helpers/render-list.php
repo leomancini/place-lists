@@ -654,7 +654,7 @@
 			echo "<div id='list-header'>";
 		
 				// render list name
-				// echo "<h1><a href='".$root.$list_name_url_without_neighborhood."'>".$list["name"]."</a></h1>";
+				echo "<h1><a href='".$root.$list_name_url_without_neighborhood."'>".$list["name"]."</a></h1>";
 		
 				// render category breadcrumbs
 				render_category_breadcrumbs($url_category_names, $this_categories_urls, $number_of_places);
