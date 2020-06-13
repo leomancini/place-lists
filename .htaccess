@@ -9,7 +9,6 @@ Options -Indexes
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 
-	RewriteRule ^php php.php [L]
 	RewriteRule ^sync resources/helpers/sync-with-foursquare.php [L]
 	RewriteRule ^google_static_map/(.*)/(.*) resources/helpers/google-static-map.php?center=$1&zoom=$2 [L]
 
