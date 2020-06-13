@@ -431,9 +431,11 @@
 		
 		// get neighborhood data for each place
 		$neighborhood_query = mysqli_query($db, "SELECT * FROM neighborhoods ".$query);
-		// while($neighborhood_info = mysqli_fetch_array($neighborhood_query)) {
-		// 	$neighborhood_info_set[$neighborhood_info["foursquare_id"]] = $neighborhood_info;
-		// }
+		while($neighborhood_info = mysqli_fetch_array($neighborhood_query)) {
+			$neighborhood_info_set[$neighborhood_info["foursquare_id"]] = $neighborhood_info;
+		}
+
+		print_r($neighborhood_info_set);
 		
 		$places_info_query = mysqli_query($db, "SELECT * FROM places ".$query);
 		while($place = mysqli_fetch_array($places_info_query)) {
