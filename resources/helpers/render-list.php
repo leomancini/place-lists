@@ -521,7 +521,7 @@
 				// if($neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"]) {
 				// 	$places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
 				// }
-				$places_info[$place["id"]]["neighborhood"] = 'asd';
+				$places_info[$place["id"]]["asd"] = 'asd';
 				print_r($places_info[$place["id"]]);
 			
 				// form category urls
