@@ -108,7 +108,6 @@
 			<meta property="og:image:width" content="600">
 			<meta property="og:image:height" content="315">
 			<meta property="og:image" content="https://places.leo.gd/google_static_map/<?php echo $list_name_url; ?>/<?php echo $map["zoom"]; ?>">
-			<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/fonts.css">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/common.css">
 			<link rel="stylesheet" href="<?php echo $root; ?>/resources/styles/list-<?php echo (is_mobile() ? "mobile" : "desktop"); ?>.css<?php echo "?".rand(0, 9999999); ?>">
 			<meta name="viewport" content="width = device-width, initial-scale = 1, user-scalable = no" />
