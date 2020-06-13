@@ -648,8 +648,6 @@
 				
 		echo "</div>"; // close #places
 		
-		phpinfo();
-		
 		// render list header
 		echo "<div id='navigation'>";
 		
