@@ -429,8 +429,8 @@
 			$premium_place_info_set[$premium_place_info["foursquare_id"]] = $premium_place_info;
 		}
 		
-		// // get neighborhood data for each place
-		// $neighborhood_query = mysqli_query($db, "SELECT * FROM neighborhoods ".$query);
+		// get neighborhood data for each place
+		$neighborhood_query = mysqli_query($db, "SELECT * FROM neighborhoods ".$query);
 		// while($neighborhood_info = mysqli_fetch_array($neighborhood_query)) {
 		// 	$neighborhood_info_set[$neighborhood_info["foursquare_id"]] = $neighborhood_info;
 		// }
