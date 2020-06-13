@@ -126,7 +126,6 @@
 			</script>
 		</head>
 		<body ontouchstart="">
-		<?php phpinfo(); ?>
 		<?php
 			if(($_GET['category1'] == "" &&
 				$_GET['category2'] == "" &&
