@@ -664,10 +664,10 @@
 			echo "</div>"; // close #list-header
 		
 			// render sub category index
-			// render_sub_category_index($places_by_sub_category, $url_categories);
+			render_sub_category_index($places_by_sub_category, $url_categories);
 			
 			// render neighborhood index
-			// render_neighborhood_index($popular["neighborhoods"], $url_categories);
+			render_neighborhood_index($popular["neighborhoods"], $url_categories);
 		
 		echo "</div>"; // close #navigation
 
