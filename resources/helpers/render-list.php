@@ -518,10 +518,9 @@
 				}
 				
 				// add neighborhood data to regular places_info array
-				// if($neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"]) {
-				// 	$places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
-				// }
-				$places_info[$place["id"]]["neighborhood"] = 'asd';
+				if($neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"]) {
+					$places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
+				}
 				print_r($places_info[$place["id"]]);
 			
 				// form category urls
