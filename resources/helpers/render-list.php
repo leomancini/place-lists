@@ -389,7 +389,7 @@
 					." ".
 					$place_info["country_code"]);
 			
-					$target = "";
+					$target = " target=''";
 				if(!is_mobile()) {
 					$target = " target='_blank'";
 				}
