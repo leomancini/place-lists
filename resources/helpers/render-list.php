@@ -434,8 +434,6 @@
 		while($neighborhood_info = mysqli_fetch_array($neighborhood_query)) {
 			$neighborhood_info_set[$neighborhood_info["foursquare_id"]] = $neighborhood_info;
 		}
-
-		print_r($neighborhood_info_set);
 		
 		$places_info_query = mysqli_query($db, "SELECT * FROM places ".$query);
 		while($place = mysqli_fetch_array($places_info_query)) {
@@ -520,7 +518,7 @@
 				}
 				
 				// add neighborhood data to regular places_info array
-				$places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
+				// $places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
 			
 				// form category urls
 				$this_categories_urls = generate_category_urls($this_categories_names);
