@@ -49,10 +49,10 @@
 		// if list has more than 1 place, render search and search suggestions
 		if($number_of_places > 1) {
 			render_search($url_neighborhood, $url_category_names);
-			// if(!is_mobile()) {
+			if(!is_mobile()) {
 				$search_suggestions = generate_search_suggestions($popular);
 				render_search_suggestions($search_suggestions);
-			// }
+			}
 		}
 
 		echo "</div>";
@@ -93,11 +93,11 @@
 				echo "<span class='label'>";
 				echo $subcategory_info["name_display"];	
 				echo "</span>";
-				// if(!is_mobile()) {
+				if(!is_mobile()) {
 					echo "<span class='count'>&nbsp;&nbsp;";
 					echo "".$subcategory_info["count"];
 					echo "</span>";
-				// }
+				}
 				echo "</a>";
 				echo "</span>";
 			}
@@ -147,11 +147,11 @@
 					echo "<span class='label'>";
 					echo $neighborhood_info["label"];	
 					echo "</span>";
-					if(!is_mobile()) {
-						echo "<span class='count'>&nbsp;&nbsp;";
-						echo "".$neighborhood_info["count"];
-						echo "</span>";
-					}
+					// if(!is_mobile()) {
+					echo "<span class='count'>&nbsp;&nbsp;";
+					echo "".$neighborhood_info["count"];
+					echo "</span>";
+					// }
 					echo "</a>";
 					echo "</span>";
 				}
@@ -394,7 +394,7 @@
 			} else {
 				$target = "";
 			}
-			
+
 			$description_items["address"] = "
 				<a class='address' href='".$google_maps_url."' target='".$target."'>".
 					$place_info["address"].
