@@ -389,11 +389,14 @@
 					." ".
 					$place_info["country_code"]);
 			
-				if(!is_mobile()) {
-					$target = "target='_blank'";
-				}
+			if(!is_mobile()) {
+				$target = "_blank";
+			} else {
+				$target = "";
+			}
+			
 			$description_items["address"] = "
-				<a class='address' href='".$google_maps_url."' ".$target.">".
+				<a class='address' href='".$google_maps_url."' target='".$target."'>".
 					$place_info["address"].
 				"</a>";
 		}
