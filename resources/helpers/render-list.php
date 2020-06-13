@@ -423,228 +423,228 @@
 		if(isset($_GET['category5'])) { $url_category_names[4] = urldecode($_GET['category5']); }
 		$url_categories = implode("/", $url_category_names);
 	
-		// // get premium data for each place
-		// $premium_places_info_query = mysqli_query($db, "SELECT * FROM places_premium_data ".$query);
-		// while($premium_place_info = mysqli_fetch_array($premium_places_info_query)) {
-		// 	$premium_place_info_set[$premium_place_info["foursquare_id"]] = $premium_place_info;
-		// }
+		// get premium data for each place
+		$premium_places_info_query = mysqli_query($db, "SELECT * FROM places_premium_data ".$query);
+		while($premium_place_info = mysqli_fetch_array($premium_places_info_query)) {
+			$premium_place_info_set[$premium_place_info["foursquare_id"]] = $premium_place_info;
+		}
 		
-		// // get neighborhood data for each place
-		// $neighborhood_query = mysqli_query($db, "SELECT * FROM neighborhoods ".$query);
-		// while($neighborhood_info = mysqli_fetch_array($neighborhood_query)) {
-		// 	$neighborhood_info_set[$neighborhood_info["foursquare_id"]] = $neighborhood_info;
-		// }
+		// get neighborhood data for each place
+		$neighborhood_query = mysqli_query($db, "SELECT * FROM neighborhoods ".$query);
+		while($neighborhood_info = mysqli_fetch_array($neighborhood_query)) {
+			$neighborhood_info_set[$neighborhood_info["foursquare_id"]] = $neighborhood_info;
+		}
 		
-		// $places_info_query = mysqli_query($db, "SELECT * FROM places ".$query);
-		// while($place = mysqli_fetch_array($places_info_query)) {
-		// 	$this_categories_names = Array();
-		// 	$this_categories_id = Array();
+		$places_info_query = mysqli_query($db, "SELECT * FROM places ".$query);
+		while($place = mysqli_fetch_array($places_info_query)) {
+			$this_categories_names = Array();
+			$this_categories_id = Array();
 		
-		// 	$matching_type = "short_name";
+			$matching_type = "short_name";
 			
-		// 	if(isset($category_info[$place["category_id"]][$matching_type])) {
-		// 		$this_categories_names[0] = convert("category", "url", $category_info[$place["category_id"]][$matching_type]);
-		// 	}
+			if(isset($category_info[$place["category_id"]][$matching_type])) {
+				$this_categories_names[0] = convert("category", "url", $category_info[$place["category_id"]][$matching_type]);
+			}
 		
-		// 	if(isset($category_info[$place["category_id"]]["parent_category_".$matching_type])) {
-		// 		$this_categories_names[1] = convert("category", "url", $category_info[$place["category_id"]]["parent_category_".$matching_type]);
-		// 	}
+			if(isset($category_info[$place["category_id"]]["parent_category_".$matching_type])) {
+				$this_categories_names[1] = convert("category", "url", $category_info[$place["category_id"]]["parent_category_".$matching_type]);
+			}
 		
-		// 	if(isset($category_info[$place["category_id"]]["grandparent_category_".$matching_type])) {
-		// 		$this_categories_names[2] = convert("category", "url", $category_info[$place["category_id"]]["grandparent_category_".$matching_type]);
-		// 	}
+			if(isset($category_info[$place["category_id"]]["grandparent_category_".$matching_type])) {
+				$this_categories_names[2] = convert("category", "url", $category_info[$place["category_id"]]["grandparent_category_".$matching_type]);
+			}
 		
-		// 	if(isset($category_info[$place["category_id"]]["greatgrandparent_category_".$matching_type])) {
-		// 		$this_categories_names[3] = convert("category", "url", $category_info[$place["category_id"]]["greatgrandparent_category_".$matching_type]);
-		// 	}
+			if(isset($category_info[$place["category_id"]]["greatgrandparent_category_".$matching_type])) {
+				$this_categories_names[3] = convert("category", "url", $category_info[$place["category_id"]]["greatgrandparent_category_".$matching_type]);
+			}
 		
-		// 	if(isset($category_info[$place["category_id"]]["greatgreatgrandparent_category_".$matching_type])) {
-		// 		$this_categories_names[4] = convert("category", "url", $category_info[$place["category_id"]]["greatgreatgrandparent_category_".$matching_type]);
-		// 	}
+			if(isset($category_info[$place["category_id"]]["greatgreatgrandparent_category_".$matching_type])) {
+				$this_categories_names[4] = convert("category", "url", $category_info[$place["category_id"]]["greatgreatgrandparent_category_".$matching_type]);
+			}
 		
-		// 	$this_categories_names = array_reverse($this_categories_names);
+			$this_categories_names = array_reverse($this_categories_names);
 		
-		// 	if(count($url_category_names) == 0) {
-		// 		$match = 1;
-		// 		$match_level = 0;
-		// 	}
+			if(count($url_category_names) == 0) {
+				$match = 1;
+				$match_level = 0;
+			}
 		
-		// 	if(count($url_category_names) == 1
-		// 		&& $this_categories_names[0] == $url_category_names[0]) {
-		// 		$match = 1;
-		// 		$match_level = 1;
-		// 	}
+			if(count($url_category_names) == 1
+				&& $this_categories_names[0] == $url_category_names[0]) {
+				$match = 1;
+				$match_level = 1;
+			}
 		
-		// 	if(count($url_category_names) == 2
-		// 		&& $this_categories_names[0] == $url_category_names[0]
-		// 		&& $this_categories_names[1] == $url_category_names[1]) {
-		// 		$match = 1;
-		// 		$match_level = 2;
-		// 	}
+			if(count($url_category_names) == 2
+				&& $this_categories_names[0] == $url_category_names[0]
+				&& $this_categories_names[1] == $url_category_names[1]) {
+				$match = 1;
+				$match_level = 2;
+			}
 		
-		// 	if(count($url_category_names) == 3
-		// 		&& $this_categories_names[0] == $url_category_names[0]
-		// 		&& $this_categories_names[1] == $url_category_names[1]
-		// 		&& $this_categories_names[2] == $url_category_names[2]) {
-		// 		$match = 1;
-		// 		$match_level = 3;
-		// 	}
+			if(count($url_category_names) == 3
+				&& $this_categories_names[0] == $url_category_names[0]
+				&& $this_categories_names[1] == $url_category_names[1]
+				&& $this_categories_names[2] == $url_category_names[2]) {
+				$match = 1;
+				$match_level = 3;
+			}
 		
-		// 	if(count($url_category_names) == 4
-		// 		&& $this_categories_names[0] == $url_category_names[0]
-		// 		&& $this_categories_names[1] == $url_category_names[1]
-		// 		&& $this_categories_names[2] == $url_category_names[2]
-		// 		&& $this_categories_names[3] == $url_category_names[3]) {
-		// 		$match = 1;
-		// 		$match_level = 4;
-		// 	}
+			if(count($url_category_names) == 4
+				&& $this_categories_names[0] == $url_category_names[0]
+				&& $this_categories_names[1] == $url_category_names[1]
+				&& $this_categories_names[2] == $url_category_names[2]
+				&& $this_categories_names[3] == $url_category_names[3]) {
+				$match = 1;
+				$match_level = 4;
+			}
 		
-		// 	if(count($url_category_names) == 5
-		// 		&& $this_categories_names[0] == $url_category_names[0]
-		// 		&& $this_categories_names[1] == $url_category_names[1]
-		// 		&& $this_categories_names[2] == $url_category_names[2]
-		// 		&& $this_categories_names[3] == $url_category_names[3]
-		// 		&& $this_categories_names[4] == $url_category_names[4]) {
-		// 		$match = 1;
-		// 		$match_level = 5;
-		// 	}
+			if(count($url_category_names) == 5
+				&& $this_categories_names[0] == $url_category_names[0]
+				&& $this_categories_names[1] == $url_category_names[1]
+				&& $this_categories_names[2] == $url_category_names[2]
+				&& $this_categories_names[3] == $url_category_names[3]
+				&& $this_categories_names[4] == $url_category_names[4]) {
+				$match = 1;
+				$match_level = 5;
+			}
 		
-		// 	if($match) {
-		// 		$places_info[$place["id"]] = $place;
+			if($match) {
+				$places_info[$place["id"]] = $place;
 				
-		// 		// add premium data to regular places_info array
-		// 		foreach(premium_places_data_fields(null) as $premium_data_field) {
-		// 			$places_info[$place["id"]][$premium_data_field] = $premium_place_info_set[$place["foursquare_id"]][$premium_data_field];	
-		// 		}
+				// add premium data to regular places_info array
+				foreach(premium_places_data_fields(null) as $premium_data_field) {
+					$places_info[$place["id"]][$premium_data_field] = $premium_place_info_set[$place["foursquare_id"]][$premium_data_field];	
+				}
 				
-		// 		// add neighborhood data to regular places_info array
-		// 		$places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
+				// add neighborhood data to regular places_info array
+				$places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
 			
-		// 		// form category urls
-		// 		$this_categories_urls = generate_category_urls($this_categories_names);
+				// form category urls
+				$this_categories_urls = generate_category_urls($this_categories_names);
 				
-		// 		// set category variables
-		// 		$direct_parent_category = $this_categories_urls[$match-2];			
-		// 		$this_sub_category = $this_categories_names[$match_level-1];
-		// 		$next_sub_category = $this_categories_names[$match_level];
+				// set category variables
+				$direct_parent_category = $this_categories_urls[$match-2];			
+				$this_sub_category = $this_categories_names[$match_level-1];
+				$next_sub_category = $this_categories_names[$match_level];
 
-		// 		// generate category info for each place
-		// 		foreach($this_categories_names as $this_category_key => $this_category_value) {
-		// 			$places_info[$place["id"]]["categories"][$this_category_key] = Array(
-		// 				"name" => $this_category_value,
-		// 				"url" => $this_categories_urls[$this_category_key]
-		// 			);
-		// 		}
+				// generate category info for each place
+				foreach($this_categories_names as $this_category_key => $this_category_value) {
+					$places_info[$place["id"]]["categories"][$this_category_key] = Array(
+						"name" => $this_category_value,
+						"url" => $this_categories_urls[$this_category_key]
+					);
+				}
 				
-		// 		// generate search terms for this place
-		// 		$search_terms_string[$place["id"]] = generate_search_terms($this_category_key, $next_sub_category, $places_info[$place["id"]]);
+				// generate search terms for this place
+				$search_terms_string[$place["id"]] = generate_search_terms($this_category_key, $next_sub_category, $places_info[$place["id"]]);
 								
-		// 		// if search query is set, check if search query words are found in search terms
-		// 		if($url_neighborhood) {
-		// 			// clear search match array
-		// 			$search_match = Array();
+				// if search query is set, check if search query words are found in search terms
+				if($url_neighborhood) {
+					// clear search match array
+					$search_match = Array();
 					
-		// 			// check if any word in search query matches any word in search terms
-		// 			foreach($url_neighborhood_terms as $url_neighborhood_term) {
-		// 				if(strpos(strtoupper($search_terms_string[$place["id"]]), strtoupper(convert("search-query", "url", $url_neighborhood_term))) > 1) {
-		// 					$search_match[$place["id"]][] = 1;
-		// 				} else {
-		// 					$search_match[$place["id"]][] = 0;
-		// 				}
-		// 			}
+					// check if any word in search query matches any word in search terms
+					foreach($url_neighborhood_terms as $url_neighborhood_term) {
+						if(strpos(strtoupper($search_terms_string[$place["id"]]), strtoupper(convert("search-query", "url", $url_neighborhood_term))) > 1) {
+							$search_match[$place["id"]][] = 1;
+						} else {
+							$search_match[$place["id"]][] = 0;
+						}
+					}
 					
-		// 			// if all search query words are found in search terms, add place to subcategory array
-		// 			if(!in_array("0", $search_match[$place["id"]])) {
-		// 				$places_by_sub_category[$next_sub_category][]["id"] = $place["id"];
-		// 			}
-		// 		} else {
-		// 			// otherwise show all places
-		// 			$places_by_sub_category[$next_sub_category][]["id"] = $place["id"];
-		// 		}
-		// 	}
+					// if all search query words are found in search terms, add place to subcategory array
+					if(!in_array("0", $search_match[$place["id"]])) {
+						$places_by_sub_category[$next_sub_category][]["id"] = $place["id"];
+					}
+				} else {
+					// otherwise show all places
+					$places_by_sub_category[$next_sub_category][]["id"] = $place["id"];
+				}
+			}
 		
-		// 	$match = 0;
-		// }
+			$match = 0;
+		}
 		
-		// echo "<div id='places'>";
+		echo "<div id='places'>";
 		
-		// // sort subcategories by number of places in each subcategory
-		// foreach($places_by_sub_category as $sub_category => $places_in_sub_category) {
-		// 	if($sub_category != "") {
-		// 		$sort = str_pad(count($places_in_sub_category), 20, "0", STR_PAD_LEFT)."%COUNT%".convert("category", "url", $sub_category);
-		// 	} else {
-		// 		$sort = "0"."%COUNT%".convert("category", "url", $sub_category);
-		// 	}
-		// 	$sub_categories_sorted_by_count[$sort] = $places_in_sub_category;
-		// }
+		// sort subcategories by number of places in each subcategory
+		foreach($places_by_sub_category as $sub_category => $places_in_sub_category) {
+			if($sub_category != "") {
+				$sort = str_pad(count($places_in_sub_category), 20, "0", STR_PAD_LEFT)."%COUNT%".convert("category", "url", $sub_category);
+			} else {
+				$sort = "0"."%COUNT%".convert("category", "url", $sub_category);
+			}
+			$sub_categories_sorted_by_count[$sort] = $places_in_sub_category;
+		}
 	
-		// krsort($sub_categories_sorted_by_count);
+		krsort($sub_categories_sorted_by_count);
 		
-		// foreach($sub_categories_sorted_by_count as $sub_category_label_and_count => $places_in_sub_category) {
-		// 	// parse subcategory label and count
-		// 	$sub_category_label_and_count = explode("%COUNT%", $sub_category_label_and_count);
-		// 	$sub_category_label = $sub_category_label_and_count[1];
-		// 	$sub_category_count = trim($sub_category_label_and_count[0], 0);
+		foreach($sub_categories_sorted_by_count as $sub_category_label_and_count => $places_in_sub_category) {
+			// parse subcategory label and count
+			$sub_category_label_and_count = explode("%COUNT%", $sub_category_label_and_count);
+			$sub_category_label = $sub_category_label_and_count[1];
+			$sub_category_count = trim($sub_category_label_and_count[0], 0);
 			
-		// 	echo "<div class='subcategory-places'";
-		// 		if($sub_category_label) { echo "id='subcategory-".convert("category", "url", $sub_category_label)."'"; }
-		// 	echo ">";
+			echo "<div class='subcategory-places'";
+				if($sub_category_label) { echo "id='subcategory-".convert("category", "url", $sub_category_label)."'"; }
+			echo ">";
 			
-		// 		// render subcategory header
-		// 		render_subcategory_header($sub_category_label, $url_categories);
+				// render subcategory header
+				render_subcategory_header($sub_category_label, $url_categories);
 		
-		// 		// sort places in subcategory by rating
-		// 		foreach($places_in_sub_category as $place) {
-		// 			if($places_info[$place["id"]]["rating"] != "") {
+				// sort places in subcategory by rating
+				foreach($places_in_sub_category as $place) {
+					if($places_info[$place["id"]]["rating"] != "") {
 					
-		// 				$rating = str_replace(".", "", number_format($places_info[$place["id"]]["rating"], 1));
-		// 				$rating_sort = convert_range($rating, 100, 0, 0, 100);
+						$rating = str_replace(".", "", number_format($places_info[$place["id"]]["rating"], 1));
+						$rating_sort = convert_range($rating, 100, 0, 0, 100);
 						
-		// 				$rating_sort = str_pad($rating_sort, 20, 0, STR_PAD_LEFT);
-		// 			} else {
-		// 				$rating_sort = str_pad(9, 20, 9, STR_PAD_LEFT);
-		// 			}
+						$rating_sort = str_pad($rating_sort, 20, 0, STR_PAD_LEFT);
+					} else {
+						$rating_sort = str_pad(9, 20, 9, STR_PAD_LEFT);
+					}
 					
 						
-		// 			$sort = $rating_sort.$places_info[$place["id"]]["name"].microtime().rand(0, 99999999);
-		// 			$places_in_sub_category_sorted[$sort] = $place;
-		// 		}
+					$sort = $rating_sort.$places_info[$place["id"]]["name"].microtime().rand(0, 99999999);
+					$places_in_sub_category_sorted[$sort] = $place;
+				}
 				
-		// 		ksort($places_in_sub_category_sorted);
+				ksort($places_in_sub_category_sorted);
 	
-		// 		// for every place in subcategory, render place
-		// 		foreach($places_in_sub_category_sorted as $sort => $place) {
+				// for every place in subcategory, render place
+				foreach($places_in_sub_category_sorted as $sort => $place) {
 				
-		// 			// get category for this place
-		// 			$this_category = $places_info[$place["id"]]["categories"][count($places_info[$place["id"]]["categories"])-1];
+					// get category for this place
+					$this_category = $places_info[$place["id"]]["categories"][count($places_info[$place["id"]]["categories"])-1];
 				
-		// 			// increment number of places in this subcategory
-		// 			$number_of_places++;
+					// increment number of places in this subcategory
+					$number_of_places++;
 				
-		// 			// increment number of places on this street
-		// 			if(preg_match('/[0-9]+/', $places_info[$place["id"]]["address"])) {
-		// 				$building_number = explode(" ", $places_info[$place["id"]]["address"]);
-		// 				$street = str_replace($building_number[0]." ", "", $places_info[$place["id"]]["address"]);
-		// 			} else {
-		// 				$street = $places_info[$place["id"]]["address"];
-		// 			}
-		// 			$popular["streets"][$street]++;
+					// increment number of places on this street
+					if(preg_match('/[0-9]+/', $places_info[$place["id"]]["address"])) {
+						$building_number = explode(" ", $places_info[$place["id"]]["address"]);
+						$street = str_replace($building_number[0]." ", "", $places_info[$place["id"]]["address"]);
+					} else {
+						$street = $places_info[$place["id"]]["address"];
+					}
+					$popular["streets"][$street]++;
 				
-		// 			// increment number of places in this neighborhood
-		// 			$popular["neighborhoods"][$places_info[$place["id"]]["neighborhood"]]++;
+					// increment number of places in this neighborhood
+					$popular["neighborhoods"][$places_info[$place["id"]]["neighborhood"]]++;
 				
-		// 			// increment number of places with this rating
-		// 			$popular["ratings"][$places_info[$place["id"]]["rating"]]++;
+					// increment number of places with this rating
+					$popular["ratings"][$places_info[$place["id"]]["rating"]]++;
 					
-		// 			// render place info
-		// 			render_place_info($places_info[$place["id"]], $search_terms_string[$place["id"]], $url_categories, $url_neighborhood_terms, $sub_category_label);
+					// render place info
+					render_place_info($places_info[$place["id"]], $search_terms_string[$place["id"]], $url_categories, $url_neighborhood_terms, $sub_category_label);
 				
-		// 			// empty subcategory places so next subcategory is filled with correct places
-		// 			$places_in_sub_category_sorted = Array();
-		// 		}
+					// empty subcategory places so next subcategory is filled with correct places
+					$places_in_sub_category_sorted = Array();
+				}
 
-		// 	echo "</div>"; // close .subcategory-places
-		// }
+			echo "</div>"; // close .subcategory-places
+		}
 				
 		echo "</div>"; // close #places
 		
