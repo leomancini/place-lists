@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 	function generate_category_urls($this_categories_names) {
 		global $db;
 		
@@ -435,9 +431,9 @@ error_reporting(E_ALL);
 		
 		// get neighborhood data for each place
 		$neighborhood_query = mysqli_query($db, "SELECT * FROM neighborhoods ".$query);
-		while($neighborhood_info = mysqli_fetch_array($neighborhood_query)) {
-			$neighborhood_info_set[$neighborhood_info["foursquare_id"]] = $neighborhood_info;
-		}
+		// while($neighborhood_info = mysqli_fetch_array($neighborhood_query)) {
+		// 	$neighborhood_info_set[$neighborhood_info["foursquare_id"]] = $neighborhood_info;
+		// }
 		
 		$places_info_query = mysqli_query($db, "SELECT * FROM places ".$query);
 		while($place = mysqli_fetch_array($places_info_query)) {
