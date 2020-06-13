@@ -389,9 +389,9 @@
 					." ".
 					$place_info["country_code"]);
 			
-				// if(!is_mobile()) {
+				if(!is_mobile()) {
 					$target = " target='_blank'";
-				// }
+				}
 			$description_items["address"] = "
 				<a class='address' href='".$google_maps_url."'".$target.">".
 					$place_info["address"].
