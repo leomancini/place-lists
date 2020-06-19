@@ -1,5 +1,6 @@
-<pre>
 <?php
+	// echo "<pre>";
+
 	include("base.php");
 	require("country-continent-mapping.php");
 	
@@ -82,14 +83,14 @@
 		foreach($database_lists as $database_list_id => $database_list_name) {
 			if(in_array($database_list_id."/".$database_list_name, $foursquare_list_id_and_name_pair)) {
 				// Database item still exists in Foursquare and is unchanged
-				echo "KEEP: ".$database_list_id." '".$database_list_name."' (still exists on Foursquare)<br>";
+				// echo "KEEP: ".$database_list_id." '".$database_list_name."' (still exists on Foursquare)<br>";
 
 				// Update count
 				$places_count = $foursquare_lists_places_count[$database_list_id];
 				mysqli_query($db, "UPDATE lists SET places_count='".$places_count."' WHERE foursquare_id='".$database_list_id."'");
 			} else {
 				// Database item doesn't exists in Foursquare
-				echo "DELETE: ".$database_list_id." '".$database_list_name."' (missing from Foursquare)<br>";
+				// echo "DELETE: ".$database_list_id." '".$database_list_name."' (missing from Foursquare)<br>";
 				$database_list_id = mysqli_real_escape_string($db, $database_list_id);
 				
 				// DELETE THIS LIST FROM DATABASE
@@ -104,18 +105,18 @@
 			}
 		}
 	
-		echo "<h3>Foursquare check:</h3>";
+		// echo "<h3>Foursquare check:</h3>";
 		foreach($foursquare_lists as $foursquare_list_id => $foursquare_list_name) {
 			if(in_array($foursquare_list_id."/".$foursquare_list_name, $database_list_id_and_name_pair)) {
 				// Foursquare item still exists in database and is unchanged
-				echo "KEEP: ".$foursquare_list_id." '".$foursquare_list_name."' (still exists in db)<br>";
+				// echo "KEEP: ".$foursquare_list_id." '".$foursquare_list_name."' (still exists in db)<br>";
 
 				// Update count
 				$places_count = $foursquare_lists_places_count[$foursquare_list_id];
 				mysqli_query($db, "UPDATE lists SET places_count='".$places_count."' WHERE foursquare_id='".$foursquare_list_id."'");
 			} else {
 				// Foursquare item doesn't exist in database
-				echo "ADD: ".$foursquare_list_id." '".$foursquare_list_name."' (missing from db)<br>";
+				// echo "ADD: ".$foursquare_list_id." '".$foursquare_list_name."' (missing from db)<br>";
 
 				// CREATE HEADER IMAGE DIRECTORY
 				mkdir("../images/list-headers/".convert("list", "url", $foursquare_list_name)."/");
@@ -376,10 +377,12 @@
 	$foursquare_lists = Array();
 	get_all_lists();
 	sync_lists();
+
 	foreach($foursquare_lists as $list_id => $list_name) {
 		get_places($list_id);
 	}
 	
 	include("end.php");
+
+	// echo "<pre>";
 ?>
-</pre>
