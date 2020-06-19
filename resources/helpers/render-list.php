@@ -49,10 +49,10 @@
 		// if list has more than 1 place, render search and search suggestions
 		if($number_of_places > 1) {
 			render_search($url_neighborhood, $url_category_names);
-			// if(!is_mobile()) {
-			// 	$search_suggestions = generate_search_suggestions($popular);
-			// 	render_search_suggestions($search_suggestions);
-			// }
+			if(!is_mobile()) {
+				$search_suggestions = generate_search_suggestions($popular);
+				render_search_suggestions($search_suggestions);
+			}
 		}
 
 		echo "</div>";
@@ -93,11 +93,11 @@
 				echo "<span class='label'>";
 				echo $subcategory_info["name_display"];	
 				echo "</span>";
-				// if(!is_mobile()) {
-				// 	echo "<span class='count'>&nbsp;&nbsp;";
-				// 	echo "".$subcategory_info["count"];
-				// 	echo "</span>";
-				// }
+				if(!is_mobile()) {
+					echo "<span class='count'>&nbsp;&nbsp;";
+					echo "".$subcategory_info["count"];
+					echo "</span>";
+				}
 				echo "</a>";
 				echo "</span>";
 			}
@@ -147,11 +147,11 @@
 					echo "<span class='label'>";
 					echo $neighborhood_info["label"];	
 					echo "</span>";
-					// if(!is_mobile()) {
-					// 	echo "<span class='count'>&nbsp;&nbsp;";
-					// 	echo "".$neighborhood_info["count"];
-					// 	echo "</span>";
-					// }
+					if(!is_mobile()) {
+						echo "<span class='count'>&nbsp;&nbsp;";
+						echo "".$neighborhood_info["count"];
+						echo "</span>";
+					}
 					echo "</a>";
 					echo "</span>";
 				}
@@ -265,6 +265,8 @@
 	}
 	
 	function render_place_info($place_info, $search_terms_string, $url_categories, $url_neighborhood_terms, $sub_category_label) {
+		echo 'data-neighborhood="'.strtolower(strip_accents(convert("neighborhood", "url", $place_info["neighborhood"]))).'"';
+
 		echo "<div class='place'";
 		echo 'data-search-terms="'.strtolower(strip_accents($search_terms_string)).'"';
 		echo 'data-subcategory="'.strtolower(strip_accents($sub_category_label)).'"';
@@ -389,14 +391,14 @@
 					." ".
 					$place_info["country_code"]);
 			
-			// if(!is_mobile()) {
-			// 	$target = "_blank";
-			// } else {
-			// 	$target = "";
-			// }
+			if(!is_mobile()) {
+				$target = "_blank";
+			} else {
+				$target = "";
+			}
 
 			$description_items["address"] = "
-				<a class='address' href='".$google_maps_url."'>".
+				<a class='address' href='".$google_maps_url."' target='".$target."'>".
 					$place_info["address"].
 				"</a>";
 		}
