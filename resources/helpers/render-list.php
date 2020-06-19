@@ -272,7 +272,7 @@
 		echo ' data-rating="'.number_format($place_info["rating"], 1).'">';
 
 			$place_url = "https://foursquare.com/v/".$place_info["foursquare_id"];
-			
+
 			echo "<a href='".$place_url."' target='_blank'>";
 				echo "<span class='place-image-wrapper'>";
 				if($place_info["photo_url_prefix"] != "" && $place_info["photo_url_suffix"] != "") {
@@ -390,10 +390,10 @@
 					." ".
 					$place_info["country_code"]);
 			
+			$target = "";
+
 			if(!is_mobile()) {
 				$target = "_blank";
-			} else {
-				$target = "";
 			}
 
 			$description_items["address"] = "
