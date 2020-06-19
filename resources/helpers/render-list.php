@@ -265,19 +265,20 @@
 	}
 	
 	function render_place_info($place_info, $search_terms_string, $url_categories, $url_neighborhood_terms, $sub_category_label) {
-		echo "div class='place'";
-		echo 'data-search-terms="'.strtolower(strip_accents($search_terms_string)).'"';
-		echo 'data-subcategory="'.strtolower(strip_accents($sub_category_label)).'"';
-		echo 'data-neighborhood="'.strtolower(strip_accents(convert("neighborhood", "url", $place_info["neighborhood"]))).'"';
-		echo "data-rating='".number_format($place_info["rating"], 1)."'>";
+		// echo "div class='place'";
+		// echo 'data-search-terms="'.strtolower(strip_accents($search_terms_string)).'"';
+		// echo 'data-subcategory="'.strtolower(strip_accents($sub_category_label)).'"';
+		// echo 'data-neighborhood="'.strtolower(strip_accents(convert("neighborhood", "url", $place_info["neighborhood"]))).'"';
+		// echo "data-rating='".number_format($place_info["rating"], 1)."'>";
 
-		echo "<div class='place'";
-		echo 'data-search-terms="'.strtolower(strip_accents($search_terms_string)).'"';
-		echo 'data-subcategory="'.strtolower(strip_accents($sub_category_label)).'"';
-		echo 'data-neighborhood="'.strtolower(strip_accents(convert("neighborhood", "url", $place_info["neighborhood"]))).'"';
-		echo "data-rating='".number_format($place_info["rating"], 1)."'>";
+		echo '<div class="place"';
+		echo ' data-search-terms="'.strtolower(strip_accents($search_terms_string)).'"';
+		echo ' data-subcategory="'.strtolower(strip_accents($sub_category_label)).'"';
+		echo ' data-neighborhood="'.strtolower(strip_accents(convert("neighborhood", "url", $place_info["neighborhood"]))).'"';
+		echo ' data-rating="'.number_format($place_info["rating"], 1).'">';
 
 			$place_url = "https://foursquare.com/v/".$place_info["foursquare_id"];
+			
 			echo "<a href='".$place_url."' target='_blank'>";
 				echo "<span class='place-image-wrapper'>";
 				if($place_info["photo_url_prefix"] != "" && $place_info["photo_url_suffix"] != "") {
