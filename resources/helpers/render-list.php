@@ -49,10 +49,10 @@
 		// if list has more than 1 place, render search and search suggestions
 		if($number_of_places > 1) {
 			render_search($url_neighborhood, $url_category_names);
-			// if(!is_mobile()) {
-			// 	$search_suggestions = generate_search_suggestions($popular);
-			// 	render_search_suggestions($search_suggestions);
-			// }
+			if(!is_mobile()) {
+				$search_suggestions = generate_search_suggestions($popular);
+				render_search_suggestions($search_suggestions);
+			}
 		}
 
 		echo "</div>";
