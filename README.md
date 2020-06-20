@@ -11,7 +11,7 @@ I love traveling and documenting my experiences. I make lists to remember places
 
 ### Sample Pages
 
-- **Category:** &nbsp; 🌮 <a href="https://places.leo.gd/los-angeles/food" target="_blank">Food in Los Angeles &nbsp;&nbsp; 💃 [Nightlife in Tel Aviv](https://places.leo.gd/tel-aviv/nightlife) &nbsp;&nbsp; 🏛 [Museums in Berlin](https://places.leo.gd/berlin/arts-and-entertainment/museum)
+- **Category:** &nbsp; 🌮 [Food in Los Angeles](https://places.leo.gd/los-angeles/food) &nbsp;&nbsp; 💃 [Nightlife in Tel Aviv](https://places.leo.gd/tel-aviv/nightlife) &nbsp;&nbsp; 🏛 [Museums in Berlin](https://places.leo.gd/berlin/arts-and-entertainment/museum)
 
 - **Sub-Category:** &nbsp; 🍦 [Ice Cream in San Francisco](https://places.leo.gd/san-francisco#ice%20cream) &nbsp;&nbsp; 📚 [Book Stores in London](https://places.leo.gd/london#bookstore) &nbsp;&nbsp; 🎨 [Art in Vienna](https://places.leo.gd/vienna#art)
 
