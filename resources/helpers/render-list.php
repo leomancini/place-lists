@@ -265,10 +265,7 @@
 	}
 	
 	function render_place_info($place_info, $search_terms_string, $url_categories, $url_neighborhood_terms, $sub_category_label) {
-		
-		echo ' data-subcategory="'.strtolower(strip_accents($sub_category_label)).'"';
-		
-		echo '<div class="place"';
+		echo ' <div class="place"';
 		echo ' data-search-terms="'.strtolower(strip_accents($search_terms_string)).'"';
 		echo ' data-subcategory="'.strtolower(strip_accents($sub_category_label)).'"';
 		echo ' data-neighborhood="'.strtolower(strip_accents(convert("neighborhood", "url", $place_info["neighborhood"]))).'"';
