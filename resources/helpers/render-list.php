@@ -147,11 +147,11 @@
 					echo "<span class='label'>";
 					echo $neighborhood_info["label"];	
 					echo "</span>";
-					// if(!is_mobile()) {
-					// 	echo "<span class='count'>&nbsp;&nbsp;";
-					// 	echo "".$neighborhood_info["count"];
-					// 	echo "</span>";
-					// }
+					if(!is_mobile()) {
+						echo "<span class='count'>&nbsp;&nbsp;";
+						echo "".$neighborhood_info["count"];
+						echo "</span>";
+					}
 					echo "</a>";
 					echo "</span>";
 				}
