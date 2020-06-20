@@ -93,11 +93,11 @@
 				echo "<span class='label'>";
 				echo $subcategory_info["name_display"];	
 				echo "</span>";
-				// if(!is_mobile()) {
-				// 	echo "<span class='count'>&nbsp;&nbsp;";
-				// 	echo "".$subcategory_info["count"];
-				// 	echo "</span>";
-				// }
+				if(!is_mobile()) {
+					echo "<span class='count'>&nbsp;&nbsp;";
+					echo "".$subcategory_info["count"];
+					echo "</span>";
+				}
 				echo "</a>";
 				echo "</span>";
 			}
