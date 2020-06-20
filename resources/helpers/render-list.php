@@ -390,10 +390,10 @@
 					." ".
 					$place_info["country_code"]);
 			
+			$target = "";
+
 			if(!is_mobile()) {
 				$target = "_blank";
-			} else {
-				$target = "";
 			}
 
 			$description_items["address"] = "
