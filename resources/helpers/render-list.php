@@ -390,11 +390,11 @@
 					." ".
 					$place_info["country_code"]);
 			
-			$target = "";
+			// $target = "";
 
-			if(!is_mobile()) {
-				$target = "_blank";
-			}
+			// if(!is_mobile()) {
+			// 	$target = "_blank";
+			// }
 
 			$description_items["address"] = "
 				<a class='address' href='".$google_maps_url."' target='".$target."'>".
