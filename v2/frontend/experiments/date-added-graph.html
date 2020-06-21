@@ -3,8 +3,6 @@
 	<head>
         <meta charset="utf-8">
 		<title>Date Added Visualization</title>
-		<link rel="stylesheet/less" href="resources/css/style.less">
-		<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" ></script>
         <script src="https://d3js.org/d3.v4.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <style>     
@@ -61,7 +59,7 @@
         <svg width="640" height="480"></svg>
         <script>
             var svg = d3.select("svg"),
-                margin = {top: 20, right: 20, bottom: 30, left: 40},
+                margin = {top: 10, right: 60, bottom: 60, left: 60},
                 width = +svg.attr("width") - margin.left - margin.right,
                 height = +svg.attr("height") - margin.top - margin.bottom;
 
@@ -80,7 +78,7 @@
             var g = svg.append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            d3.json(`../api/list.php?foursquare_list_id=${window.location.hash.replace('#', '')}`, function(error, dataInput) {
+            d3.json(`../../api/list.php?foursquare_list_id=${window.location.hash.replace('#', '')}`, function(error, dataInput) {
                 if (error) throw error;
 
                 window.document.title = dataInput.metadata.name;
@@ -111,11 +109,12 @@
 
                 g.append("g")
                     .attr("class", "axis axis--x")
-                    .attr("transform", "translate(0," + height + ")")
+                    .attr("transform", "translate(0, " + (height + 30) + ")")
                     .call(d3.axisBottom(x).ticks(6))
 
                 g.append("g")
                     .attr("class", "axis axis--y")
+                    .attr("transform", "translate(-30, 0)")
                     .call(d3.axisLeft(y).ticks(4))
 
                 g.append("path")
