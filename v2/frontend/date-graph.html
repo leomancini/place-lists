@@ -70,7 +70,7 @@ var line = d3.line()
 var g = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json(`../backend/list.php?foursquare_list_id=${window.location.hash.replace('#', '')}`, function(error, dataInput) {
+d3.json(`../api/list.php?foursquare_list_id=${window.location.hash.replace('#', '')}`, function(error, dataInput) {
     if (error) throw error;
     
     window.document.title = dataInput.metadata.name;
