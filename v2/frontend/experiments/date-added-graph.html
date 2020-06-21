@@ -81,7 +81,7 @@
             d3.json(`../../api/list.php?foursquare_list_id=${window.location.hash.replace('#', '')}`, function(error, dataInput) {
                 if (error) throw error;
 
-                window.document.title = dataInput.metadata.name;
+                window.document.title = `${dataInput.metadata.name} – ${window.document.title}`;
                 document.querySelector("h1").innerText = dataInput.metadata.name;
 
                 let data = dataInput.places.metadata.saved_timestamp_counts.map((saved_timestamps_count) => {
