@@ -12,7 +12,7 @@
 
             h1 {
                 font: bold 28px 'Helvetica Neue';
-                margin: 0;
+                margin: 0 0 30px 0;
             }
             
             .axis path,
@@ -30,7 +30,6 @@
 
             .line {
                 fill: none;
-                stroke: #2D9AFF;
                 stroke-width: 4px;
             }
 
@@ -58,6 +57,21 @@
         <h1></h1>
         <svg width="640" height="480"></svg>
         <script>
+            const pathColors = [
+                "#FF522D",
+                "#7DFF2D",
+                "#572DFF",
+                "#FF852D",
+                "#2DD9FF",
+                "#A22DFF",
+                "#FFC42D",
+                "#2D9AFF",
+                "#E22DFF",
+                "#FFEA2D",
+                "#2D5BFF",
+                "#FF2DAB"
+            ];
+
             var svg = d3.select("svg"),
                 margin = {top: 10, right: 60, bottom: 60, left: 60},
                 width = +svg.attr("width") - margin.left - margin.right,
@@ -84,7 +98,7 @@
                 window.document.title = `${dataInput.metadata.name} – ${window.document.title}`;
                 document.querySelector("h1").innerText = dataInput.metadata.name;
 
-                let data = dataInput.places.metadata.saved_timestamp_counts.map((saved_timestamps_count) => {
+                let data = dataInput.places.metadata.saved_timestamp_counts_with_zeros.map((saved_timestamps_count) => {
                     return {
                     'year': parseTime(saved_timestamps_count.date),
                     'test': saved_timestamps_count.date,
@@ -92,7 +106,7 @@
                     }
                 });
 
-                data = data.splice(1); // Remove first value (since initial data was imported from Google Maps)
+                // data = data.splice(1); // Remove first value (since initial data was imported from Google Maps)
 
                 x.domain(d3.extent(data, function(d) {
                     return d.year;
@@ -120,6 +134,7 @@
                 g.append("path")
                     .datum(data)
                     .attr("class", "line")
+                    .attr("stroke", pathColors[Math.floor(Math.random() * pathColors.length)])
                     .attr("d", line);
 
                 // var focus = g.append("g")

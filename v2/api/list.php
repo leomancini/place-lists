@@ -73,6 +73,51 @@
             );
         }
 
+        $dates = [];
+
+        $startYear = 2015;
+        
+        for ($year = $startYear; $year <= date("Y"); $year++) {
+            for ($month = 1; $month <= 12; $month++) {
+                $monthFormatted = str_pad($month, 2, '0', STR_PAD_LEFT);
+
+                if ($year < date("Y")) {
+                    array_push($dates, [
+                        "date" => $year."-".$monthFormatted,
+                        "count" => 0
+                    ]);
+                } else if ($year == date("Y")) {
+                    if ($monthFormatted <= date("m")) {
+                        array_push($dates, [
+                            "date" => $year."-".$monthFormatted,
+                            "count" => 0
+                        ]);
+                    }
+                }
+            }
+        }
+
+        $saved_timestamp_counts_with_zeros = [];
+
+        foreach ($dates as $key => $value) {
+            $saved_timestamp_counts_with_zeros[$key] = $value;
+
+            foreach ($result["places"]["metadata"]["saved_timestamp_counts"] as $timestamp_count) {
+                if ($value["date"] === $timestamp_count["date"]) {
+                    $saved_timestamp_counts_with_zeros[$key] = $timestamp_count;
+                }
+            }
+        }
+        
+        // $result["places"]["metadata"]["saved_timestamp_counts"]
+        
+        usort($saved_timestamp_counts_with_zeros, function($a, $b) {
+            return $b["date"] < $a["date"];
+        });
+
+        $result["places"]["metadata"]["saved_timestamp_counts_with_zeros"] = $saved_timestamp_counts_with_zeros;
+
+        // Median
         $result["places"]["metadata"]["saved_timestamp_median_count"] = getMedian($places_metadata_saved_timestamp_counts);
         
         $places_metadata_saved_timestamps_greater_than_median = [];
