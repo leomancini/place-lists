@@ -73,7 +73,7 @@
             ];
 
             var svg = d3.select("svg"),
-                margin = {top: 10, right: 60, bottom: 60, left: 60},
+                margin = {top: 10, right: 60, bottom: 60, left: 70},
                 width = +svg.attr("width") - margin.left - margin.right,
                 height = +svg.attr("height") - margin.top - margin.bottom;
 
@@ -129,7 +129,7 @@
                 g.append("g")
                     .attr("class", "axis axis--y")
                     .attr("transform", "translate(-30, 0)")
-                    .call(d3.axisLeft(y).ticks(4))
+                    .call(d3.axisLeft(y).ticks(6))
 
                 g.append("path")
                     .datum(data)

@@ -108,9 +108,7 @@
                 }
             }
         }
-        
-        // $result["places"]["metadata"]["saved_timestamp_counts"]
-        
+                
         usort($saved_timestamp_counts_with_zeros, function($a, $b) {
             return $b["date"] < $a["date"];
         });
