@@ -1,5 +1,6 @@
 <pre>
 <?php
+	/*
 	require("../resources/helpers/base.php");
 	
 	// $neighborhood = google_location_metadata("latlng", urlencode($_GET['lat']).",".urlencode($_GET['lng']), "neighborhood")["short_name"];

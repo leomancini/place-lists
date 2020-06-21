@@ -1,4 +1,5 @@
 <?php
+	/*
 	$city = $_GET['city'];
 	require("../resources/helpers/base.php");
 	require("../resources/helpers/render-list.php");

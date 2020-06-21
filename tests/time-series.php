@@ -1,5 +1,6 @@
 <html>
 <?php
+	/*
 	$max_width = 900;
 ?>
 <head>

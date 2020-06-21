@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <meta charset="utf-8">
+		<title>Category Stats</title>
+		<link rel="stylesheet/less" href="experiments-style.less">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" ></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body, html {
+                overflow: hidden;
+            }
+            
+            ul {
+                margin: 0;
+                list-style: none;
+                padding-left: 0;
+                /* width: fit-content; */
+                width: 100%;
+            }
+
+            li {
+                width: 100%;
+                font: 20px 'Helvetica Neue';
+                margin: 0 0 16px 0;
+                display: table;
+                vertical-align: middle;
+            }
+
+            li .image-cell {
+                display: table-cell;
+                width: 60px;
+            }
+
+            li .image-wrapper {
+                background: rgba(0, 0, 0, 0.05);
+                border-radius: 8px;
+                width: 32px;
+                height: 32px;
+                padding: 6px;
+            }
+
+            li .image-wrapper img {
+                width: 32px;
+                height: 32px;
+                filter: brightness(0.6);
+            }
+
+            li label {
+                vertical-align: middle;
+                display: table-cell;
+            }
+
+            li .count {
+                color: rgba(0, 0, 0, 0.4);
+                margin-left: 16px;
+                text-align: right;
+                vertical-align: middle;
+                display: table-cell;
+                padding-left: 24px;
+            }
+        </style>
+	</head>
+	<body>
+        <h1></h1>
+        <ul id="category_stats"></ul>
+        <pre id="debug"></pre>
+        <script type="text/javascript">
+            async function getListData() {
+                try {
+                    const data = await fetch(`../../api/list.php?foursquare_list_id=${window.location.hash.replace('#', '')}`);
+
+                    return await data.json();
+                } catch (error) {
+                    console.log('fetch failed', error);
+                }
+            }
+
+            async function render() {
+                const   listData = await getListData(),
+                        category_stats = document.querySelector("#category_stats"),
+                        title = document.querySelector("h1");
+
+                window.document.title = `${listData.metadata.name} – ${window.document.title}`;
+                title.innerText = listData.metadata.name;
+
+                let category_stat_list_items = '';
+
+                listData.places.metadata.top_categories.map((category) => {
+                    if(category.percentage_in_this_list > 1.8) {
+                        category_stat_list_items += `<li><div class="image-cell"><div class="image-wrapper"><img src="${category.data.icon_url_prefix}64${category.data.icon_url_suffix}"></div></div><label>${category.data.plural_name}</label><span class="count">${(category.percentage_in_this_list).toFixed(1)}%</span></li>`;
+                    }
+                });
+
+                category_stats.innerHTML = category_stat_list_items;
+
+                // document.getElementById('debug').innerHTML = JSON.stringify(listData, null, 2);
+            }
+
+            render();
+        </script>
+	</body>
+</html>
