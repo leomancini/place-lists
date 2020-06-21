@@ -1,5 +1,5 @@
 <?php
-    require("../../config/secrets.php");
+    require("../../../config/secrets.php");
     require("functions.php");
     
     date_default_timezone_set('America/Los_Angeles');

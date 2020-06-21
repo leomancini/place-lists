@@ -2,10 +2,13 @@ Options -Indexes
 
 <IfModule mod_rewrite.c>
 	RewriteEngine On
+	
+	RewriteRule ^v2 - [L,NC] 
+
 	RewriteCond %{HTTPS} !=on
 	RewriteCond %{HTTP_HOST} !=localhost
 	RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] 
-	
+
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 
