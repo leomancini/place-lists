@@ -1,5 +1,5 @@
 <?php
-    require("helpers/base.php");
+    require("base.php");
 
     $foursquare_list_id = $_GET['foursquare_list_id'];
 
@@ -43,90 +43,19 @@
         $places_query->bindParam(':foursquare_list_id', $foursquare_list_id);
         $places_query->execute();
         $places_query->setFetchMode(PDO::FETCH_ASSOC);
-        $places_metadata_saved_timestamps = [];
 
         // Add places data to response
         while($place_data = $places_query->fetch()) {
             array_push($result["places"]["data"], $place_data);
-
-            if($place_data["saved_timestamp"] !== "") {
-                array_push($places_metadata_saved_timestamps, date("Y-m", $place_data["saved_timestamp"]));
-            }
         }
 
-        // Add metadata to response: number of places in list
-        $result["places"]["metadata"]["places_count"] = count($result["places"]["data"]);
-
-        // Add metadata to response: counts of when places were saved
-        $places_metadata_saved_timestamp_counts = array_count_values($places_metadata_saved_timestamps);
-        ksort($places_metadata_saved_timestamp_counts);
+        // Add calculated metadata to response
+        $result["places"]["metadata"] = [
+            "top_categories" => getTopCategories($result["places"]["data"]),
+            "saved_timestamp_counts_with_zeros" => getSavedTimestampStats($result["places"]["data"]),
+            "important_timestamps" => getImportantTimestamps($result["places"]["data"]),
+        ];
         
-        $result["places"]["metadata"]["saved_timestamp_counts"] = [];
-
-        foreach ($places_metadata_saved_timestamp_counts as $date => $count) {
-            array_push(
-                $result["places"]["metadata"]["saved_timestamp_counts"],
-                [
-                    "date" => $date,
-                    "count" => $count
-                ]
-            );
-        }
-
-        $dates = [];
-
-        $startYear = 2015;
-        
-        for ($year = $startYear; $year <= date("Y"); $year++) {
-            for ($month = 1; $month <= 12; $month++) {
-                $monthFormatted = str_pad($month, 2, '0', STR_PAD_LEFT);
-
-                if ($year < date("Y")) {
-                    array_push($dates, [
-                        "date" => $year."-".$monthFormatted,
-                        "count" => 0
-                    ]);
-                } else if ($year == date("Y")) {
-                    if ($monthFormatted <= date("m")) {
-                        array_push($dates, [
-                            "date" => $year."-".$monthFormatted,
-                            "count" => 0
-                        ]);
-                    }
-                }
-            }
-        }
-
-        $saved_timestamp_counts_with_zeros = [];
-
-        foreach ($dates as $key => $value) {
-            $saved_timestamp_counts_with_zeros[$key] = $value;
-
-            foreach ($result["places"]["metadata"]["saved_timestamp_counts"] as $timestamp_count) {
-                if ($value["date"] === $timestamp_count["date"]) {
-                    $saved_timestamp_counts_with_zeros[$key] = $timestamp_count;
-                }
-            }
-        }
-                
-        usort($saved_timestamp_counts_with_zeros, function($a, $b) {
-            return $b["date"] < $a["date"];
-        });
-
-        $result["places"]["metadata"]["saved_timestamp_counts_with_zeros"] = $saved_timestamp_counts_with_zeros;
-
-        // Median
-        $result["places"]["metadata"]["saved_timestamp_median_count"] = getMedian($places_metadata_saved_timestamp_counts);
-        
-        $places_metadata_saved_timestamps_greater_than_median = [];
-        foreach ($result["places"]["metadata"]["saved_timestamp_counts"] as $saved_timestamp_date_count_pair) {
-            if ($saved_timestamp_date_count_pair["count"] > $result["places"]["metadata"]["saved_timestamp_median_count"]) {
-                array_push($places_metadata_saved_timestamps_greater_than_median, $saved_timestamp_date_count_pair);
-            }
-        }
-
-        $result["places"]["metadata"]["greater_than_saved_timestamp_median_count"] = $places_metadata_saved_timestamps_greater_than_median;
-
         // Add metadata to response: if this list is a split list
         if($result["metadata"]["split_list"] === true) {
             $result["metadata"]["places_count"] = strval(count($result["places"]["data"]));
@@ -143,11 +72,10 @@
 
         // Close database connection
         $db = null;
-    }
-        catch(PDOException $error){
+    } catch(PDOException $error) {
         error_log('PDOException - ' . $error->getMessage(), 0);
         http_response_code(500);
 
-        die($error);
+        die('Database error (see logs)');
     }
 ?>

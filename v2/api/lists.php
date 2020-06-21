@@ -1,5 +1,5 @@
 <?php
-    require("helpers/base.php");
+    require("base.php");
 
     $hidden_lists = Array();
 
@@ -35,11 +35,10 @@
         }
 
         $db = null;
-    }
-        catch(PDOException $error){
+    } catch(PDOException $error) {
         error_log('PDOException - ' . $error->getMessage(), 0);
         http_response_code(500);
         
-        die('Error establishing connection with database');
+        die('Database error (see logs)');
     }
 ?>

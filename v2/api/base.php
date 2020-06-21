@@ -1,6 +1,13 @@
 <?php
     require("../../../config/secrets.php");
-    require("functions.php");
+
+    $function_files = scandir("functions");
+
+    foreach($function_files as $function_file) {
+        if($function_file !== '.' && $function_file !== '..') {
+            require("functions/".$function_file);
+        }
+    }
     
     date_default_timezone_set('America/Los_Angeles');
 
