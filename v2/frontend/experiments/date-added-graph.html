@@ -7,7 +7,16 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" ></script>
         <script src="https://d3js.org/d3.v4.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>        
+        <style>     
+            body {
+                margin: 50px;
+            }   
+
+            h1 {
+                font: bold 28px 'Helvetica Neue';
+                margin: 0;
+            }
+            
             .axis path,
             .axis line {
                 fill: none;
@@ -48,6 +57,7 @@
         </style>
 	</head>
 	<body>
+        <h1></h1>
         <svg width="640" height="480"></svg>
         <script>
             var svg = d3.select("svg"),
@@ -74,6 +84,7 @@
                 if (error) throw error;
 
                 window.document.title = dataInput.metadata.name;
+                document.querySelector("h1").innerText = dataInput.metadata.name;
 
                 let data = dataInput.places.metadata.saved_timestamp_counts.map((saved_timestamps_count) => {
                     return {
