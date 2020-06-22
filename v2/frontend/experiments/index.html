@@ -4,45 +4,78 @@
         <meta charset="utf-8">
 		<title>Experiments Index</title>
         <script src="https://d3js.org/d3.v4.js"></script>
-		<link rel="stylesheet/less" href="experiments-style.less">
-		<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" ></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
+        <style type="text/less">
+            @import "experiments-style.less";
+
             ul {
                 margin-top: 50px;
                 list-style: none;
                 padding-left: 0;
                 width: 100%;
-                max-width: 480px;
+                /* max-width: 480px; */
             }
 
             li {
                 width: 100%;
-                margin: 0 0 40px 0;
-            }
+                margin: 0 0 50px 0;
 
-            li label {
-                font: bold 20px 'Helvetica Neue';
-                display: block;
-                padding-bottom: 12px;
-            }
+                h3 {
+                    font: bold 20px 'Helvetica Neue';
+                    display: block;
+                    padding-bottom: 12px;
+                }
 
-            li .links {
-                color: rgba(0, 0, 0, 0.4);
-                display: block;
-            }
+                .links {
+                    display: block;
+                    margin-top: 20px;
+                    font-size: 0;
 
-            li a {
-                color: rgba(0, 0, 0, 0.4);
-                font: 16px 'Helvetica Neue';
-                text-decoration: none;
-                margin-right: 20px;
-            }
-            
-            li a:hover {
-                color: rgba(0, 0, 0, 0.6);
-                font: 16px 'Helvetica Neue';
-                text-decoration: underline;
+                    a {
+                        @media @mobile {    
+                            display: block;
+                            margin-right: 0px;
+                        }
+
+                        transition: all 0.1s;
+                        display: inline-block;
+                        background: rgba(0, 0, 0, 0.05);
+                        padding: 8px 12px;
+                        border-radius: 8px;
+                        margin-bottom: 12px;
+                        margin-right: 12px;
+
+                        &:hover {
+                            background: rgba(0, 0, 0, 0.1);
+
+                            .emoji {
+                                cursor: pointer;
+                            }
+
+                            label {
+                                cursor: pointer;
+                                /* text-decoration: underline; */
+                                color: rgba(0, 0, 0, 0.6);
+                            }
+                        }
+
+                        .emoji {
+                            display: inline-block;
+                            font-size: 20px;
+                            vertical-align: -2px;
+                            margin-right: 8px;
+                            color: rgba(0, 0, 0, 1);
+                        }
+
+                        label {
+                            display: inline-block;
+                            color: rgba(0, 0, 0, 0.5);
+                            font: 16px 'Helvetica Neue';
+                            text-decoration: none;
+                            margin-right: 4px;
+                        }
+                    }
+                }
             }
 
             .date-graph {
@@ -73,6 +106,7 @@
                 pointer-events: all;
             }
         </style>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" ></script>
 	</head>
 	<body>
         <ul id="lists"></ul>
@@ -176,11 +210,12 @@
                 lists.map((list) => {
                     listItemHtml += `
                         <li>
-                            <label>${list.name}</label>
+                            <h3>${list.name}</h3>
                             <svg width="320" height="160" class="date-graph" id="foursquare_id_${list.foursquare_id}"></svg>
                             <div class="links">
-                                <a href="date-added-graph.html#${list.foursquare_id}" target="_blank" rel="noopener">Date Added Graph</a>
-                                <a href="category-stats.html#${list.foursquare_id}" target="_blank" rel="noopener">Category Stats</a>
+                                <a href="date-added-graph.html#${list.foursquare_id}" target="_blank" rel="noopener"><span class="emoji">📈</span><label>Date Added Graph</label></a>
+                                <a href="category-stats.html#${list.foursquare_id}" target="_blank" rel="noopener"><span class="emoji">#️⃣</span><label>Category Stats</label></a>
+                                <a href="https://places.leo.gd/${list.url}" target="_blank" rel="noopener"><span class="emoji">📍</span><label>Places</label></a>
                             </div>
                         </li>
                     `;
@@ -188,6 +223,12 @@
 
                 document.getElementById('lists').innerHTML = listItemHtml;
 
+                let svgs = document.querySelectorAll('svg');
+            
+                svgs.forEach(function(svg) {
+                    svg.setAttribute('width', window.innerWidth - 100);;
+                });
+                
                 lists.map((list) => {
                     renderDataAddedGraph(`foursquare_id_${list.foursquare_id}`, list.foursquare_id);
                 });
