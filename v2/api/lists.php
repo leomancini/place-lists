@@ -17,7 +17,19 @@
         $lists = [];
 
         while($list_data = $lists_query->fetch()) {
+            $this_split_list = false;
+
+            foreach($split_list_combos as $split_list_combo) {
+                if($list_data["foursquare_id"] === $split_list_combo["parent"]) {
+                    $this_split_list = true;
+                    $list_data["places_count"] = places_count($list_data);
+                }
+            }
+
             if(!in_array($list_data["foursquare_id"], $hidden_lists)) {
+                $list_data["url"] = convert("url", "url", $list_data["name"]);
+                $list_data["split_list"] = $this_split_list;
+
                 array_push($lists, $list_data);
             }
         }

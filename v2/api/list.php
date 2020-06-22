@@ -23,6 +23,7 @@
 
         // Add metadata to response: all fields from database
         $result["metadata"] = $metadata;
+        $result["metadata"]["url"] = convert("url", "url", $result["metadata"]["name"]);
         $result["metadata"]["split_list"] = false;
 
         // Get places data

@@ -15,6 +15,19 @@
                 width: 100%;
             }
 
+            a.category {
+                text-decoration: none;
+            }
+
+            a.category:hover {
+                cursor: pointer;
+            }
+
+            a.category:hover label {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+
             li {
                 width: 100%;
                 font: 18px 'Helvetica Neue';
@@ -103,6 +116,7 @@
 
                 listData.places.metadata.top_categories.map((category) => {
                     if(category.percentage_in_this_list > 1.8) {
+                        // category_stat_list_items += `<a class="category" target="_blank" rel="noopener" href="https://places.leo.gd/${listData.metadata.url}#${encodeURIComponent(category.data.name)}"><li><div class="image-cell"><div class="image-wrapper"><img src="${category.data.icon_url_prefix}64${category.data.icon_url_suffix}"></div></div><label>${category.data.plural_name}</label><span class="count">${(category.percentage_in_this_list).toFixed(1)}%</span></li></a>`;
                         category_stat_list_items += `<li><div class="image-cell"><div class="image-wrapper"><img src="${category.data.icon_url_prefix}64${category.data.icon_url_suffix}"></div></div><label>${category.data.plural_name}</label><span class="count">${(category.percentage_in_this_list).toFixed(1)}%</span></li>`;
                     }
                 });
