@@ -7,12 +7,8 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" ></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
-            body, html {
-                overflow: hidden;
-            }
-            
             ul {
-                margin: 0;
+                margin-top: 50px;
                 list-style: none;
                 padding-left: 0;
                 /* width: fit-content; */
@@ -21,7 +17,7 @@
 
             li {
                 width: 100%;
-                font: 20px 'Helvetica Neue';
+                font: 18px 'Helvetica Neue';
                 margin: 0 0 16px 0;
                 display: table;
                 vertical-align: middle;
@@ -38,15 +34,17 @@
                 width: 32px;
                 height: 32px;
                 padding: 6px;
+                user-select: none;
             }
 
             li .image-wrapper img {
                 width: 32px;
                 height: 32px;
-                filter: brightness(0.6);
+                filter: brightness(0.5);
             }
 
             li label {
+                color: rgba(0, 0, 0, 0.8);
                 vertical-align: middle;
                 display: table-cell;
             }
@@ -59,11 +57,26 @@
                 display: table-cell;
                 padding-left: 24px;
             }
+
+            #credit {
+                margin-top: 50px;
+                color: rgba(0, 0, 0, 0.2);
+                font: 14px 'Helvetica Neue';
+            }
+
+            #credit a {
+                color: rgba(0, 0, 0, 0.2);
+            }
+
+            #credit a:hover {
+                text-decoration: none;
+            }
         </style>
 	</head>
 	<body>
         <h1></h1>
         <ul id="category_stats"></ul>
+        <div id="credit">Category names and icons from <a href="https://developer.foursquare.com/docs/api-reference/venues/categories/">Foursquare Places API</a>.</div>
         <pre id="debug"></pre>
         <script type="text/javascript">
             async function getListData() {
