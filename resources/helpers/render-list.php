@@ -314,12 +314,9 @@
 			convert("category", "display", $place_info["categories"][$this_category_key]["name"]),
 			$place_info["name"],
 			$place_info["address"],
-			number_format(floatval($place_info["rating"]), 1)
+			convert("neighborhood", "url", $place_info["neighborhood"]),
+			number_format($place_info["rating"], 1)
 		);
-
-		if(isset($place_info["neighborhood"])) {
-			array_push($search_terms, convert("neighborhood", "url", $place_info["neighborhood"]));
-		}
 		
 		// remove special characters
 		$special_characters_to_remove = Array("-", "%", "&", "'");
@@ -347,13 +344,9 @@
 		}
 		
 		// combine search terms into string
-		if(isset($place)) {
-			$search_terms_string[$place["id"]] = implode(" ", $search_terms);
-		}
-
-		if(isset($place)) {
-			return $search_terms_string[$place["id"]];
-		}
+		$search_terms_string[$place["id"]] = implode(" ", $search_terms);
+		
+		return $search_terms_string[$place["id"]];
 	}
 	
 	function render_place_description_items($place_info, $url_categories, $url_neighborhood_terms) {
@@ -535,7 +528,7 @@
 				}
 				
 				// add neighborhood data to regular places_info array
-				if(isset($neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"])) {
+				if($neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"]) {
 					$places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
 				}
 			
@@ -638,33 +631,22 @@
 					$this_category = $places_info[$place["id"]]["categories"][count($places_info[$place["id"]]["categories"])-1];
 				
 					// increment number of places in this subcategory
-					if(isset($number_of_places)) {
-						$number_of_places++;
-					}
+					$number_of_places++;
 				
 					// increment number of places on this street
-					if(isset($places_info[$place["id"]]["address"])) {
-						if(preg_match('/[0-9]+/', $places_info[$place["id"]]["address"])) {
-							$building_number = explode(" ", $places_info[$place["id"]]["address"]);
-							$street = str_replace($building_number[0]." ", "", $places_info[$place["id"]]["address"]);
-						} else {
-							$street = $places_info[$place["id"]]["address"];
-						}
+					if(preg_match('/[0-9]+/', $places_info[$place["id"]]["address"])) {
+						$building_number = explode(" ", $places_info[$place["id"]]["address"]);
+						$street = str_replace($building_number[0]." ", "", $places_info[$place["id"]]["address"]);
+					} else {
+						$street = $places_info[$place["id"]]["address"];
 					}
-
-					if(isset($popular["streets"][$street])) {
-						$popular["streets"][$street]++;
-					}
+					$popular["streets"][$street]++;
 				
 					// increment number of places in this neighborhood
-					if(isset($places_info[$place["id"]]["neighborhood"])) {
-						$popular["neighborhoods"][$places_info[$place["id"]]["neighborhood"]]++;
-					}
+					$popular["neighborhoods"][$places_info[$place["id"]]["neighborhood"]]++;
 				
 					// increment number of places with this rating
-					if(isset($popular["ratings"][$places_info[$place["id"]]["rating"]])) {
-						$popular["ratings"][$places_info[$place["id"]]["rating"]]++;
-					}
+					$popular["ratings"][$places_info[$place["id"]]["rating"]]++;
 					
 					// render place info
 					render_place_info($places_info[$place["id"]], $search_terms_string[$place["id"]], $url_categories, $url_neighborhood_terms, $sub_category_label);

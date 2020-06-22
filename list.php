@@ -79,7 +79,7 @@
 		if(isset($_GET["category4"])) { $title .= " / ".convert("category", "display", $_GET["category4"]); }
 		if(isset($_GET["category5"])) { $title .= " / ".convert("category", "display", $_GET["category5"]); }
 		
-		if(isset($url_neighborhood["url"])) {
+		if($url_neighborhood["url"]) {
 			foreach($url_neighborhood_terms as $url_neighborhood_term) {
 				$check_neighborhood_is_real_query = mysqli_query($db, "SELECT neighborhood_long_name FROM neighborhoods WHERE neighborhood_long_name = '".convert("search-query", "display", $url_neighborhood_term)."' LIMIT 1");
 				$is_real_neighborhood = mysqli_num_rows($check_neighborhood_is_real_query);
@@ -90,7 +90,7 @@
 			}
 		}
 		
-		if(isset($url_neighborhood["url"]) && isset($map_neighborhood)) {
+		if($url_neighborhood["url"] && $map_neighborhood) {
 			$map["center"] = $list["name"]." ".$map_neighborhood;
 			$map["zoom"] = 15;
 		} else {
@@ -127,16 +127,16 @@
 		</head>
 		<body ontouchstart="">
 		<?php
-			if((isset($_GET['category1']) &&
-				isset($_GET['category2']) &&
-				isset($_GET['category3']) &&
-				isset($_GET['category4']) &&
-				isset($_GET['category5']) &&
-				isset($url_neighborhood["url"]))
+			if(($_GET['category1'] == "" &&
+				$_GET['category2'] == "" &&
+				$_GET['category3'] == "" &&
+				$_GET['category4'] == "" &&
+				$_GET['category5'] == "" &&
+				$url_neighborhood["url"] == "")
 			|| is_mobile() == false) {			
 		?>
 			<div id="header-image">
-				<?php if(isset($header_image_path)) { ?>
+				<?php if($header_image_path) { ?>
 					<img class="photo" src="<?php echo $root; ?>/resources/images/list-headers/<?php echo $list_name_url_without_neighborhood; ?>/<?php echo $header_image_path; ?>">	
 				<?php
 					} else {
