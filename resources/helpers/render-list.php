@@ -667,12 +667,12 @@
 		
 				// render list name
 				echo "<h1><a href='".$root.$list_name_url_without_neighborhood."'>".$list["name"]."</a></h1>";
-		
-				// render category breadcrumbs
-				render_category_breadcrumbs($url_category_names, $this_categories_urls, $number_of_places);
 				
 				echo "<div id='empty-search-results'>Nothing found...<br><a id='clear-search'>clear search</a></div>";
-		
+
+				// render category breadcrumbs
+				render_category_breadcrumbs($url_category_names, $this_categories_urls, $number_of_places);
+						
 			echo "</div>"; // close #list-header
 		
 			// render sub category index
