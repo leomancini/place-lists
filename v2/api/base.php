@@ -14,7 +14,13 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
-
+	
+	function strip_accents($str) {
+	    return strtr(utf8_decode($str), utf8_decode(
+		'àáâãäāçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'),
+		'aaaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+    }
+    
 	function convert($type, $direction, $old_string) {
 		$new_string = $old_string;
 		
