@@ -53,7 +53,7 @@
             li .image-wrapper img {
                 width: 32px;
                 height: 32px;
-                filter: brightness(0.5);
+                filter: brightness(0.6);
             }
 
             li label {
@@ -114,8 +114,8 @@
 
                 let category_stat_list_items = '';
 
-                listData.places.metadata.top_categories.map((category) => {
-                    if(category.percentage_in_this_list > 1.8) {
+                listData.places.metadata.top_categories.map((category, index) => {
+                    if(index < 10 && category.percentage_in_this_list > 1.8) {
                         // category_stat_list_items += `<a class="category" target="_blank" rel="noopener" href="https://places.leo.gd/${listData.metadata.url}#${encodeURIComponent(category.data.name)}"><li><div class="image-cell"><div class="image-wrapper"><img src="${category.data.icon_url_prefix}64${category.data.icon_url_suffix}"></div></div><label>${category.data.plural_name}</label><span class="count">${(category.percentage_in_this_list).toFixed(1)}%</span></li></a>`;
                         category_stat_list_items += `<li><div class="image-cell"><div class="image-wrapper"><img src="${category.data.icon_url_prefix}64${category.data.icon_url_suffix}"></div></div><label>${category.data.plural_name}</label><span class="count">${(category.percentage_in_this_list).toFixed(1)}%</span></li>`;
                     }
