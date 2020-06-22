@@ -13,97 +13,90 @@
                 list-style: none;
                 padding-left: 0;
                 width: 100%;
-                /* max-width: 480px; */
-            }
 
-            li {
-                width: 100%;
-                margin: 0 0 50px 0;
+                li {
+                    width: 100%;
+                    margin: 0 0 80px 0;
 
-                h3 {
-                    font: bold 20px 'Helvetica Neue';
-                    display: block;
-                    padding-bottom: 12px;
-                }
+                    .links {
+                        display: block;
+                        margin-top: 20px;
+                        font-size: 0;
 
-                .links {
-                    display: block;
-                    margin-top: 20px;
-                    font-size: 0;
+                        a {
+                            @media @mobile {    
+                                display: block;
+                                margin-right: 0px;
+                            }
 
-                    a {
-                        @media @mobile {    
-                            display: block;
-                            margin-right: 0px;
-                        }
+                            transition: all 0.1s;
+                            display: inline-block;
+                            background: rgba(0, 0, 0, 0.05);
+                            padding: 8px 12px;
+                            border-radius: 8px;
+                            margin-bottom: 12px;
+                            margin-right: 12px;
 
-                        transition: all 0.1s;
-                        display: inline-block;
-                        background: rgba(0, 0, 0, 0.05);
-                        padding: 8px 12px;
-                        border-radius: 8px;
-                        margin-bottom: 12px;
-                        margin-right: 12px;
+                            &:hover {
+                                background: rgba(0, 0, 0, 0.1);
 
-                        &:hover {
-                            background: rgba(0, 0, 0, 0.1);
+                                .emoji {
+                                    cursor: pointer;
+                                }
+
+                                label {
+                                    cursor: pointer;
+                                    /* text-decoration: underline; */
+                                    color: rgba(0, 0, 0, 0.6);
+                                }
+                            }
 
                             .emoji {
-                                cursor: pointer;
+                                display: inline-block;
+                                font-size: 20px;
+                                vertical-align: -2px;
+                                margin-right: 8px;
+                                color: rgba(0, 0, 0, 1);
                             }
 
                             label {
-                                cursor: pointer;
-                                /* text-decoration: underline; */
-                                color: rgba(0, 0, 0, 0.6);
+                                display: inline-block;
+                                color: rgba(0, 0, 0, 0.5);
+                                font: 16px 'Helvetica Neue';
+                                text-decoration: none;
+                                margin-right: 4px;
                             }
                         }
+                    }
 
-                        .emoji {
-                            display: inline-block;
-                            font-size: 20px;
-                            vertical-align: -2px;
-                            margin-right: 8px;
-                            color: rgba(0, 0, 0, 1);
+                    .date-graph {
+                        margin-bottom: 20px;
+
+                        .axis path,
+                        .axis line {
+                            fill: none;
+                            stroke: rgba(0, 0, 0, 0.2);
+                            stroke-width: 0px;
+                            shape-rendering: crispEdges;
                         }
 
-                        label {
-                            display: inline-block;
-                            color: rgba(0, 0, 0, 0.5);
+                        .axis text {
                             font: 16px 'Helvetica Neue';
-                            text-decoration: none;
-                            margin-right: 4px;
+                            fill: rgba(0, 0, 0, 0.5);
+                        }
+
+                        .line {
+                            fill: none;
+                            stroke-width: 4px;
+                            stroke-linecap: round;
+                        }
+
+                        .overlay {
+                            fill: none;
+                            pointer-events: all;
                         }
                     }
                 }
-            }
-
-            .date-graph {
-                margin-bottom: 20px;
-            }
-
-            .axis path,
-            .axis line {
-                fill: none;
-                stroke: rgba(0, 0, 0, 0.2);
-                stroke-width: 0px;
-                shape-rendering: crispEdges;
-            }
-
-            .axis text {
-                font: 16px 'Helvetica Neue';
-                fill: rgba(0, 0, 0, 0.5);
-            }
-
-            .line {
-                fill: none;
-                stroke-width: 4px;
-                stroke-linecap: round;
-            }
-
-            .overlay {
-                fill: none;
-                pointer-events: all;
             }
         </style>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" ></script>
@@ -210,7 +203,7 @@
                 lists.map((list) => {
                     listItemHtml += `
                         <li>
-                            <h3>${list.name}</h3>
+                            <h1>${list.name}</h1>
                             <svg width="320" height="160" class="date-graph" id="foursquare_id_${list.foursquare_id}"></svg>
                             <div class="links">
                                 <a href="date-added-graph.html#${list.foursquare_id}" target="_blank" rel="noopener"><span class="emoji">📈</span><label>Date Added Graph</label></a>
