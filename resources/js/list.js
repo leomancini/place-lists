@@ -182,19 +182,19 @@ function is_mobile() {
 }
 
 function set_places_margin_top() {
-	if(window.mobile) {
-		if($(".index-container").length > 0) {
-			$("#places").css("margin-top", $("#navigation").height());
-		} else {
-			$("#places").css("margin-top", $("#navigation").height() + 39);
-		}
+	// if(window.mobile) {
+	// 	if($(".index-container").length > 0) {
+	// 		$("#places").css("margin-top", $("#navigation").height());
+	// 	} else {
+	// 		$("#places").css("margin-top", $("#navigation").height() + 39);
+	// 	}
 		
-	} else {
+	// } else {
 		if($(".index-container").length > 0) {
 			$("#places").css("margin-top", $("#list-header").height() + 39);
 		}
 		$("#places").css("opacity", 1);
-	}
+	// }
 	
 	// update index to reflect current search results
 	if($(".index-container").length <= 0 && $(".search-container").length <= 0) {
@@ -245,7 +245,7 @@ function set_subcategory_index_state() {
 	
 	if($(".subcategory-places:visible").length == 1) {
 		$(".subcategory-header-replacement").parent(".subcategory-places.positive-search-result").children(".place:first").css("margin-top", 0);
-		if(window.mobile) { $(".subcategory-header-replacement").css("margin-top", "-20px"); }
+		// if(window.mobile) { $(".subcategory-header-replacement").css("margin-top", "-20px"); }
 	}
 
 }
