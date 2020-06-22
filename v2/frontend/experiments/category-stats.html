@@ -11,8 +11,8 @@
                 margin-top: 50px;
                 list-style: none;
                 padding-left: 0;
-                /* width: fit-content; */
                 width: 100%;
+                max-width: 480px;
             }
 
             a.category {
@@ -70,25 +70,11 @@
                 display: table-cell;
                 padding-left: 24px;
             }
-
-            #credit {
-                margin-top: 50px;
-                color: rgba(0, 0, 0, 0.2);
-                font: 14px 'Helvetica Neue';
-                display: none;
-            }
-
-            #credit a {
-                color: rgba(0, 0, 0, 0.2);
-            }
-
-            #credit a:hover {
-                text-decoration: none;
-            }
         </style>
 	</head>
 	<body>
         <h1></h1>
+        <h2>Top categories of places saved</h2>
         <ul id="category_stats"></ul>
         <div id="credit">Category names and icons from <a href="https://developer.foursquare.com/docs/api-reference/venues/categories/">Foursquare Places API</a>.</div>
         <pre id="debug"></pre>

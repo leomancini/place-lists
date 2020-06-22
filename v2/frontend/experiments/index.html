@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <meta charset="utf-8">
+		<title>Experiments Index</title>
+        <script src="https://d3js.org/d3.v4.js"></script>
+		<link rel="stylesheet/less" href="experiments-style.less">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" ></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            ul {
+                margin-top: 50px;
+                list-style: none;
+                padding-left: 0;
+                width: 100%;
+                max-width: 480px;
+            }
+
+            li {
+                width: 100%;
+                margin: 0 0 40px 0;
+            }
+
+            li label {
+                font: bold 20px 'Helvetica Neue';
+                display: block;
+                padding-bottom: 12px;
+            }
+
+            li .links {
+                color: rgba(0, 0, 0, 0.4);
+                display: block;
+            }
+
+            li a {
+                color: rgba(0, 0, 0, 0.4);
+                font: 16px 'Helvetica Neue';
+                text-decoration: none;
+                margin-right: 20px;
+            }
+            
+            li a:hover {
+                color: rgba(0, 0, 0, 0.6);
+                font: 16px 'Helvetica Neue';
+                text-decoration: underline;
+            }
+
+            .date-graph {
+                margin-bottom: 20px;
+            }
+
+            .axis path,
+            .axis line {
+                fill: none;
+                stroke: rgba(0, 0, 0, 0.2);
+                stroke-width: 0px;
+                shape-rendering: crispEdges;
+            }
+
+            .axis text {
+                font: 16px 'Helvetica Neue';
+                fill: rgba(0, 0, 0, 0.5);
+            }
+
+            .line {
+                fill: none;
+                stroke-width: 4px;
+                stroke-linecap: round;
+            }
+
+            .overlay {
+                fill: none;
+                pointer-events: all;
+            }
+        </style>
+	</head>
+	<body>
+        <ul id="lists"></ul>
+        <script type="text/javascript">
+            function renderDataAddedGraph(svg_id, foursquare_list_id) {
+                const pathColors = [
+                    "#FF522D",
+                    "#7DFF2D",
+                    "#572DFF",
+                    "#FF852D",
+                    "#2DD9FF",
+                    "#A22DFF",
+                    "#FFC42D",
+                    "#2D9AFF",
+                    "#E22DFF",
+                    "#FFEA2D",
+                    "#2D5BFF",
+                    "#FF2DAB"
+                ];
+
+                var svg = d3.select(`svg#${svg_id}`),
+                    margin = { top: -40, right: 3, bottom: 3, left: 3 },
+                    width = +svg.attr("width") - margin.left - margin.right,
+                    height = +svg.attr("height") - margin.top - margin.bottom;
+
+                var parseTime = d3.timeParse("%Y-%m")
+                    bisectDate = d3.bisector(function(d) { return d.year; }).left;
+
+                var x = d3.scaleTime().range([0, width]);
+                var y = d3.scaleLinear().range([height, 0]);
+
+                var line = d3.line()
+                    .x(function(d) { return x(d.year); })
+                    .y(function(d) { return y(d.value); })
+                    // .curve(d3.curveMonotoneX);
+                    .curve(d3.curveBasis);
+
+                var g = svg.append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                d3.json(`../../api/list.php?foursquare_list_id=${foursquare_list_id}`, function(error, dataInput) {
+                    if (error) throw error;
+
+                    // window.document.title = `${dataInput.metadata.name} – ${window.document.title}`;
+                    // document.querySelector("h1").innerText = dataInput.metadata.name;
+
+                    let data = dataInput.places.metadata.saved_timestamp_counts_with_zeros.map((saved_timestamps_count) => {
+                        return {
+                            'year': parseTime(saved_timestamps_count.date),
+                            'test': saved_timestamps_count.date,
+                            'value': saved_timestamps_count.count
+                        }
+                    });
+
+                    x.domain(d3.extent(data, function(d) {
+                        return d.year;
+                    }));
+
+                    y.domain(
+                        [d3.min(data, function(d) {
+                            return d.value;
+                        }) / 1.005,
+                        d3.max(data, function(d) {
+                            return d.value;
+                        }) * 1.005]
+                    );
+
+                    // g.append("g")
+                    //     .attr("class", "axis axis--x")
+                    //     .attr("transform", "translate(0, " + (height + 30) + ")")
+                    //     .call(d3.axisBottom(x).ticks(6))
+
+                    // g.append("g")
+                    //     .attr("class", "axis axis--y")
+                    //     .attr("transform", "translate(-30, 0)")
+                    //     .call(d3.axisLeft(y).ticks(6))
+
+                    g.append("path")
+                        .datum(data)
+                        .attr("class", "line")
+                        .attr("stroke", pathColors[Math.floor(Math.random() * pathColors.length)])
+                        .attr("d", line);
+                });   
+            }
+
+            async function getLists() {
+                try {
+                    const data = await fetch('../../api/lists.php');
+
+                    return await data.json();
+                } catch (error) {
+                    console.log('fetch failed', error);
+                }
+            }
+
+            async function render() {
+                const lists = await getLists();
+
+                let listItemHtml = '';
+
+                lists.map((list) => {
+                    listItemHtml += `
+                        <li>
+                            <label>${list.name}</label>
+                            <svg width="320" height="160" class="date-graph" id="foursquare_id_${list.foursquare_id}"></svg>
+                            <div class="links">
+                                <a href="date-added-graph.html#${list.foursquare_id}" target="_blank" rel="noopener">Date Added Graph</a>
+                                <a href="category-stats.html#${list.foursquare_id}" target="_blank" rel="noopener">Category Stats</a>
+                            </div>
+                        </li>
+                    `;
+                });
+
+                document.getElementById('lists').innerHTML = listItemHtml;
+
+                lists.map((list) => {
+                    renderDataAddedGraph(`foursquare_id_${list.foursquare_id}`, list.foursquare_id);
+                });
+            }
+
+            render();
+        </script>
+	</body>
+</html>
