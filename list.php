@@ -117,7 +117,6 @@
 			<meta name="viewport" content="width = device-width, initial-scale = 1, user-scalable = no" />
 			<script src="<?php echo $root; ?>resources/js/lib/jquery.js"></script>
 			<script src="<?php echo $root; ?>resources/js/lib/stretchy.js" data-filter=".stretchy"></script>
-			<?php if(is_mobile()) { ?><script>$(document).ready(function() { is_mobile(); });</script><?php } ?>
 			<script src="<?php echo $root; ?>resources/js/list.js"></script>
 			<!-- Global site tag (gtag.js) - Google Analytics -->
 			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112757234-2"></script>
@@ -136,7 +135,8 @@
 				$_GET['category3'] == "" &&
 				$_GET['category4'] == "" &&
 				$_GET['category5'] == "" &&
-				$url_neighborhood["url"] == "")) {			
+				$url_neighborhood["url"] == "")
+			|| is_mobile() == false) {			
 		?>
 			<div id="header-image">
 				<?php if($header_image_path) { ?>
