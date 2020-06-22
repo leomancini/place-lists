@@ -136,8 +136,7 @@
 				$_GET['category3'] == "" &&
 				$_GET['category4'] == "" &&
 				$_GET['category5'] == "" &&
-				$url_neighborhood["url"] == "")
-			|| is_mobile() == false) {			
+				$url_neighborhood["url"] == "")) {			
 		?>
 			<div id="header-image">
 				<?php if($header_image_path) { ?>
