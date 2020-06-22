@@ -117,6 +117,7 @@
 			<meta name="viewport" content="width = device-width, initial-scale = 1, user-scalable = no" />
 			<script src="<?php echo $root; ?>resources/js/lib/jquery.js"></script>
 			<script src="<?php echo $root; ?>resources/js/lib/stretchy.js" data-filter=".stretchy"></script>
+			<?php if(is_mobile()) { ?><script>window.mobile = 1;</script><?php } ?>
 			<script src="<?php echo $root; ?>resources/js/list.js"></script>
 			<!-- Global site tag (gtag.js) - Google Analytics -->
 			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112757234-2"></script>
