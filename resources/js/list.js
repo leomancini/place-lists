@@ -207,27 +207,27 @@ function set_subcategory_index_state() {
 	
 	$("a.index-show-more").hide();
 	
-	if(window.mobile) {
-		$("a.index-show-more").hide();
+	// if(window.mobile) {
+	// 	$("a.index-show-more").hide();
 
-		$(".index").each(function() {
-			width = 0;
-			$(this).children().each(function() {
-				width = parseInt(width) + (parseInt($(this).width()) + parseInt($(this).css("margin-right").replace("px", "")));
-			});
-			$(this).width(width + 10);
+	// 	$(".index").each(function() {
+	// 		width = 0;
+	// 		$(this).children().each(function() {
+	// 			width = parseInt(width) + (parseInt($(this).width()) + parseInt($(this).css("margin-right").replace("px", "")));
+	// 		});
+	// 		$(this).width(width + 10);
 			
-			if($(this).children(":visible").length == 0) {
-				$(this).parent().parent().hide();
-			}
-		});
+	// 		if($(this).children(":visible").length == 0) {
+	// 			$(this).parent().parent().hide();
+	// 		}
+	// 	});
 		
-		search_width = 0;
-		$("#search-suggestions").children(":visible").each(function() {
-			search_width = parseInt(search_width) + (parseInt($(this).outerWidth()) + parseInt($(this).css("margin-right").replace("px", "")));
-		});
-		$("#search-suggestions").width(search_width + 10);
-	} else {	
+	// 	search_width = 0;
+	// 	$("#search-suggestions").children(":visible").each(function() {
+	// 		search_width = parseInt(search_width) + (parseInt($(this).outerWidth()) + parseInt($(this).css("margin-right").replace("px", "")));
+	// 	});
+	// 	$("#search-suggestions").width(search_width + 10);
+	// } else {	
 		$(".index").each(function() {
 			if($(this).children(":visible").length > subcategory_index_max) {
 				$("a.index-show-more#"+$(this).attr("id")).show();
@@ -241,7 +241,7 @@ function set_subcategory_index_state() {
 				}
 			}
 		});
-	}
+	// }
 	
 	if($(".subcategory-places:visible").length == 1) {
 		$(".subcategory-header-replacement").parent(".subcategory-places.positive-search-result").children(".place:first").css("margin-top", 0);
