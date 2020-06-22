@@ -1,18 +1,18 @@
 <?php
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
+	// error_reporting(E_ALL);
+	// ini_set('display_errors', 1);
+	// ini_set('display_startup_errors', 1);
 
 	function generate_category_urls($this_categories_names) {
 		global $db;
 		
 		$this_categories_urls = Array();
 			
-		if($this_categories_names[0]) { $this_categories_urls[0] = $this_categories_names[0]; }
-		if($this_categories_names[1]) { $this_categories_urls[1] = $this_categories_names[0]."/".$this_categories_names[1]; }
-		if($this_categories_names[2]) { $this_categories_urls[2] = $this_categories_names[0]."/".$this_categories_names[1]."/".$this_categories_names[2]; }
-		if($this_categories_names[3]) { $this_categories_urls[3] = $this_categories_names[0]."/".$this_categories_names[1]."/".$this_categories_names[2]."/".$this_categories_names[3]; }
-		if($this_categories_names[4]) { $this_categories_urls[4] = $this_categories_names[0]."/".$this_categories_names[1]."/".$this_categories_names[2]."/".$this_categories_names[3]."/".$this_categories_names[4]; }
+		if(isset($this_categories_names[0])) { $this_categories_urls[0] = $this_categories_names[0]; }
+		if(isset($this_categories_names[1])) { $this_categories_urls[1] = $this_categories_names[0]."/".$this_categories_names[1]; }
+		if(isset($this_categories_names[2])) { $this_categories_urls[2] = $this_categories_names[0]."/".$this_categories_names[1]."/".$this_categories_names[2]; }
+		if(isset($this_categories_names[3])) { $this_categories_urls[3] = $this_categories_names[0]."/".$this_categories_names[1]."/".$this_categories_names[2]."/".$this_categories_names[3]; }
+		if(isset($this_categories_names[4])) { $this_categories_urls[4] = $this_categories_names[0]."/".$this_categories_names[1]."/".$this_categories_names[2]."/".$this_categories_names[3]."/".$this_categories_names[4]; }
 		
 		return $this_categories_urls;
 	}
@@ -314,9 +314,12 @@
 			convert("category", "display", $place_info["categories"][$this_category_key]["name"]),
 			$place_info["name"],
 			$place_info["address"],
-			convert("neighborhood", "url", $place_info["neighborhood"]),
-			number_format($place_info["rating"], 1)
+			number_format(floatval($place_info["rating"]), 1)
 		);
+
+		if(isset($place_info["neighborhood"])) {
+			array_push($search_terms, convert("neighborhood", "url", $place_info["neighborhood"]));
+		}
 		
 		// remove special characters
 		$special_characters_to_remove = Array("-", "%", "&", "'");
@@ -344,9 +347,13 @@
 		}
 		
 		// combine search terms into string
-		$search_terms_string[$place["id"]] = implode(" ", $search_terms);
-		
-		return $search_terms_string[$place["id"]];
+		if(isset($place)) {
+			$search_terms_string[$place["id"]] = implode(" ", $search_terms);
+		}
+
+		if(isset($place)) {
+			return $search_terms_string[$place["id"]];
+		}
 	}
 	
 	function render_place_description_items($place_info, $url_categories, $url_neighborhood_terms) {
@@ -528,7 +535,7 @@
 				}
 				
 				// add neighborhood data to regular places_info array
-				if($neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"]) {
+				if(isset($neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"])) {
 					$places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
 				}
 			
@@ -536,9 +543,9 @@
 				$this_categories_urls = generate_category_urls($this_categories_names);
 				
 				// set category variables
-				$direct_parent_category = $this_categories_urls[$match-2];			
-				$this_sub_category = $this_categories_names[$match_level-1];
-				$next_sub_category = $this_categories_names[$match_level];
+				if(isset($this_categories_urls[$match-2])) { $direct_parent_category = $this_categories_urls[$match-2]; }	
+				if(isset($this_categories_urls[$match_level-1])) { $this_sub_category = $this_categories_names[$match_level-1]; }
+				if(isset($this_categories_urls[$match_level])) { $next_sub_category = $this_categories_names[$match_level]; }
 
 				// generate category info for each place
 				foreach($this_categories_names as $this_category_key => $this_category_value) {
@@ -631,22 +638,33 @@
 					$this_category = $places_info[$place["id"]]["categories"][count($places_info[$place["id"]]["categories"])-1];
 				
 					// increment number of places in this subcategory
-					$number_of_places++;
+					if(isset($number_of_places)) {
+						$number_of_places++;
+					}
 				
 					// increment number of places on this street
-					if(preg_match('/[0-9]+/', $places_info[$place["id"]]["address"])) {
-						$building_number = explode(" ", $places_info[$place["id"]]["address"]);
-						$street = str_replace($building_number[0]." ", "", $places_info[$place["id"]]["address"]);
-					} else {
-						$street = $places_info[$place["id"]]["address"];
+					if(isset($places_info[$place["id"]]["address"])) {
+						if(preg_match('/[0-9]+/', $places_info[$place["id"]]["address"])) {
+							$building_number = explode(" ", $places_info[$place["id"]]["address"]);
+							$street = str_replace($building_number[0]." ", "", $places_info[$place["id"]]["address"]);
+						} else {
+							$street = $places_info[$place["id"]]["address"];
+						}
 					}
-					$popular["streets"][$street]++;
+
+					if(isset($popular["streets"][$street])) {
+						$popular["streets"][$street]++;
+					}
 				
 					// increment number of places in this neighborhood
-					$popular["neighborhoods"][$places_info[$place["id"]]["neighborhood"]]++;
+					if(isset($places_info[$place["id"]]["neighborhood"])) {
+						$popular["neighborhoods"][$places_info[$place["id"]]["neighborhood"]]++;
+					}
 				
 					// increment number of places with this rating
-					$popular["ratings"][$places_info[$place["id"]]["rating"]]++;
+					if(isset($popular["ratings"][$places_info[$place["id"]]["rating"]])) {
+						$popular["ratings"][$places_info[$place["id"]]["rating"]]++;
+					}
 					
 					// render place info
 					render_place_info($places_info[$place["id"]], $search_terms_string[$place["id"]], $url_categories, $url_neighborhood_terms, $sub_category_label);
