@@ -393,11 +393,11 @@
 			$address_link_target = "";
 
 			if(!is_mobile()) {
-				$address_link_target = "_blank";
+				$address_link_target = "target='_blank'";
 			}
 
 			$description_items["address"] = "
-				<a class='address' href='".$google_maps_url."' target='".$address_link_target."'>".
+				<a class='address' href='".$google_maps_url."'".$address_link_target.">".
 					$place_info["address"].
 				"</a>";
 		}
