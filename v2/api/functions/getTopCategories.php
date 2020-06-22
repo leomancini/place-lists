@@ -13,6 +13,7 @@
 
             while($categories_data = $categories_query->fetch()) {
                 $categories_data_output[$categories_data["foursquare_id"]] = $categories_data;
+                $categories_data_output[$categories_data["foursquare_id"]]["url"] = convert("category", "url", $categories_data["name"]);
             }
     
             $db = null;
@@ -43,12 +44,29 @@
 
         foreach($this_list_categories_with_counts as $foursquare_id => $count) {
             if($count > 1 && array_key_exists($foursquare_id, $categories_data)) {
+
+                $url = "";
+
+                foreach($categories_data[$foursquare_id] as $category_data_field => $category_data_value) {
+                    if(
+                        ($category_data_field === "foursquare_id" ||
+                        $category_data_field === "parent_category_foursquare_id" ||
+                        $category_data_field === "grandparent_category_foursquare_id" ||
+                        $category_data_field === "greatgrandparent_category_foursquare_id" ||
+                        $category_data_field === "greatgreatgrandparent_category_foursquare_id") &&
+                        $category_data_value !== ""
+                    ) {
+                        $url .= "/".convert("category", "url", $categories_data[$category_data_value]["name"]);
+                    }
+                }
+
                 array_push(
                     $this_list_categories_with_counts_and_data,
                     [
                         "count_in_this_list" => $count,
                         "percentage_in_this_list" => round(($count / count($places_data)) * 100, 2),
-                        "data" => $categories_data[$foursquare_id]
+                        "data" => $categories_data[$foursquare_id],
+                        "url" => $url
                     ]
                 );
             }
