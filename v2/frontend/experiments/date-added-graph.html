@@ -40,6 +40,13 @@
         </div>
         <svg width='640' height='480' id='date-graph'></svg>
         <script>
+            function preRenderPage() {
+                let svg = document.querySelector('svg');
+            
+                svg.setAttribute('width', window.innerWidth - 70);
+                svg.setAttribute('height', window.innerHeight - 230);
+            }
+                    
             function renderDataAddedGraph(svg_id, foursquare_list_id) {
                 const pathColors = [
                     '#FF522D',
@@ -129,6 +136,7 @@
                 description.style.display = 'block';
             }
 
+            preRenderPage();
             renderDataAddedGraph('date-graph', window.location.hash.replace('#', ''));
         </script>
 	</body>
