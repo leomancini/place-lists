@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-        <meta charset="utf-8">
+        <meta charset='utf-8'>
 		<title>Date Added Visualization</title>
-        <script src="https://d3js.org/d3.v4.js"></script>
-		<link rel="stylesheet/less" href="experiments-style.less">
-		<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" ></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src='https://d3js.org/d3.v4.js'></script>
+		<link rel='stylesheet/less' href='experiments-style.less'>
+		<script src='//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js' ></script>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
         <style>
             .axis path,
             .axis line {
@@ -34,34 +34,34 @@
         </style>
 	</head>
 	<body>
-        <h1></h1>
-        <h2>Number of places saved over time</h2>
-        <svg width="640" height="480" id="date-graph"></svg>
+        <div id='description'>
+            <h1></h1>
+            <h2>Number of places saved over time</h2>
+        </div>
+        <svg width='640' height='480' id='date-graph'></svg>
         <script>
-            renderDataAddedGraph("date-graph", window.location.hash.replace('#', ''));
-            
             function renderDataAddedGraph(svg_id, foursquare_list_id) {
                 const pathColors = [
-                    "#FF522D",
-                    "#7DFF2D",
-                    "#572DFF",
-                    "#FF852D",
-                    "#2DD9FF",
-                    "#A22DFF",
-                    "#FFC42D",
-                    "#2D9AFF",
-                    "#E22DFF",
-                    "#FFEA2D",
-                    "#2D5BFF",
-                    "#FF2DAB"
+                    '#FF522D',
+                    '#7DFF2D',
+                    '#572DFF',
+                    '#FF852D',
+                    '#2DD9FF',
+                    '#A22DFF',
+                    '#FFC42D',
+                    '#2D9AFF',
+                    '#E22DFF',
+                    '#FFEA2D',
+                    '#2D5BFF',
+                    '#FF2DAB'
                 ];
 
                 var svg = d3.select(`svg#${svg_id}`),
                     margin = {top: 10, right: 60, bottom: 60, left: 70},
-                    width = +svg.attr("width") - margin.left - margin.right,
-                    height = +svg.attr("height") - margin.top - margin.bottom;
+                    width = +svg.attr('width') - margin.left - margin.right,
+                    height = +svg.attr('height') - margin.top - margin.bottom;
 
-                var parseTime = d3.timeParse("%Y-%m")
+                var parseTime = d3.timeParse('%Y-%m')
                     bisectDate = d3.bisector(function(d) { return d.year; }).left;
 
                 var x = d3.scaleTime().range([0, width]);
@@ -73,14 +73,14 @@
                     // .curve(d3.curveMonotoneX);
                     .curve(d3.curveBasis);
 
-                var g = svg.append("g")
-                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                var g = svg.append('g')
+                    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
                 d3.json(`../../api/list.php?foursquare_list_id=${foursquare_list_id}`, function(error, dataInput) {
                     if (error) throw error;
 
                     window.document.title = `${dataInput.metadata.name} – ${window.document.title}`;
-                    document.querySelector("h1").innerText = dataInput.metadata.name;
+                    document.querySelector('h1').innerText = dataInput.metadata.name;
 
                     let data = dataInput.places.metadata.saved_timestamp_counts_with_zeros.map((saved_timestamps_count) => {
                         return {
@@ -103,23 +103,33 @@
                         }) * 1.005]
                     );
 
-                    g.append("g")
-                        .attr("class", "axis axis--x")
-                        .attr("transform", "translate(0, " + (height + 30) + ")")
+                    g.append('g')
+                        .attr('class', 'axis axis--x')
+                        .attr('transform', 'translate(0, ' + (height + 30) + ')')
                         .call(d3.axisBottom(x).ticks(6))
 
-                    g.append("g")
-                        .attr("class", "axis axis--y")
-                        .attr("transform", "translate(-30, 0)")
+                    g.append('g')
+                        .attr('class', 'axis axis--y')
+                        .attr('transform', 'translate(-30, 0)')
                         .call(d3.axisLeft(y).ticks(6))
 
-                    g.append("path")
+                    g.append('path')
                         .datum(data)
-                        .attr("class", "line")
-                        .attr("stroke", pathColors[Math.floor(Math.random() * pathColors.length)])
-                        .attr("d", line);
-                });   
+                        .attr('class', 'line')
+                        .attr('stroke', pathColors[Math.floor(Math.random() * pathColors.length)])
+                        .attr('d', line);
+
+                    renderPage();
+                });
             }
+
+            function renderPage() {
+                let description = document.getElementById('description');
+
+                description.style.display = 'block';
+            }
+
+            renderDataAddedGraph('date-graph', window.location.hash.replace('#', ''));
         </script>
 	</body>
 </html>
