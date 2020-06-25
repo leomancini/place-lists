@@ -1,7 +1,4 @@
 <?php
-	ob_end_clean(); // disable output buffer
-	ob_implicit_flush(); // call flush() automatically after every output
-
 	function generate_category_urls($this_categories_names) {
 		global $db;
 		
