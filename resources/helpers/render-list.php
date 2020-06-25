@@ -1,4 +1,8 @@
 <?php
+	// Disable PHP output buffering to allow rendering of long lists
+	ob_end_clean();
+	ob_implicit_flush();
+
 	function generate_category_urls($this_categories_names) {
 		global $db;
 		
