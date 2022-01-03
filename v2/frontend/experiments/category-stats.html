@@ -1,125 +1,125 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-        <meta charset='utf-8'>
+		<meta charset='utf-8'>
 		<title>Category Stats</title>
 		<link rel='stylesheet/less' href='experiments-style.less'>
 		<script src='//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js' ></script>
-        <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <style>
-            ul {
-                margin-top: 50px;
-                list-style: none;
-                padding-left: 0;
-                width: 100%;
-                max-width: 480px;
-            }
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+		<style>
+		    ul {
+			margin-top: 50px;
+			list-style: none;
+			padding-left: 0;
+			width: 100%;
+			max-width: 480px;
+		    }
 
-            a.category {
-                text-decoration: none;
-            }
+		    a.category {
+			text-decoration: none;
+		    }
 
-            a.category:hover {
-                cursor: pointer;
-            }
+		    a.category:hover {
+			cursor: pointer;
+		    }
 
-            a.category:hover label {
-                cursor: pointer;
-                text-decoration: underline;
-            }
+		    a.category:hover label {
+			cursor: pointer;
+			text-decoration: underline;
+		    }
 
-            li {
-                width: 100%;
-                font: 18px 'Helvetica Neue';
-                margin: 0 0 16px 0;
-                display: table;
-                vertical-align: middle;
-            }
+		    li {
+			width: 100%;
+			font: 18px 'Helvetica Neue';
+			margin: 0 0 16px 0;
+			display: table;
+			vertical-align: middle;
+		    }
 
-            li .image-cell {
-                display: table-cell;
-                width: 60px;
-            }
+		    li .image-cell {
+			display: table-cell;
+			width: 60px;
+		    }
 
-            li .image-wrapper {
-                background: rgba(0, 0, 0, 0.05);
-                border-radius: 8px;
-                width: 32px;
-                height: 32px;
-                padding: 6px;
-                user-select: none;
-            }
+		    li .image-wrapper {
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 8px;
+			width: 32px;
+			height: 32px;
+			padding: 6px;
+			user-select: none;
+		    }
 
-            li .image-wrapper img {
-                width: 32px;
-                height: 32px;
-                filter: brightness(0.6);
-            }
+		    li .image-wrapper img {
+			width: 32px;
+			height: 32px;
+			filter: brightness(0.6);
+		    }
 
-            li label {
-                color: rgba(0, 0, 0, 0.8);
-                vertical-align: middle;
-                display: table-cell;
-            }
+		    li label {
+			color: rgba(0, 0, 0, 0.8);
+			vertical-align: middle;
+			display: table-cell;
+		    }
 
-            li .count {
-                color: rgba(0, 0, 0, 0.4);
-                margin-left: 16px;
-                text-align: right;
-                vertical-align: middle;
-                display: table-cell;
-                padding-left: 24px;
-            }
-        </style>
+		    li .count {
+			color: rgba(0, 0, 0, 0.4);
+			margin-left: 16px;
+			text-align: right;
+			vertical-align: middle;
+			display: table-cell;
+			padding-left: 24px;
+		    }
+		</style>
 	</head>
 	<body>
-        <div id='description'>
-            <h1></h1>
-            <h2>Top categories of places saved</h2>
-        </div>
-        <ul id='category_stats'></ul>
-        <div id='credit'>Category names and icons from <a href='https://developer.foursquare.com/docs/api-reference/venues/categories/'>Foursquare Places API</a>.</div>
-        <pre id='debug'></pre>
-        <script type='text/javascript'>
-            async function getListData() {
-                try {
-                    const data = await fetch(`../../api/list.php?foursquare_list_id=${window.location.hash.replace('#', '')}`);
+		<div id='description'>
+		    <h1></h1>
+		    <h2>Top categories of places saved</h2>
+		</div>
+		<ul id='category_stats'></ul>
+		<div id='credit'>Category names and icons from <a href='https://developer.foursquare.com/docs/api-reference/venues/categories/'>Foursquare Places API</a>.</div>
+		<pre id='debug'></pre>
+		<script type='text/javascript'>
+		    async function getListData() {
+			try {
+			    const data = await fetch(`../../api/list.php?foursquare_list_id=${window.location.hash.replace('#', '')}`);
 
-                    return await data.json();
-                } catch (error) {
-                    console.log('fetch failed', error);
-                }
-            }
+			    return await data.json();
+			} catch (error) {
+			    console.log('fetch failed', error);
+			}
+		    }
 
-            async function renderPage() {
-                const   listData = await getListData(),
-                        category_stats = document.querySelector('#category_stats'),
-                        description = document.getElementById('description'),
-                        title = document.querySelector('h1'),
-                        credit = document.querySelector('#credit');
+		    async function renderPage() {
+			const   listData = await getListData(),
+				category_stats = document.querySelector('#category_stats'),
+				description = document.getElementById('description'),
+				title = document.querySelector('h1'),
+				credit = document.querySelector('#credit');
 
-                window.document.title = `${listData.metadata.name} – ${window.document.title}`;
-                title.innerText = listData.metadata.name;
+			window.document.title = `${listData.metadata.name} – ${window.document.title}`;
+			title.innerText = listData.metadata.name;
 
-                let category_stat_list_items = '';
+			let category_stat_list_items = '';
 
-                listData.places.metadata.top_categories.map((category, index) => {
-                    if(index < 10 && category.percentage_in_this_list > 1.8) {
-                        category_stat_list_items += `<a class='category' target='_blank' rel='noopener' href='https://places.leo.gd/${listData.metadata.url}/${category.url}'><li><div class='image-cell'><div class='image-wrapper'><img src='${category.data.icon_url_prefix}64${category.data.icon_url_suffix}'></div></div><label>${category.data.plural_name}</label><span class='count'>${(category.percentage_in_this_list).toFixed(1)}%</span></li></a>`;
-                        // category_stat_list_items += `<li><div class='image-cell'><div class='image-wrapper'><img src='${category.data.icon_url_prefix}64${category.data.icon_url_suffix}'></div></div><label>${category.data.plural_name}</label><span class='count'>${(category.percentage_in_this_list).toFixed(1)}%</span></li>`;
-                    }
-                });
+			listData.places.metadata.top_categories.map((category, index) => {
+			    if(index < 10 && category.percentage_in_this_list > 1.8) {
+				category_stat_list_items += `<a class='category' target='_blank' rel='noopener' href='https://places.leo.gd/${listData.metadata.url}/${category.url}'><li><div class='image-cell'><div class='image-wrapper'><img src='${category.data.icon_url_prefix}64${category.data.icon_url_suffix}'></div></div><label>${category.data.plural_name}</label><span class='count'>${(category.percentage_in_this_list).toFixed(1)}%</span></li></a>`;
+				// category_stat_list_items += `<li><div class='image-cell'><div class='image-wrapper'><img src='${category.data.icon_url_prefix}64${category.data.icon_url_suffix}'></div></div><label>${category.data.plural_name}</label><span class='count'>${(category.percentage_in_this_list).toFixed(1)}%</span></li>`;
+			    }
+			});
 
-                category_stats.innerHTML = category_stat_list_items;
-                
-                credit.style.display = 'block';
+			category_stats.innerHTML = category_stat_list_items;
 
-                description.style.display = 'block';
-                
-                // document.getElementById('debug').innerHTML = JSON.stringify(listData, null, 2);
-            }
+			credit.style.display = 'block';
 
-            renderPage();
-        </script>
+			description.style.display = 'block';
+
+			// document.getElementById('debug').innerHTML = JSON.stringify(listData, null, 2);
+		    }
+
+		    renderPage();
+		</script>
 	</body>
 </html>
