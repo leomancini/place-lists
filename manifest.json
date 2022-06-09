@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "apple-bookmark-icon.png",
+      "src": "/resources/images/favicon/apple-bookmark-icon.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "apple-touch-icon.png",
+      "src": "/resources/images/favicon/apple-touch-icon.png",
       "type": "image/png",
       "sizes": "180x180"
     }

@@ -17,8 +17,6 @@ Options -Indexes
 
 	RewriteRule ^robots.txt robots.txt [L]
 	RewriteRule ^manifest.json manifest.json [L]
-	RewriteRule ^apple-bookmark-icon.png apple-bookmark-icon.png [L]
-	RewriteRule ^apple-touch-icon.png apple-touch-icon.png [L]
 	
 	RewriteRule ^(.*)/(.*)/(.*)/(.*)/(.*) resources/helpers/router.php?list=$1&category1=$2&category2=$3&category3=$4&category4=$5 [QSA]
 	RewriteRule ^(.*)/(.*)/(.*)/(.*) resources/helpers/router.php?list=$1&category1=$2&category2=$3&category3=$4 [QSA]
