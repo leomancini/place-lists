@@ -1,0 +1,25 @@
+{
+  "short_name": "Places",
+  "name": "Place lists by Leo Mancini",
+  "icons": [
+    {
+      "src": "/resources/images/favicon/mono.ico",
+      "sizes": "32x32 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/resources/images/favicon/apple-bookmark-icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/resources/images/favicon/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff"
+}
