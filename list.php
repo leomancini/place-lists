@@ -93,13 +93,153 @@
 				$map_neighborhood = $neighborhood["neighborhood_long_name"];
 			}
 		}
+
+		$zoomLevels = [
+			"default" => 11,
+			"region" => 6,
+			"neighborhood" => 15
+		];
+
+		$showEntireWorld = [
+			"center" => "Algeria",
+			"zoom" => 2
+		];
 		
-		if($url_neighborhood["url"] && $map_neighborhood) {
+		$listsToOverrideMapCenter = [
+			"South Bay + Peninsula" => [
+				"center" => "Menlo Park",
+				"zoom" => 10
+			],
+			"SF Parks + Beaches" => [
+				"center" => "San Francisco",
+				"zoom" => $zoomLevels["default"]
+			],
+			"Want to Go To There" => [
+				"center" => "Kansas",
+				"zoom" => 5
+			],
+			"Mission Bars" => [
+				"center" => "San Francisco Mission District",
+				"zoom" => $zoomLevels["neighborhood"]
+			],
+			"Hotels I've Stayed at in the Bay Area" => [
+				"center" => "San Mateo",
+				"zoom" => 9
+			],
+			"Marin" => [
+				"center" => "Marin County, California",
+				"zoom" => 10
+			],
+			"Napa + Sonoma" => [
+				"center" => "Santa Rosa, California",
+				"zoom" => 10
+			],
+			"East Bay" => [
+				"center" => "Oakland, California",
+				"zoom" => 11
+			],
+			"Highway 1" => [
+				"center" => "Monterey, California",
+				"zoom" => 7
+			],
+			"Connecticut" => [
+				"center" => "Connecticut",
+				"zoom" => 9
+			],
+			"New Hampshire" => [
+				"center" => "Meredith, New Hampshire",
+				"zoom" => 8
+			],
+			"Massachusetts" => [
+				"center" => "Worcester, Massachusetts",
+				"zoom" => 9
+			],
+			"Upstate New York" => [
+				"center" => "Albany, New York",
+				"zoom" => 7
+			],
+			"North Fork" => [
+				"center" => "Cutchuogue, New York",
+				"zoom" => 10
+			],
+			"Sea Ranch" => [
+				"center" => "Sea Ranch, California",
+				"zoom" => 15
+			],
+			"Din Tai Fung" => $showEntireWorld,
+			"Kobe" => [
+				"center" => "Kobe, Japan",
+				"zoom" => $zoomLevels["default"]
+			],
+			"Northern California (outside Bay Area)" => [
+				"center" => "Chico, California",
+				"zoom" => 7
+			],
+			"New Mexico Towns" => [
+				"center" => "New Mexico",
+				"zoom" => $zoomLevels["region"]
+			],
+			"Italian Countryside" => [
+				"center" => "Italy",
+				"zoom" => $zoomLevels["region"]
+			],
+			"South of France" => [
+				"center" => "Montelimar, France",
+				"zoom" => 7
+			],
+			"Canary Islands" => [
+				"center" => "Canary Islands",
+				"zoom" => 8
+			],
+			"Luxembourg" => [
+				"center" => "Luxembourg City, Luxembourg",
+				"zoom" => 12
+			],
+			"Master of None Season 2" => [
+				"center" => "New York City",
+				"zoom" => $zoomLevels["default"]
+			],
+			"Cyprus" => [
+				"center" => "Klirou, Cyprus",
+				"zoom" => 9
+			],
+			"Tokyo" => [
+				"center" => "Tokyo, Japan",
+				"zoom" => 10
+			],
+			"Amalfi Coast" => [
+				"center" => "Amalfi Coast, Italy",
+				"zoom" => 9
+			]
+		];
+
+		if(in_array($list["name"], array_keys($listsToOverrideMapCenter))) {
+			$map["center"] = $listsToOverrideMapCenter[$list["name"]]["center"];
+			$map["zoom"] = $listsToOverrideMapCenter[$list["name"]]["zoom"];;
+		} else if($url_neighborhood["url"] && $map_neighborhood) {
 			$map["center"] = $list["name"]." ".$map_neighborhood;
-			$map["zoom"] = 15;
+			$map["zoom"] = $zoomLevels["neighborhood"];
 		} else {
 			$map["center"] = $list["name"];
-			$map["zoom"] = 11;
+
+			$listsToShowZoomedOutMap = [
+				"Morocco",
+				"Thailand"
+			];
+
+			$us_states_query = mysqli_query($db, "SELECT * FROM us_states");
+
+			while($us_state = mysqli_fetch_array($us_states_query)) {
+				array_push($listsToShowZoomedOutMap, $us_state["name"]);
+			}
+
+			$listsToShowZoomedOutMapExclusion = ["New York"];
+
+			if (in_array($list["name"], $listsToShowZoomedOutMap) && !in_array($list["name"], $listsToShowZoomedOutMapExclusion)) {
+				$map["zoom"] = $zoomLevels["region"];
+			} else {
+				$map["zoom"] = $zoomLevels["default"];
+			}
 		}
 ?>
 	<!DOCTYPE HTML>
