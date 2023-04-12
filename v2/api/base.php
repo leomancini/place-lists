@@ -128,7 +128,7 @@
 		), // San Francisco, San Francisco 2, and San Francisco 3
 		Array(
 			"parent" => "567e16a238fa9c9182a0b903",
-			"children" => Array("5e0a930d16de620006642ad8")
-		), // New York, New York 2
+			"children" => Array("5e0a930d16de620006642ad8", "5026bca3e4b0dfdf254a3d8a")
+		), // New York, New York 2, and New York 3
 	);
 ?>
