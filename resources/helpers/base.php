@@ -101,6 +101,7 @@
 			if($direction == "url") {
 				$new_string = strtolower($new_string);
 				$new_string = str_replace(" ", "-", $new_string);
+				$new_string = str_replace("café", "cafe", $new_string);
 				$new_string = str_replace("&", "-and-", $new_string);
 				$new_string = str_replace("+", "-plus-", $new_string);
 				$new_string = str_replace("/", "-slash-", $new_string);
@@ -113,6 +114,7 @@
 				$new_string = str_replace("-plus-", " + ", $new_string);
 				$new_string = str_replace("-slash-", " / ", $new_string);
 				$new_string = str_replace("-and-", " & ", $new_string);
+				$new_string = str_replace("cafe", "café", $new_string);
 				$new_string = str_replace("-", " ", $new_string);
 				$new_string = custom_ucwords($new_string);
 				
