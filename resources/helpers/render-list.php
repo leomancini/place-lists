@@ -228,7 +228,7 @@
 		while($random_popular_ratings_count < $number_of_random_popular_ratings) {
 			$popular_ratings = array_keys($popular["ratings"]);
 			if($popular_ratings[$random_amongst_top_x_percentile_ratings+$random_popular_ratings_count] != "") {
-				$search_suggestions[] = ">".number_format($popular_ratings[$random_amongst_top_x_percentile_ratings+$random_popular_ratings_count], 1);
+				$search_suggestions[] = ">".number_format(floatval($popular_ratings[$random_amongst_top_x_percentile_ratings+$random_popular_ratings_count]), 1);
 			}
 			$random_popular_ratings_count++;	
 		}
@@ -273,7 +273,7 @@
 		echo ' data-search-terms="'.strtolower(strip_accents($search_terms_string)).'"';
 		echo ' data-subcategory="'.strtolower(strip_accents($sub_category_label)).'"';
 		echo ' data-neighborhood="'.strtolower(strip_accents(convert("neighborhood", "url", $place_info["neighborhood"]))).'"';
-		echo ' data-rating="'.number_format($place_info["rating"], 1).'">';
+		echo ' data-rating="'.number_format(floatval($place_info["rating"]), 1).'">';
 
 			$place_url = "https://foursquare.com/v/".$place_info["foursquare_id"];
 			
@@ -317,7 +317,7 @@
 			$place_info["formatted_address"],
 			$place_info["zip"],
 			convert("neighborhood", "url", $place_info["neighborhood"]),
-			number_format($place_info["rating"], 1)
+			number_format(floatval($place_info["rating"]), 1)
 		);
 		
 		// remove special characters
@@ -359,7 +359,7 @@
 		
 		// generate html for place rating
 		if($place_info["rating"] != "") {
-			$rating_display = number_format($place_info["rating"], 1);
+			$rating_display = number_format(floatval($place_info["rating"]), 1);
 
 			if($url_categories) { $url_categories_string = "/".$url_categories; }
 	
@@ -611,7 +611,7 @@
 				foreach($places_in_sub_category as $place) {
 					if($places_info[$place["id"]]["rating"] != "") {
 					
-						$rating = str_replace(".", "", number_format($places_info[$place["id"]]["rating"], 1));
+						$rating = str_replace(".", "", number_format(floatval($places_info[$place["id"]]["rating"]), 1));
 						$rating_sort = convert_range($rating, 100, 0, 0, 100);
 						
 						$rating_sort = str_pad($rating_sort, 20, 0, STR_PAD_LEFT);
