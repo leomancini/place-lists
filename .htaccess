@@ -4,6 +4,7 @@ Options -Indexes
 	RewriteEngine On
 
 	RewriteCond %{HTTPS} !=on
+	RewriteCond %{HTTP_HOST} !=localhost:8888
 	RewriteCond %{HTTP_HOST} !=localhost
 	RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] 
 
