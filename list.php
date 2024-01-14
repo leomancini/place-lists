@@ -210,6 +210,10 @@
 			"Amalfi Coast" => [
 				"center" => "Amalfi Coast, Italy",
 				"zoom" => 9
+			],
+			"Jackson" => [
+				"center" => "Jackson, Mississippi",
+				"zoom" => $zoomLevels["default"]
 			]
 		];
 
