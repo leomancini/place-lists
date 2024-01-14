@@ -213,7 +213,7 @@
 			],
 			"Jackson" => [
 				"center" => "Jackson, Mississippi",
-				"zoom" => $zoomLevels["default"]
+				"zoom" => 9
 			]
 		];
 
