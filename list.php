@@ -213,7 +213,7 @@
 			],
 			"Jackson" => [
 				"center" => "Jackson, Mississippi",
-				"zoom" => 15
+				"zoom" => 13
 			]
 		];
 
