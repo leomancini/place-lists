@@ -2,38 +2,57 @@
 	require("../../../config/secrets.php");
 	date_default_timezone_set('America/Los_Angeles');
 
-	// Connect to database based on server
-	if($_SERVER['SERVER_NAME'] == "localhost" || $_SERVER['SERVER_NAME'] == $server["local"]["name"]) {
-		$root = "//".$_SERVER["HTTP_HOST"]."/foursquare-places-dev/foursquare-places/";
-		// $root = "//".$_SERVER["HTTP_HOST"]."/";
+	function setEnvironment() {
+		global $server, $database;
 		
-		$db = mysqli_init();
-		mysqli_real_connect(
-		   $db, 
-		   $database["local"]["server"], 
-		   $database["local"]["username"], 
-		   $database["local"]["password"], 
-		   $database["local"]["database-name"],
-		   8889
-		);
-	} else {
-		$root = "//".$_SERVER["HTTP_HOST"]."/";
+		$database_env = array();
 		
-		$db = mysqli_init();
-		mysqli_real_connect(
-		   $db, 
-		   $database["remote"]["server"], 
-		   $database["remote"]["username"], 
-		   $database["remote"]["password"], 
-		   $database["remote"]["database-name"],
-		   3306
+		if($_SERVER['SERVER_NAME'] == "localhost" || $_SERVER['SERVER_NAME'] == $server["local"]["name"]) {
+			$root = "//".$_SERVER["HTTP_HOST"]."/foursquare-places-dev/foursquare-places/";
+			// $root = "//".$_SERVER["HTTP_HOST"]."/";
+			
+			$database_env["server"] = $database["local"]["server"];
+			$database_env["username"] = $database["local"]["username"];
+			$database_env["password"] = $database["local"]["password"];
+			$database_env["database_name"] = $database["local"]["database-name"];
+			$database_env["port"] = 8889;
+		} else {
+			$root = "//".$_SERVER["HTTP_HOST"]."/";
+
+			$database_env["server"] = $database["remote"]["server"];
+			$database_env["username"] = $database["remote"]["username"];
+			$database_env["password"] = $database["remote"]["password"];
+			$database_env["database_name"] = $database["remote"]["database-name"];
+			$database_env["port"] = 3306;
+		}
+		
+		return array(
+			"database_env" => $database_env,
+			"root" => $root
 		);
 	}
+
+	$environment = setEnvironment();
+	$root = $environment["root"];
+
+	$db = new mysqli(
+		$environment["database_env"]["server"],
+		$environment["database_env"]["username"],
+		$environment["database_env"]["password"],
+		$environment["database_env"]["database_name"],
+		$environment["database_env"]["port"]
+	);
 	
+	if ($db->connect_error) {
+		die("Connection failed: " . $db->connect_error);
+	}
+
 	mysqli_set_charset($db, 'UTF8');
 
 	function get_all_category_info() {
 		global $db;
+	
+		if (!($db instanceof mysqli)) { return null; }
 		
 		$x_parent_categories_query = mysqli_query($db, "SELECT * FROM categories");
 	
@@ -148,9 +167,10 @@
 	}
 	
 	function strip_accents($str) {
-	    return strtr(utf8_decode($str), utf8_decode(
-		'àáâãäāçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'),
-		'aaaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+		$str = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', $str);
+		return strtr($str,
+			'ÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝàáâãäçèéêëìíîïñòóôõöùúûüýÿ',
+			'AAAAACEEEEIIIINOOOOOUUUUYaaaaaceeeeiiiinooooouuuuyy');
 	}
 	
 	function google_location_metadata($type, $data, $data_label) {
@@ -198,6 +218,8 @@
 
 	function places_count($list) {
 		global $db;
+		if (!($db instanceof mysqli)) { return null; }
+		
 		global $split_list_combos;
 		
 		$split_lists_parent_ids = Array();
