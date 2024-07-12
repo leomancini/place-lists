@@ -181,7 +181,21 @@
 		
 		return $address_data[$data_label];
 	}
-	
+
+	function parseSortKey($input) {
+		$parts = explode('-----', $input);
+		if (count($parts) !== 2) {
+			return "Invalid input format";
+		}
+		
+		$numberPart = $parts[0];
+		$listName = trim($parts[1]);
+
+		$number = ltrim($numberPart, '0');
+
+		return ['placesCount' => $number, 'list' => $listName];
+	}
+
 	function places_count($list) {
 		global $db;
 		global $split_list_combos;

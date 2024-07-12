@@ -53,7 +53,7 @@
 		
 		return $new_string;
 	}
-
+	
 	function places_count($list) {
 		global $db;
 		global $split_list_combos;

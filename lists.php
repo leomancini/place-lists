@@ -47,10 +47,10 @@
 						$lists_query = mysqli_query($db, "SELECT * FROM lists WHERE private <> 1");
 						while($list = mysqli_fetch_array($lists_query)) {
 							if(!in_array($list["foursquare_id"], $hidden_lists)) {
-								$lists_by_section[$list["continent"]][str_pad($list["places_count"], 20, "0", STR_PAD_LEFT)."-----".$list["name"]] = $list;
+								$lists_by_section[$list["continent"]][str_pad(places_count($list), 20, "0", STR_PAD_LEFT)."-----".$list["name"]] = $list;
 							}
 						}
-						
+
 						krsort($lists_by_section);
 						
 						foreach($lists_by_section as $section_label => $lists_of_section) {
@@ -73,7 +73,7 @@
 										echo "</span>";
 									echo '</a>';
 									echo "<span class='count'>&nbsp;&nbsp;";
-										echo places_count($list);
+										echo parseSortKey($list_id_and_name)["placesCount"];
 									echo "</span>";
 								echo '</div>';
 							}
