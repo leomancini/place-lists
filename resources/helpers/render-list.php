@@ -17,7 +17,7 @@
 		return $this_categories_urls;
 	}
 
-	function render_category_breadcrumbs($url_category_names, $this_categories_urls, $number_of_places) {
+	function render_category_breadcrumbs($url_category_names, $this_categories_urls, $number_of_places, $popular = null) {
 		global $root;
 		global $list_name_url;
 		global $url_neighborhood;
@@ -28,11 +28,13 @@
 		
 			if($url_neighborhood) {
 				$url_neighborhood_term_count = 0;
+				$neighborhood_breadcrumb_urls = Array();
 				foreach($url_neighborhood_terms as $url_neighborhood_term) {
 					$url_neighborhood_term_count++;
 					if($url_neighborhood_term_count > 1) { echo " / " ;}
-				
+
 					$neighborhood_breadcrumb_counter = 0;
+					if(!isset($neighborhood_breadcrumb_urls[$url_neighborhood_term_count])) { $neighborhood_breadcrumb_urls[$url_neighborhood_term_count] = ""; }
 					while($neighborhood_breadcrumb_counter-1 < $url_neighborhood_term_count-1) {
 						$neighborhood_breadcrumb_counter++;
 						$neighborhood_breadcrumb_urls[$url_neighborhood_term_count] .= ":".$url_neighborhood_terms[$neighborhood_breadcrumb_counter-1];
@@ -53,10 +55,6 @@
 		// if list has more than 1 place, render search and search suggestions
 		if($number_of_places > 1) {
 			render_search($url_neighborhood, $url_category_names);
-			// if(!is_mobile()) {
-				$search_suggestions = generate_search_suggestions($popular);
-				render_search_suggestions($search_suggestions);
-			// }
 		}
 
 		echo "</div>";
@@ -129,6 +127,7 @@
 			$show_neighborhoods = true;
 		}
 
+		$neighborhoods_sorted = Array();
 		foreach($neighborhoods as $neighborhood_label => $neighborhood_count) {
 			$sort = str_pad($neighborhood_count, 20, "0", STR_PAD_LEFT)."%COUNT%";
 			$neighborhoods_sorted[$sort.$neighborhood_label] = Array("label" => $neighborhood_label, "count" => $neighborhood_count);
@@ -171,6 +170,7 @@
 	
 	function render_search($url_neighborhood, $url_category_names) {
 		if($url_category_names || $url_neighborhood) {
+			$saved_search_class = "";
 			// if($url_neighborhood) { $saved_search_class = " has-search-query"; }
 			echo "<span id='search-separator' class='".$saved_search_class."'> / </span>";
 		}
@@ -193,44 +193,54 @@
 	}
 	
 	function generate_search_suggestions($popular) {
+		if(!$popular || empty($popular["streets"]) || empty($popular["ratings"])) {
+			return Array();
+		}
+
 		// array value for places on street count starts at 0, so add 1 to get correct value
 		foreach($popular["streets"] as $street_name => $places_on_street_count) {
 			$popular["streets"][$street_name] = $places_on_street_count + 1;
 		}
-		
+
 		// sort popular data by number of places in each popular type
 		foreach($popular as $popular_label => $popular_data) {
 			arsort($popular[$popular_label]);
 		}
-		
+
 		// setup search suggestions
 		$search_suggestions = Array();
-		
+
 		$top_x = 50;
 		$number_of_random_popular_streets = 4;
 		$number_of_random_popular_neighborhoods = 5;
 		$number_of_random_popular_ratings = 5;
-		
+
 		// add popular streets to search suggestions
 		$top_x_popular_streets = round((round(count($popular["streets"])) / $top_x) * 10);
-		$random_amongst_top_x_percentile_streets = rand(0, $top_x_popular_streets);
-		
+		$random_amongst_top_x_percentile_streets = rand(0, max($top_x_popular_streets, 0));
+
+		$random_popular_streets_count = 0;
 		while($random_popular_streets_count < $number_of_random_popular_streets) {
 			$popular_streets = array_keys($popular["streets"]);
-			$search_suggestions[] = $popular_streets[$random_amongst_top_x_percentile_streets+$random_popular_streets_count];
-			$random_popular_streets_count++;	
+			$idx = $random_amongst_top_x_percentile_streets + $random_popular_streets_count;
+			if(isset($popular_streets[$idx])) {
+				$search_suggestions[] = $popular_streets[$idx];
+			}
+			$random_popular_streets_count++;
 		}
-		
+
 		// add popular ratings to search suggestions
 		$top_x_popular_ratings = round((round(count($popular["ratings"])) / $top_x) * 10);
-		$random_amongst_top_x_percentile_ratings = rand(0, $top_x_popular_ratings);
-		
+		$random_amongst_top_x_percentile_ratings = rand(0, max($top_x_popular_ratings, 0));
+
+		$random_popular_ratings_count = 0;
 		while($random_popular_ratings_count < $number_of_random_popular_ratings) {
 			$popular_ratings = array_keys($popular["ratings"]);
-			if($popular_ratings[$random_amongst_top_x_percentile_ratings+$random_popular_ratings_count] != "") {
-				$search_suggestions[] = ">".number_format(floatval($popular_ratings[$random_amongst_top_x_percentile_ratings+$random_popular_ratings_count]), 1);
+			$idx = $random_amongst_top_x_percentile_ratings + $random_popular_ratings_count;
+			if(isset($popular_ratings[$idx]) && $popular_ratings[$idx] != "") {
+				$search_suggestions[] = ">".number_format(floatval($popular_ratings[$idx]), 1);
 			}
-			$random_popular_ratings_count++;	
+			$random_popular_ratings_count++;
 		}
 	
 		/*
@@ -272,7 +282,7 @@
 		echo ' <div class="place"';
 		echo ' data-search-terms="'.strtolower(strip_accents($search_terms_string)).'"';
 		echo ' data-subcategory="'.strtolower(strip_accents($sub_category_label)).'"';
-		echo ' data-neighborhood="'.strtolower(strip_accents(convert("neighborhood", "url", $place_info["neighborhood"]))).'"';
+		echo ' data-neighborhood="'.strtolower(strip_accents(convert("neighborhood", "url", $place_info["neighborhood"] ?? ""))).'"';
 		echo ' data-rating="'.number_format(floatval($place_info["rating"]), 1).'">';
 
 			$place_url = "https://foursquare.com/v/".$place_info["foursquare_id"];
@@ -316,7 +326,7 @@
 			$place_info["address"],
 			$place_info["formatted_address"],
 			$place_info["zip"],
-			convert("neighborhood", "url", $place_info["neighborhood"]),
+			convert("neighborhood", "url", $place_info["neighborhood"] ?? ""),
 			number_format(floatval($place_info["rating"]), 1)
 		);
 		
@@ -346,9 +356,7 @@
 		}
 		
 		// combine search terms into string
-		$search_terms_string[$place["id"]] = implode(" ", $search_terms);
-		
-		return $search_terms_string[$place["id"]];
+		return implode(" ", $search_terms);
 	}
 	
 	function render_place_description_items($place_info, $url_categories, $url_neighborhood_terms) {
@@ -361,9 +369,9 @@
 		if($place_info["rating"] != "") {
 			$rating_display = number_format(floatval($place_info["rating"]), 1);
 
-			if($url_categories) { $url_categories_string = "/".$url_categories; }
-	
-			if(!in_array($rating_display, $url_neighborhood_terms)) {
+			$url_categories_string = $url_categories ? "/".$url_categories : "";
+
+			if(!in_array($rating_display, $url_neighborhood_terms ?? [])) {
 				$description_items["rating"] = "
 					<span class='rating-circle' style='background-color: #".$place_info["rating_color"].";'></span>
 					<span class='rating'>
@@ -377,7 +385,7 @@
 		}
 
 		// generate html for place category
-		if($sub_category_label != $this_category["name"] && $this_sub_category != $this_category["name"]) {
+		if(isset($this_category) && isset($sub_category_label) && $sub_category_label != $this_category["name"] && ($this_sub_category ?? "") != $this_category["name"]) {
 			$description_items["category"] = "
 				<a class='category' href='".$root.$list_name_url."/".$this_category["url"]."'>".
 					convert("category", "display", $this_category["name"]).
@@ -427,6 +435,8 @@
 		global $db;
 	
 		$category_info = get_all_category_info();
+		$number_of_places = 0;
+		$popular = Array("streets" => Array(), "neighborhoods" => Array(), "ratings" => Array());
 		$url_category_names = Array();
 		if(isset($_GET['category1'])) { $url_category_names[0] = urldecode($_GET['category1']); }
 		if(isset($_GET['category2'])) { $url_category_names[1] = urldecode($_GET['category2']); }
@@ -530,7 +540,7 @@
 				}
 				
 				// add neighborhood data to regular places_info array
-				if($neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"]) {
+				if(isset($neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"]) && $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"]) {
 					$places_info[$place["id"]]["neighborhood"] = $neighborhood_info_set[$place["foursquare_id"]]["neighborhood_long_name"];
 				}
 			
@@ -630,7 +640,8 @@
 				foreach($places_in_sub_category_sorted as $sort => $place) {
 				
 					// get category for this place
-					$this_category = $places_info[$place["id"]]["categories"][count($places_info[$place["id"]]["categories"])-1];
+					$place_categories = $places_info[$place["id"]]["categories"] ?? [];
+					$this_category = !empty($place_categories) ? $place_categories[count($place_categories)-1] : null;
 				
 					// increment number of places in this subcategory
 					$number_of_places++;
@@ -642,13 +653,18 @@
 					} else {
 						$street = $places_info[$place["id"]]["address"];
 					}
+					if(!isset($popular["streets"][$street])) { $popular["streets"][$street] = 0; }
 					$popular["streets"][$street]++;
-				
+
 					// increment number of places in this neighborhood
-					$popular["neighborhoods"][$places_info[$place["id"]]["neighborhood"]]++;
-				
+					$neighborhood_key = $places_info[$place["id"]]["neighborhood"] ?? "";
+					if(!isset($popular["neighborhoods"][$neighborhood_key])) { $popular["neighborhoods"][$neighborhood_key] = 0; }
+					$popular["neighborhoods"][$neighborhood_key]++;
+
 					// increment number of places with this rating
-					$popular["ratings"][$places_info[$place["id"]]["rating"]]++;
+					$rating_key = $places_info[$place["id"]]["rating"] ?? "";
+					if(!isset($popular["ratings"][$rating_key])) { $popular["ratings"][$rating_key] = 0; }
+					$popular["ratings"][$rating_key]++;
 					
 					// render place info
 					render_place_info($places_info[$place["id"]], $search_terms_string[$place["id"]], $url_categories, $url_neighborhood_terms, $sub_category_label);
@@ -671,7 +687,7 @@
 				echo '<h1><a href="'.$root.$list_name_url_without_neighborhood.'">'.$list["name"]."</a></h1>";
 
 				// render category breadcrumbs
-				render_category_breadcrumbs($url_category_names, $this_categories_urls, $number_of_places);
+				render_category_breadcrumbs($url_category_names, $this_categories_urls, $number_of_places, $popular);
 						
 				echo "<div id='empty-search-results'>Nothing found...<br><a id='clear-search'>clear search</a></div>";
 

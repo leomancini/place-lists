@@ -158,14 +158,18 @@ function search_filter_list(input_from_textfield) {
 	}
 		
 	if(document.getElementsByClassName("place positive-search-result").length == 0) {
-		document.getElementById("empty-search-results").style.display = "inline-block";
+		if(document.getElementById("empty-search-results")) {
+			document.getElementById("empty-search-results").style.display = "inline-block";
+		}
 
 		// update index to reflect current search results
 		for(var i = 0; i < indexes.length; i++) {
 			indexes[i].style.display = "none";
 		}
 	} else {
-		document.getElementById("empty-search-results").style.display = "none";
+		if(document.getElementById("empty-search-results")) {
+			document.getElementById("empty-search-results").style.display = "none";
+		}
 
 		// update index to reflect current search results
 		for(var i = 0; i < indexes.length; i++) {
@@ -314,7 +318,9 @@ $(document).ready(function() {
 		$(this).parent().parent().parent().children(".place-info").children(".title").children("a").removeClass("hover");
 	});
 	
-	window.list_header_position = $("#navigation").offset().top - (60 + parseInt($("#navigation").css("margin-top").replace("px", "")));
+	if($("#navigation").length > 0) {
+		window.list_header_position = $("#navigation").offset().top - (60 + parseInt($("#navigation").css("margin-top").replace("px", "")));
+	}
 	
 	$("input#search").attr("autocomplete", "off").on('input change paste keyup', function(keyboard) {
 		input_from_textfield = $(this).val();

@@ -1,5 +1,5 @@
 <?php
-	// echo "<pre>";
+	echo "<pre>";
 
 	include("base.php");
 	require("country-continent-mapping.php");
@@ -83,14 +83,14 @@
 		foreach($database_lists as $database_list_id => $database_list_name) {
 			if(in_array($database_list_id."/".$database_list_name, $foursquare_list_id_and_name_pair)) {
 				// Database item still exists in Foursquare and is unchanged
-				// echo "KEEP: ".$database_list_id." '".$database_list_name."' (still exists on Foursquare)<br>";
+				echo "KEEP: ".$database_list_id." '".$database_list_name."' (still exists on Foursquare)<br>";
 
 				// Update count
 				$places_count = $foursquare_lists_places_count[$database_list_id];
 				mysqli_query($db, "UPDATE lists SET places_count='".$places_count."' WHERE foursquare_id='".$database_list_id."'");
 			} else {
 				// Database item doesn't exists in Foursquare
-				// echo "DELETE: ".$database_list_id." '".$database_list_name."' (missing from Foursquare)<br>";
+				echo "DELETE: ".$database_list_id." '".$database_list_name."' (missing from Foursquare)<br>";
 				$database_list_id = mysqli_real_escape_string($db, $database_list_id);
 				
 				// DELETE THIS LIST FROM DATABASE
@@ -105,18 +105,18 @@
 			}
 		}
 	
-		// echo "<h3>Foursquare check:</h3>";
+		echo "<h3>Foursquare check:</h3>";
 		foreach($foursquare_lists as $foursquare_list_id => $foursquare_list_name) {
 			if(in_array($foursquare_list_id."/".$foursquare_list_name, $database_list_id_and_name_pair)) {
 				// Foursquare item still exists in database and is unchanged
-				// echo "KEEP: ".$foursquare_list_id." '".$foursquare_list_name."' (still exists in db)<br>";
+				echo "KEEP: ".$foursquare_list_id." '".$foursquare_list_name."' (still exists in db)<br>";
 
 				// Update count
 				$places_count = $foursquare_lists_places_count[$foursquare_list_id];
 				mysqli_query($db, "UPDATE lists SET places_count='".$places_count."' WHERE foursquare_id='".$foursquare_list_id."'");
 			} else {
 				// Foursquare item doesn't exist in database
-				// echo "ADD: ".$foursquare_list_id." '".$foursquare_list_name."' (missing from db)<br>";
+				echo "ADD: ".$foursquare_list_id." '".$foursquare_list_name."' (missing from db)<br>";
 
 				// CREATE HEADER IMAGE DIRECTORY
 				mkdir("../images/list-headers/".convert("list", "url", $foursquare_list_name)."/");
@@ -223,12 +223,12 @@
 			}
 			
 			// DEBUG
-			/*
+			// /*
 			echo "<br><br>ok getting ".$list_id."<br>";
 			$next = $offset + $limit;
 			$offset_display = $offset - $limit;
 			echo "got ".$offset_display." - ".$offset." = ".$count."<br>";
-			*/
+			// */
 			
 			if($count < $limit) { break; }
 		}
@@ -273,15 +273,15 @@
 				
 		// COMPARISON
 		
-		// echo "<h3>Database check:</h3>";
+		echo "<h3>Database check:</h3>";
 		foreach($database_places as $database_place) {
 			if(in_array($database_place['foursquare_list_id']."/".$database_place["foursquare_id"], $foursquare_list_and_place_pair)) {
 				// Database item still exists in Foursquare and is unchanged
-				// echo "KEEP: ".$database_place['foursquare_list_id']."/".$database_place["foursquare_id"]." '".$database_place["name"]."' (still exists on Foursquare)<br>";
+				echo "KEEP: ".$database_place['foursquare_list_id']."/".$database_place["foursquare_id"]." '".$database_place["name"]."' (still exists on Foursquare)<br>";
 				// DO NOTHING
 			} else {
 				// Database item doesn't exists in Foursquare
-				// echo "DELETE: ".$database_place['foursquare_list_id']."/".$database_place["foursquare_id"]." '".$database_place["name"]."' (missing from Foursquare)<br>";
+				echo "DELETE: ".$database_place['foursquare_list_id']."/".$database_place["foursquare_id"]." '".$database_place["name"]."' (missing from Foursquare)<br>";
 				$database_place["foursquare_list_id"] = mysqli_real_escape_string($db, $database_place["foursquare_list_id"]);
 				$database_place["foursquare_id"] = mysqli_real_escape_string($db, $database_place["foursquare_id"]);
 				
@@ -291,15 +291,15 @@
 			}
 		}
 		
-		// echo "<h3>Foursquare check:</h3>";
+		echo "<h3>Foursquare check:</h3>";
 		foreach($foursquare_places as $foursquare_place) {
 			if(in_array($foursquare_place['foursquare_list_id']."/".$foursquare_place["foursquare_id"], $database_list_and_place_pair)) {
 				// Foursquare item still exists in database and is unchanged
-				// echo "KEEP: ".$foursquare_place['foursquare_list_id']."/".$foursquare_place['foursquare_id']." '".$foursquare_place["name"]."' (still exists in db)<br>";
+				echo "KEEP: ".$foursquare_place['foursquare_list_id']."/".$foursquare_place['foursquare_id']." '".$foursquare_place["name"]."' (still exists in db)<br>";
 				// DO NOTHING
 			} else {
 				// Foursquare item doesn't exist in database
-				// echo "ADD: ".$foursquare_place['foursquare_list_id']."/".$foursquare_place['foursquare_id']." '".$foursquare_place["name"]."' (missing from db)<br>";
+				echo "ADD: ".$foursquare_place['foursquare_list_id']."/".$foursquare_place['foursquare_id']." '".$foursquare_place["name"]."' (missing from db)<br>";
 				// ADD THIS TO DATABASE
 													
 				foreach($foursquare_places_data[$foursquare_place['foursquare_id']] as $key => $value) {
@@ -384,5 +384,5 @@
 	
 	include("end.php");
 
-	// echo "<pre>";
+	echo "<pre>";
 ?>
